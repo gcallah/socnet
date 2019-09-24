@@ -1,8 +1,0 @@
-ipython
-matplotlib
-numpy
-flask
-flask_restplus
-flask-cors
-propargs
-seaborn
