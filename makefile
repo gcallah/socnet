@@ -10,7 +10,7 @@ PYTHONFILES += $(shell ls $(LIB_DIR)/*.py)
 
 FORCE:
 
-container: $(DOCKER_DIR)/Dockerfile  $(DOCKER_DIR)/requirements.txt
+container: $(DOCKER_DIR)/Dockerfile  $(DOCKER_DIR)/requirements-dev.txt
 	docker build -t utils docker
 
 html_tests: FORCE
