@@ -1,0 +1,4 @@
+Initial Thoughts: At first look MS Teams looks like a very polished service, butbecause it released only recently, I believe it hasn't been adopted in many places, especially in offices and sysadmin networks. While it might be a good app, there are already existing services that do similar things like Slack. I think it'd be better to target a more popular or commonly used message service, or even SMS/Texting.
+
+Although I'm not sure if this counts as a custom GET/POST API, we can create Connector Cards, which seem like interactive messages (eg. Invites, Weather, Calender events? Not sure) to an Officer 365 group using an API Client to send a POST request. The recommeded client is Postman. 
+
