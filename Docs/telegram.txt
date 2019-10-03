@@ -1,8 +1,0 @@
-This document contains information about Telegram APIs
-
-APIs (https://core.telegram.org/api):
-Telegram offer two kinds of APIs:
-1. The Bot API allows us to easily create programs that use Telegram messages for an interface. 
-2. The Telegram API and TDLib allow us to build our own customized Telegram clients.
-
-using TDLib we can create our own client application for telegram.
