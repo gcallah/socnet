@@ -8,3 +8,17 @@ which seem like interactive messages (eg. Invites, Weather, Calender events? Not
 to an Officer 365 group using an API Client to send a POST request. The recommeded client is Postman. 
 
 We can also make custom webhooks using Connectors, MS Teams' interface for webhooks and 3rd party apps. This interface is also used to make the previously mentioned Connector Cards. 
+
+What is required at least:
+A text/json editor to create the JSON payload.
+A way to send the JSON as a POST i.e cURL, API Client, Powershell
+A MS Teams Webhook URL, created in the Connectors menu of MS Teams. 
+
+If we do intend to go through with using MS Teams, I believe it is possible to send something like a Emergency Alert message, 
+looking at the JSON format provided in the references. However, it might not appear where we want it to appear. I still do not 
+think this is a viable method of alerting people to an emergency due to its narrow target audience and low adoption rate given its 
+recency. 
+
+References:
+https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/connectors/connectors-using
+https://docs.microsoft.com/en-us/outlook/actionable-messages/send-via-connectors
