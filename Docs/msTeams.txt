@@ -1,4 +1,24 @@
-Initial Thoughts: At first look MS Teams looks like a very polished service, butbecause it released only recently, I believe it hasn't been adopted in many places, especially in offices and sysadmin networks. While it might be a good app, there are already existing services that do similar things like Slack. I think it'd be better to target a more popular or commonly used message service, or even SMS/Texting.
+Initial Thoughts: At first look MS Teams looks like a very polished service, butbecause it released only recently, 
+I believe it hasn't been adopted in many places, especially in offices and sysadmin networks. While it might be a good app, 
+there are already existing services that do similar things like Slack. 
+I think it'd be better to target a more popular or commonly used message service, or even SMS/Texting.
 
-Although I'm not sure if this counts as a custom GET/POST API, we can create Connector Cards, which seem like interactive messages (eg. Invites, Weather, Calender events? Not sure) to an Officer 365 group using an API Client to send a POST request. The recommeded client is Postman. 
+Although I'm not sure if this counts as a custom GET/POST API, we can create Connector Cards, 
+which seem like interactive messages (eg. Invites, Weather, Calender events? Not sure) 
+to an Officer 365 group using an API Client to send a POST request. The recommeded client is Postman. 
 
+We can also make custom webhooks using Connectors, MS Teams' interface for webhooks and 3rd party apps. This interface is also used to make the previously mentioned Connector Cards. 
+
+What is required at least:
+A text/json editor to create the JSON payload.
+A way to send the JSON as a POST i.e cURL, API Client, Powershell
+A MS Teams Webhook URL, created in the Connectors menu of MS Teams. 
+
+If we do intend to go through with using MS Teams, I believe it is possible to send something like a Emergency Alert message, 
+looking at the JSON format provided in the references. However, it might not appear where we want it to appear. I still do not 
+think this is a viable method of alerting people to an emergency due to its narrow target audience and low adoption rate given its 
+recency. 
+
+References:
+https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/connectors/connectors-using
+https://docs.microsoft.com/en-us/outlook/actionable-messages/send-via-connectors
