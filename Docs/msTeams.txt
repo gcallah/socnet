@@ -1,24 +1,31 @@
-Initial Thoughts: At first look MS Teams looks like a very polished service, butbecause it released only recently, 
-I believe it hasn't been adopted in many places, especially in offices and sysadmin networks. While it might be a good app, 
-there are already existing services that do similar things like Slack. 
-I think it'd be better to target a more popular or commonly used message service, or even SMS/Texting.
+Initial Thoughts: MS Teams looks like a very polished app with a great set of features. I wanted to test it out by making an account and playing around with the interface, but I had problems with signing up on the Microsoft Store.
 
+
+1. How can we achieve calling (custom GET/POST)APIs?
 Although I'm not sure if this counts as a custom GET/POST API, we can create Connector Cards, 
 which seem like interactive messages (eg. Invites, Weather, Calender events? Not sure) 
 to an Officer 365 group using an API Client to send a POST request. The recommeded client is Postman. 
 
 We can also make custom webhooks using Connectors, MS Teams' interface for webhooks and 3rd party apps. This interface is also used to make the previously mentioned Connector Cards. 
+Although there are other uses for these connectors such as notifying users of an upcoming meeting, scheduling dates and deadlines,
+sending files or approving budget changes, I believe the focus of SOCNET is to send messages, specifically to warn people of an emergency in their area, and Adaptive Cards (Previously referred to as Connector Cards) look to be the most ideal way of achieving this. If you look in the 5th reference, you can enter a sandbox with various adaptive card templates, and you should be able to understand what the limits of these cards are
+You can use these Adaptive Cards to message a channel, and collect input based on what we need, such as "Can you see the emergency (Storm/Tornado/etc) from your location", "Is your location in a shelter or a building that can resist the disaster?", etc. This data can then be used to improve our messages. 
 
+
+2. What resources are required for producing or providing it?
 What is required at least:
 A text/json editor to create the JSON payload.
 A way to send the JSON as a POST i.e cURL, API Client, Powershell
 A MS Teams Webhook URL, created in the Connectors menu of MS Teams. 
 
-If we do intend to go through with using MS Teams, I believe it is possible to send something like a Emergency Alert message, 
-looking at the JSON format provided in the references. However, it might not appear where we want it to appear. I still do not 
-think this is a viable method of alerting people to an emergency due to its narrow target audience and low adoption rate given its 
-recency. 
+3. Are there any standards surrounding the product that we have to follow?
+Other then what is needed for the requirements or listed in required, none that I could find. 
+
+Although Adaptive Cards have the potential to be used on a much greater level, I believe the functionality it provides is more than enough to satisify our needs. The sandbox provided in the 5th reference should be more than enough to figure out how to make a Card that suits our needs. However, I believe the only downside is where the Card appears. Because I couldn't sign up for Microsoft Teams, I wasn't able to test or see where exactly the Cards appear. If there is no way to have the Card alert the person and make them shift focus to the Card, such as assigning a higher priority to the Card or having it appear in an easy to see location, it might be difficult for users to spot the Card. 
 
 References:
 https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/connectors/connectors-using
 https://docs.microsoft.com/en-us/outlook/actionable-messages/send-via-connectors
+https://docs.microsoft.com/en-us/outlook/actionable-messages/
+https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/connectors/connectors
+https://messagecardplayground.azurewebsites.net/
