@@ -1,30 +1,33 @@
+# A template makefile that works for static websites.
 # Need to export as ENV var
-export TEST_DIR = tests
-export TEST_DATA = test_data
-export CODE_DIR = .
-export HTML_DIR = .
-export DATA_DIR = $(CODE_DIR)/data
-export DOCKER_DIR = docker
-PYTHONFILES = $(shell ls *.py)
-PYTHONFILES += $(shell ls $(LIB_DIR)/*.py)
+export TEMPLATE_DIR = templates
+PTML_DIR = html_src
+UTILS_DIR = utils
 
-FORCE:
+INCS = $(TEMPLATE_DIR)/head.txt $(TEMPLATE_DIR)/logo.txt $(TEMPLATE_DIR)/menu.txt
 
-container: $(DOCKER_DIR)/Dockerfile  $(DOCKER_DIR)/requirements-dev.txt
-	docker build -t utils docker
+HTMLFILES = $(shell ls $(PTML_DIR)/*.ptml | sed -e 's/.ptml/.html/' | sed -e 's/html_src\///')
 
-html_tests: FORCE
-	$(TEST_DIR)/html_tests.sh
+%.html: $(PTML_DIR)/%.ptml $(INCS)
+	python3 $(UTILS_DIR)/html_checker.py $< 
+	$(UTILS_DIR)/html_include.awk <$< >$@
+	git add $@
 
-pytests: FORCE
-	$(LIB_DIR)/pytests.sh
+local: $(HTMLFILES)
 
-tests: html_tests 
-
-lint: 
-	flake8 $(PYTHONFILES)
-
-prod: $(INCS) $(HTMLFILES) lint tests
+prod: $(INCS) $(HTMLFILES)
 	-git commit -a 
 	git pull origin master
 	git push origin master
+
+submods:
+	git submodule foreach 'git pull origin master'
+	
+nocrud:
+	rm *~
+	rm .*swp
+	rm $(PTML_DIR)/*~
+	rm $(PTML_DIR)/.*swp
+
+clean:
+	touch $(PTML_DIR)/*.ptml; make local
