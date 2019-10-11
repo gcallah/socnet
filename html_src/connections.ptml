@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <link href="../style.css" rel="stylesheet" type="text/css"/>
+<!--include head.txt -->
         <title>
             SOCNET:
             Review of Various Messaging System's Interoperability Characteristics
@@ -10,12 +9,20 @@
     </head>
 
     <body>
+<!--include logo.txt -->
+<!--include menu.txt -->
         <h1>
             SOCNET:
             Review of Various Messaging System's Interoperability Characteristics
         </h1>
 
         <ul>
+            <li>
+                <a href="msteams.html">
+                    Microsoft Teams
+                </a>
+            </li>
+
             <li>
                 <a href="service_now.html">
                     Service Now
@@ -34,11 +41,6 @@
                 </a>
             </li>
             
-            <li>
-                <a href="msteams.html">
-                    Microsoft Teams
-                </a>
-            </li>
         </ul>
 
     </body>

@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <link href="../style.css" rel="stylesheet" type="text/css"/>
+<!--include head.txt -->
         <title>
             Review of Symfony Interoperability Characteristics
         </title>
     </head>
 
     <body>
+<!--include logo.txt -->
+<!--include menu.txt -->
         <h1>
             Review of Symfony Interoperability Characteristics
         </h1>
@@ -16,12 +17,13 @@
         <p><strong>This document answers some basic questions about Symfony for creating custom GET/POST APIs</strong></p>
 <ul>
 <li>we can create custom GET/POST APIs in Symfony that users can interact with.</li>
-<li>as a team we would be creating a REST(representational state transfer) API. REST provides a block of HTTP methods which are used to alter the data.</li>
-<li>GET- used for reading and retrieving data.</li>
-<li>POST- used for inserting data.</li>
-<li>PUT- used for updating data.</li>
-<li>DELETE- used for deleting data.</li>
-<li>REST works on actions and resources. When an action is invoked REST performs methods</li>
+<li>as a team we would be creating a REST(representational state transfer) API.
+    REST provides a block of HTTP methods which are used to alter the
+    data.</li>
+<li>GET: used for reading and retrieving data.</li>
+<li>POST: used for inserting data.</li>
+<li>PUT: used for updating data.</li>
+<li>DELETE: used for deleting data.</li>
 </ul>
 
 <p><strong>How do we create a REST API? </strong></p>
@@ -36,30 +38,31 @@ href="http://symphonyextensions.com/extensions/rest_api/">documented
 <li>Entries: read and write entries.</li>
 <li>Sections: read meta data about sections and fields.</li>
 <li>Response formats:</li>
-<li>By default the API returns XML but JSON, YAML and serialised PHP arrays are also supported by appending the format variable to any URL.</li>
-<li>Authentication & Security:</li>
+<li>By default the API returns XML but JSON, YAML and serialised PHP arrays are
+    also supported by appending the format variable to any URL.</li>
+<li>Authentication &amp; Security:</li>
 <li>The API is private. You must authenticate as a Symphony author</li>
 
 <li>Another nice resource can be found
     <a
          href="https://www.sgalinski.de/en/typo3-agency/technology/how-to-create-a-basic-rest-api-in-symfony/">
     here
-    </a>
-    that is not created by Symfony but leverages its features.
+    </a>,
+    which is not created by Symfony but leverages its features.
     </li>
 </ul>
 
 <p><strong>What resources do we need? </strong></p>
 <ul>
-<li>Well for Symfony we could simply utilize the REST API and constantly pull updates to a databse of our own then post it in a third party chat app, but there is a better solution</li>
+<li>Well for Symfony we could simply utilize the REST API and constantly pull
+    updates to a database of our own then post it in a third party chat app, but
+    there is a better solution</li>
 <li>We could install BotMan which is "a framework agnostic PHP library designed
     to simplify the task of using innovative bots for multiple messaging
     platforms." </li>
 <li>We could use BotMan to create a chatbox that combined different
-    platforms(<a href="https://symfony.com/projects/botman">Doc here</a>.)</li>
+    platforms (<a href="https://symfony.com/projects/botman">Doc here</a>.)</li>
 </ul>
-
-
 
 
     </body>

@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html>
     <head>
 <!--include head.txt -->
         <title>
-            Web site
+            SOCNET: Messaging System Hub
         </title>
     </head>
 
@@ -10,8 +11,19 @@
 <!--include logo.txt -->
 <!--include menu.txt -->
         <h1>
-            Web site
+            SOCNET: Messaging System Hub
         </h1>
+
+        <p>
+            We plan to provide an information hub for various partner's
+            emergency messaging systems.
+        </p>
+
+        <figure>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/StarNetwork.svg/440px-StarNetwork.svg.png">
+            <figcaption>
+            </figcaption>
+        </figure>
 
     </body>
 </html>

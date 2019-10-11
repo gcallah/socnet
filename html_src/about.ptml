@@ -2,7 +2,7 @@
     <head>
 <!--include head.txt -->
         <title>
-            About This Project
+            SOCNET Information Exchange Project
         </title>
     </head>
 
@@ -10,8 +10,33 @@
 <!--include logo.txt -->
 <!--include menu.txt -->
         <h1>
-            About This Project
+            SOCNET Information Exchange Project
         </h1>
+
+        <p>
+            Project for
+            <a href="http://www.intercep.nyu.edu">NYU Intercep</a>.
+            Participants include:
+        </p>
+
+        <ul>
+            <li>
+                Rohit Saraf
+            </li>
+
+            <li>
+                Channi Greenwall
+            </li>
+
+            <li>
+                Karan Katliwala
+            </li>
+
+            <li>
+                Carroll Shen
+            </li>
+
+        </ul>
 
     </body>
 </html>
