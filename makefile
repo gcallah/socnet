@@ -6,7 +6,7 @@ UTILS_DIR = utils
 
 INCS = $(TEMPLATE_DIR)/head.txt $(TEMPLATE_DIR)/logo.txt $(TEMPLATE_DIR)/menu.txt
 
-HTMLFILES = $(shell ls $(PTML_DIR)/*.ptml | sed -e 's/.ptml/.html/' | sed -e 's/html_src\///')
+HTMLFILES = $(shell ls $(PTML_DIR)/*.ptml | sed s/.ptml/.html/ | sed 's/html_src\///')
 
 %.html: $(PTML_DIR)/%.ptml $(INCS)
 	python3 $(UTILS_DIR)/html_checker.py $< 
