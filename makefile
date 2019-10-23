@@ -3,6 +3,8 @@
 export TEMPLATE_DIR = templates
 PTML_DIR = html_src
 UTILS_DIR = utils
+REPO = SOCNET
+DOCKER_DIR = docker
 
 INCS = $(TEMPLATE_DIR)/head.txt $(TEMPLATE_DIR)/logo.txt $(TEMPLATE_DIR)/menu.txt
 
@@ -22,6 +24,10 @@ prod: $(INCS) $(HTMLFILES)
 
 submods:
 	git submodule foreach 'git pull origin master'
+
+# dev container has dev tools
+dev_container: $(DOCKER_DIR)/Dockerfile # $(DOCKER_DIR)/requirements.txt $(DOCKER_DIR)/requirements-dev.txt
+	docker build -t gcallah/$(REPO)-dev docker
 	
 nocrud:
 	rm *~
