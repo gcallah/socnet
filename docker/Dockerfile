@@ -7,7 +7,7 @@ FROM python:3.6.0
 
 # RUN pip install -r requirements-dev.txt
 
-ENV repo SOCNET
+ENV repo socnet
 ENV PYTHONPATH "/home/${repo}:${PYTHONPATH}"
 
-WORKDIR /home/$project/
+WORKDIR /home/$repo/

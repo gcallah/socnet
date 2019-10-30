@@ -3,7 +3,7 @@
 export TEMPLATE_DIR = templates
 PTML_DIR = html_src
 UTILS_DIR = utils
-REPO = SOCNET
+REPO = socnet
 DOCKER_DIR = docker
 
 INCS = $(TEMPLATE_DIR)/head.txt $(TEMPLATE_DIR)/logo.txt $(TEMPLATE_DIR)/menu.txt

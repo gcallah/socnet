@@ -1,6 +1,6 @@
 #!/bin/sh
 export HOST_PORT="8000"
-export REPO=SOCNET
+export REPO=socnet
 if [ $1 ]
 then
     HOST_PORT=$1
