@@ -11,6 +11,7 @@ import json
 #from APIServer.model_creator_api import put_model_creator
 #from APIServer.model_creator_api import get_model_creator
 from APIServer.api_utils import json_converter
+from APIServer.get_form import get_form
 # these imports below must be automated somehow;
 # also, these things are unserializable, NOT unrestorable!
 # (Otherwise why bother?)
@@ -46,6 +47,11 @@ user = APIUser("Dennis", None)
 class HelloWorld(Resource):
     def get(self):
         return {'hello': 'world'}
+
+@api.route('/APIServer/<str:form_name>')
+class MessageFormat(Resource):
+    def get(self, form_name):
+	return get_form(form_name)
 
 """
 group_fields = api.model("group", {
