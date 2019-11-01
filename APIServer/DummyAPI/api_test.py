@@ -1,31 +1,12 @@
 from flask import request  
 from flask_api import FlaskAPI, status, exceptions
+from doc_process import *
 
 import os
 
 app = FlaskAPI(__name__)
 
 DB_TEMP = 'db_temp'
-def writeToFile(msg, key):
-    f = open(DB_TEMP, 'a')
-    msg_str = 'Record ' + str(key) + ' : ' + 'Date ' + msg.get('Date', '') + '|' \
-                              + 'Time ' + msg.get('Time', '') + '|' \
-                              + 'Type ' + msg.get('Type', '') + '|' \
-                              + 'Location ' + msg.get('Location', '') + '|' \
-                              + 'Text ' + msg.get('Text', '') + '|' \
-                              + 'Who ' + msg.get('Who', '') + '|' \
-                              + 'Org ' + msg.get('Org', '') + '\n' 
-    f.write(msg_str)
-    f.close()
-    return
-
-def readFile(key):
-    f = open(DB_TEMP, 'r')
-    for line in f:
-        num = line.split(' ')[1]
-        if int(num) == key:
-            return line
-    return 'No record found!'
 
 @app.route("/echo", methods=['POST'])
 def echo_test():
@@ -53,7 +34,6 @@ def simple_message(key):
     return readFile(key), status.HTTP_200_OK
 
 if __name__ == "__main__":
-    if not os.path.isfile(DB_TEMP):
-       open(DB_TEMP, 'w+')
+    docInit()
     app.run(debug=True)
 
