@@ -5,7 +5,7 @@ from flask_restplus import Resource, Api, fields
 from flask_cors import CORS
 import json
 from APIServer.api_utils import json_converter
-from APIServer.get_form import get_form
+from APIServer.form_api import get_form
 
 app = Flask(__name__)
 CORS(app)
