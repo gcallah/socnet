@@ -11,7 +11,7 @@ from APIServer.api_utils import err_return
 class Test(TestCase):
     def setUp(self):
         # none of the object's members names should have caps!
-	self.messageformat = MessageFormat(Resource)
+        self.messageformat = MessageFormat(Resource)
         self.HelloWorld = HelloWorld(Resource)
 
     def test_hello_world(self):
