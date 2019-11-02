@@ -22,6 +22,9 @@ prod: $(INCS) $(HTMLFILES)
 	git pull origin master
 	git push origin master
 
+tests: 
+	cd APIServer; make tests
+
 submods:
 	git submodule foreach 'git pull origin master'
 
