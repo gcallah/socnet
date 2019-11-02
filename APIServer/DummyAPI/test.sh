@@ -1,7 +1,13 @@
 #!/bin/bash
 
+trap "exit" INT TERM ERR
+trap "kill 0" EXIT
+python api_test.py &
+sleep 3
+
 URL=http://127.0.0.1:5000
 
+echo
 echo Test echo API
 if [ -n "$1" ]; then
     TEST_TEXT=$1
