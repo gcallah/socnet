@@ -4,7 +4,7 @@ DB_TEMP = 'db_temp'
 def writeToFile(msg, key):
     f = open(DB_TEMP, 'a')
     msg_str = 'Record ' + str(key) + ' : ' + 'Date ' + msg.get('Date', '') + '|' \
-                              + 'Time ' + msg.get('Time', '') + '|' \
+                              + 'Time ' + msg.get('Time','') + '|' \
                               + 'Type ' + msg.get('Type', '') + '|' \
                               + 'Location ' + msg.get('Location', '') + '|' \
                               + 'Text ' + msg.get('Text', '') + '|' \
@@ -23,5 +23,5 @@ def readFile(key):
     return 'No record found!'
 
 def docInit():
-    open(DB_TEMP, 'w+')
-    
+    if not os.path.isfile(DB_TEMP):
+        open(DB_TEMP, 'w+')
