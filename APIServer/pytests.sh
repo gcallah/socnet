@@ -9,6 +9,6 @@ else
     export capture="--nocapture"
 fi
 
-echo "INDRA_HOME: $INDRA_HOME"
+echo "SOCNET_HOME: $SOCNET_HOME"
 nosetests --ignore-files=$ignores --exe --verbose --with-coverage --cover-package=APIServer $capture
 
