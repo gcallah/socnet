@@ -21,6 +21,13 @@ class Test(TestCase):
         rv = self.HelloWorld.get()
         self.assertEqual(rv, {'hello': 'world'})
 
+    def test_message_format(self):
+        """
+        See if MessageFormat returns the form.
+        """
+        form = self.messageformat.get('./test_data/test_form.json')
+        self.assertEqual(form, {'message':'hello'})
+
     def test_err_return(self):
         """
         Testing whether we are able to get the right error message
