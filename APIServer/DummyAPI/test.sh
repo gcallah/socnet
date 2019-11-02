@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This is a script to test api_test.py
+
 trap "exit" INT TERM ERR
 trap "kill 0" EXIT
 python api_test.py &
