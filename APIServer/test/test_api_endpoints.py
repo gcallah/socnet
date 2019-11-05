@@ -7,6 +7,7 @@ from flask_restplus import Resource, Api, fields
 
 from APIServer.api_endpoints import app, HelloWorld, MessageFormat
 from APIServer.api_utils import err_return
+from APIServer.doc_process import writeToFile, readFile, docInit
 
 class Test(TestCase):
     def setUp(self):

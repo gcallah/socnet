@@ -11,4 +11,3 @@ fi
 
 echo "SOCNET_HOME: $SOCNET_HOME"
 nosetests --ignore-files=$ignores --exe --verbose --with-coverage --cover-package=APIServer $capture
-
