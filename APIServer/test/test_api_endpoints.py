@@ -5,15 +5,16 @@ import json
 import random
 from flask_restplus import Resource, Api, fields
 
-from APIServer.api_endpoints import app, HelloWorld, MessageFormat
+from APIServer.api_endpoints import app, HelloWorld, Alert, MessageFormat
 from APIServer.api_utils import err_return
-from APIServer.doc_process import writeToFile, readFile, docInit
+from APIServer.data_store import write_alert, read_alert, db_init
 
 class Test(TestCase):
     def setUp(self):
         # none of the object's members names should have caps!
         self.messageformat = MessageFormat(Resource)
         self.HelloWorld = HelloWorld(Resource)
+        self.alert = Alert(Resource)
 
     def test_hello_world(self):
         """

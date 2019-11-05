@@ -3,7 +3,7 @@ import os
 DB_TEMP = 'db_temp'
 
 
-def writeToFile(msg, key):
+def write_alert(msg, key):
     f = open(DB_TEMP, 'a')
     msg_str = 'Record ' + str(key) + ' : ' \
                         + 'Date ' + msg.get('Date', '') + '|' \
@@ -18,7 +18,7 @@ def writeToFile(msg, key):
     return
 
 
-def readFile(key):
+def read_alert(key):
     f = open(DB_TEMP, 'r')
     for line in f:
         num = line.split(' ')[1]
@@ -27,6 +27,6 @@ def readFile(key):
     return 'No record found!'
 
 
-def docInit():
+def db_init():
     if not os.path.isfile(DB_TEMP):
         open(DB_TEMP, 'w+')
