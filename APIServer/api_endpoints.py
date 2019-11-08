@@ -1,6 +1,6 @@
 # SOCNET API server
 from flask import Flask, request
-from flask_restplus import Resource, Api
+from flask_restplus import Resource, Api, fields
 from flask_cors import CORS
 from APIServer.form_api import get_form
 from APIServer.data_store import read_alert, write_alert, db_init
@@ -8,6 +8,8 @@ from APIServer.data_store import read_alert, write_alert, db_init
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
+
+form_field = api.model('form', {'form_name': fields.String('Model Name.')})
 
 
 @api.route('/hello')
