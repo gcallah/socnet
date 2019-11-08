@@ -2,9 +2,9 @@ import json
 from APIServer.api_utils import err_return
 
 
-def get_form(form_dir):
+def get_form():
     try:
-        with open(form_dir, 'r') as jfile:
+        with open('./alert_props.json', 'r') as jfile:
             mess_form = json.load(jfile)
         return mess_form
     except FileNotFoundError:

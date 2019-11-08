@@ -27,8 +27,8 @@ class Test(TestCase):
         """
         See if MessageFormat returns the form.
         """
-        form = self.messageformat.get('./test_data/test_form.json')
-        self.assertEqual(form, {'message':'hello'})
+        rv = self.messageformat.get()
+        self.assertEqual(type(rv), dict)
 
     def test_err_return(self):
         """

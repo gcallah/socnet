@@ -20,8 +20,8 @@ class HelloWorld(Resource):
 
 @api.route('/form')
 class MessageFormat(Resource):
-    def get(self, form_name):
-        return get_form(form_name)
+    def get(self):
+        return get_form()
 
 
 @api.route('/alert/<int:key>/')
