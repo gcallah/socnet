@@ -18,7 +18,7 @@ class HelloWorld(Resource):
         return {'hello': 'world'}
 
 
-@api.route('/APIServer')
+@api.route('/form')
 class MessageFormat(Resource):
     def get(self, form_name):
         return get_form(form_name)
