@@ -23,7 +23,7 @@
     "question ID": 5,
     "question": "How severe is the emergency?",
     "atype": "string"
-  }
+  },
   "msg_sender": {
     "question ID": 6,
     "question": "Who is sending the alert?",
