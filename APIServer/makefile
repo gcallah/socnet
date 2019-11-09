@@ -9,6 +9,9 @@ pytests: $(PYTHONFILES)
 
 tests: pytests lint
 
+api_server: 
+	./api.sh
+
 %.pylint:
 	$(PYLINT) $(PYLINTFLAGS) $*.py
 

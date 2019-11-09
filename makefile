@@ -5,6 +5,7 @@ PTML_DIR = html_src
 UTILS_DIR = utils
 REPO = socnet
 DOCKER_DIR = docker
+API_DIR = APIServer
 
 INCS = $(TEMPLATE_DIR)/head.txt $(TEMPLATE_DIR)/logo.txt $(TEMPLATE_DIR)/menu.txt
 
@@ -24,6 +25,9 @@ prod: $(INCS) $(HTMLFILES)
 
 tests: 
 	cd APIServer; make tests
+
+api_server:
+	cd APIServer; make api_server
 
 submods:
 	git submodule foreach 'git pull origin master'
