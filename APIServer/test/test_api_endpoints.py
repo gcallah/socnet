@@ -23,12 +23,12 @@ class Test(TestCase):
         rv = self.HelloWorld.get()
         self.assertEqual(rv, {'hello': 'world'})
 
-    def test_message_format(self):
+    def test_get_message_format(self):
         """
         See if MessageFormat returns the form.
         """
         rv = self.messageformat.get()
-        self.assertEqual(type(rv), dict)
+        self.assertEqual(type(rv), dict) 
 
     def test_err_return(self):
         """
