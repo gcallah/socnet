@@ -1,0 +1,7 @@
+{
+  "host": "0.0.0.0",
+  "port": 8000,
+  "debug": true,
+  "format_path": "message_formats",
+  "database_path": "db_temp"
+}
