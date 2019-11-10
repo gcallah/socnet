@@ -1,0 +1,32 @@
+{
+  "date": {
+    "question ID": 0,
+    "question": "When did even occur?",
+    "atype": "datetime"
+  },
+  "event_loc": {
+    "question ID": 3,
+    "question": "What is the event location?",
+    "atype": "string"
+  },
+  "event_type": {
+    "question ID": 1,
+    "question": "What is the type of emergecy?",
+    "atype": "string"
+  },
+  "event_discription": {
+    "question ID": 4,
+    "question": "What is the emergency?",
+    "atype": "string"
+  },
+  "event_severity": {
+    "question ID": 5,
+    "question": "How severe is the emergency?",
+    "atype": "string"
+  },
+  "msg_sender": {
+    "question ID": 6,
+    "question": "Who is sending the alert?",
+    "atype": "string"
+  }
+}
