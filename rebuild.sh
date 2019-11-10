@@ -12,5 +12,5 @@ source /home/$project_name/.virtualenvs/$project_name/bin/activate
 pip install -r docker/requirements.txt
 echo "Going to reboot the webserver (not implemented yet)"
 API_TOKEN=$1 pa_reload_webapp.py $project_name.pythonanywhere.com
-# the next line giv es evidence as to whether script ran on PA:
+# the next line gives us evidence as to whether script ran on PA:
 touch reboot
