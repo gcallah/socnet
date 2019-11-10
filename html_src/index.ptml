@@ -23,8 +23,9 @@
         </p>
 
         <p>
-            Our "minimal viable product" server exists at
-            <a href="http://socnet.pythonanywhere.com">this location</a>.
+            Our "minimal viable product" server will exist at
+            <a href="http://socnet.pythonanywhere.com">this location</a>;
+            we are working out a few kinks in our deployment here!
         </p>
 
         <figure>
