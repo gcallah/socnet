@@ -29,6 +29,7 @@ prod: $(INCS) $(HTMLFILES) tests
 tests: 
 	cd APIServer; make tests
 
+# get new code for each submodule:
 submods:
 	git submodule foreach 'git pull origin master'
 
