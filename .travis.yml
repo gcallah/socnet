@@ -23,6 +23,6 @@ script:
     - make tests
 
 after_success:
-    - ./deploy.sh $pa_pwd
+    - ./deploy.sh $pa_pwd $pa_api
 
 notifications:
