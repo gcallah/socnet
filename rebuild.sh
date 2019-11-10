@@ -10,7 +10,7 @@ git pull origin master
 source /home/$project_name/.virtualenvs/$project_name/bin/activate
 # install all of our packages:
 pip install -r docker/requirements.txt
-echo "Going to reboot the webserver (not implemented yet)"
+echo "Going to reboot the webserver"
 API_TOKEN=$1 pa_reload_webapp.py $project_name.pythonanywhere.com
 # the next line gives us evidence as to whether script ran on PA:
 touch reboot
