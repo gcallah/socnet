@@ -5,6 +5,7 @@ PTML_DIR = html_src
 UTILS_DIR = utils
 REPO = socnet
 DOCKER_DIR = docker
+REQ_DIR = requirements
 API_DIR = APIServer
 
 INCS = $(TEMPLATE_DIR)/head.txt $(TEMPLATE_DIR)/logo.txt $(TEMPLATE_DIR)/menu.txt
@@ -20,9 +21,7 @@ FORCE:
 
 local: $(HTMLFILES)
 
-# we need a `tests` target for prod to run!
-prod: $(INCS) $(HTMLFILES)
-	make tests
+prod: $(INCS) $(HTMLFILES) tests
 	-git commit -a 
 	git pull origin master
 	git push origin master
@@ -37,7 +36,7 @@ submods:
 	git submodule foreach 'git pull origin master'
 
 # dev container has dev tools
-dev_container: $(DOCKER_DIR)/Dockerfile # $(DOCKER_DIR)/requirements.txt $(DOCKER_DIR)/requirements-dev.txt
+dev_container: $(DOCKER_DIR)/Dockerfile # $(REQ_DIR)/requirements.txt $(REQ_DIR)/requirements-dev.txt
 	docker build -t gcallah/$(REPO)-dev docker
 	
 nocrud:
