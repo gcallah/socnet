@@ -1,15 +1,19 @@
 # SOCNET API server
 from flask import Flask, request
-from flask_restplus import Resource, Api, fields
+from flask_restplus import Resource, Api
 from flask_cors import CORS
 from APIServer.form_api import get_form
 from APIServer.data_store import read_alert, write_alert, db_init
+from APIServer.api_utils import read_json
 
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
-form_field = api.model('form', {'form_name': fields.String('Model Name.')})
+CONFIG_PATH = 'api_config.json'
+config = read_json(CONFIG_PATH)
+if config.get('Error:', None):
+    config = read_json('APIServer/' + CONFIG_PATH)
 
 
 @api.route('/hello')
@@ -21,7 +25,7 @@ class HelloWorld(Resource):
 @api.route('/form')
 class MessageFormat(Resource):
     def get(self):
-        return get_form()
+        return get_form(config['format_path'])
 
 
 @api.route('/alert/<int:key>/')
@@ -41,4 +45,4 @@ class Alert(Resource):
 
 if __name__ == '__main__':
     db_init()
-    app.run(host="0.0.0.0", port=8000, debug=True)
+    app.run(host=config['host'], port=config['port'], debug=config['debug'])
