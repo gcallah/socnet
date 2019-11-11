@@ -6,13 +6,12 @@ DB_TEMP = 'db_temp'
 def write_alert(msg, key):
     f = open(DB_TEMP, 'a')
     msg_str = 'Record ' + str(key) + ' : ' \
-                        + 'Date ' + msg.get('Date', '') + '|' \
-                        + 'Time ' + msg.get('Time', '') + '|' \
-                        + 'Type ' + msg.get('Type', '') + '|' \
-                        + 'Location ' + msg.get('Location', '') + '|' \
-                        + 'Text ' + msg.get('Text', '') + '|' \
-                        + 'Who ' + msg.get('Who', '') + '|' \
-                        + 'Org ' + msg.get('Org', '') + '\n'
+            + 'Date ' + msg.get('date', '') + '|' \
+            + 'Location ' + msg.get('event_loc', '') + '|' \
+            + 'Type ' + msg.get('event_type', '') + '|' \
+            + 'Description ' + msg.get('event_description', '') + '|' \
+            + 'Severity ' + msg.get('event_severity', '') + '|' \
+            + 'Sender ' + msg.get('msg_sender', '') + '\n'
     f.write(msg_str)
     f.close()
     return

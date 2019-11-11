@@ -1,6 +1,6 @@
 # SOCNET API server
 from flask import Flask, request
-from flask_restplus import Resource, Api
+from flask_restplus import Resource, Api, fields
 from flask_cors import CORS
 from form_api import get_form
 from data_store import read_alert, write_alert, db_init
@@ -28,11 +28,22 @@ class MessageFormat(Resource):
         return get_form(config['format_path'])
 
 
-@api.route('/alert/<int:key>/')
+resource_fields = api.model('Resource', {
+    'date': fields.DateTime,
+    'event_loc': fields.String,
+    'event_type': fields.String,
+    'event_description': fields.String,
+    'event_severity': fields.String,
+    'msg_sender': fields.String,
+})
+
+
+@api.route('/alert/<int:key>')
 class Alert(Resource):
     def get(self, key):
         return read_alert(key)
 
+    @api.doc(body=resource_fields)
     def put(self, key):
         if read_alert(key) == 'No record found!':
             msg = request.json
