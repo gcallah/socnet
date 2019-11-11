@@ -2,9 +2,9 @@
 from flask import Flask, request
 from flask_restplus import Resource, Api
 from flask_cors import CORS
-from APIServer.form_api import get_form
-from APIServer.data_store import read_alert, write_alert, db_init
-from APIServer.api_utils import read_json
+from form_api import get_form
+from data_store import read_alert, write_alert, db_init
+from api_utils import read_json
 
 app = Flask(__name__)
 CORS(app)

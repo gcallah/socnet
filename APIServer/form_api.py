@@ -1,4 +1,4 @@
-from APIServer.api_utils import read_json
+from api_utils import read_json
 
 
 def get_form(path):
