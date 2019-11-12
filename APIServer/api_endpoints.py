@@ -2,7 +2,7 @@
 from flask import Flask, request
 from flask_restplus import Resource, Api
 from flask_cors import CORS
-from form_api import get_form, get_model
+from form_api import get_form, get_fields
 from data_store import read_alert, write_alert, db_init
 from api_utils import read_json
 
@@ -28,7 +28,7 @@ class MessageFormat(Resource):
         return get_form(config['format_path'])
 
 
-resource_fields = api.model('Resource', get_model())
+resource_fields = api.model('Alert', get_fields())
 
 
 @api.route('/alert/<int:key>')

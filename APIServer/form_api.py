@@ -5,7 +5,7 @@ from flask_restplus import fields
 def get_form(path):
     return read_json(path + '/alert_props.json')
 
-def get_model():
+def get_fields():
     return {
         'date': fields.DateTime,
         'event_loc': fields.String,
