@@ -1,5 +1,4 @@
 import os
-import sys
 from api_utils import read_json
 
 
