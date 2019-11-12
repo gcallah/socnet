@@ -38,13 +38,7 @@ class Alert(Resource):
 
     @api.doc(body=resource_fields)
     def put(self, key):
-        if read_alert(key) == 'No record found!':
-            msg = request.json
-            write_alert(msg, key)
-            return_msg = 'Put key ' + str(key) + ' into DB... Success!'
-        else:
-            return_msg = 'Key ' + str(key) + ' already exists!'
-        return return_msg
+        return write_alert(request.json, key)
 
 
 if __name__ == '__main__':
