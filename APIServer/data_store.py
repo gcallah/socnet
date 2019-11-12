@@ -54,7 +54,7 @@ def read_alert(key):
 
 
 def get_alert_id():
-    for id in range(1, sys.maxsize):
+    for id in range(1, 65536):
         if read_alert(id) == 'No record found!':
             return id
     return 0
