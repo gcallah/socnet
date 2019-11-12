@@ -57,6 +57,7 @@ def get_alert_id():
     for id in range(1, sys.maxsize):
         if read_alert(id) == 'No record found!':
             return id
+    return 0
 
 
 def write_new_alert(msg):
