@@ -1,4 +1,5 @@
 import os
+import sys
 from api_utils import read_json
 
 
@@ -50,6 +51,25 @@ def read_alert(key):
         if int(num) == key:
             return line
     return 'No record found!'
+
+
+def get_alert_id():
+    for id in range(1, sys.maxsize):
+        if read_alert(id) == 'No record found!':
+            return id
+
+
+def write_new_alert(msg):
+    key = get_alert_id()
+    return write_alert(msg, key)
+
+
+def read_all_alerts():
+    f = open(DB, 'r')
+    all_alerts = []
+    for line in f:
+        all_alerts.append(line)
+    return all_alerts
 
 
 def db_init():
