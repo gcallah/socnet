@@ -33,23 +33,35 @@ class MessageFormat(Resource):
 resource_fields = api.model('Alert', get_fields())
 
 
-@api.route('/alert/<int:key>')
+@api.route('/alert/<int:id>')
 class Alert(Resource):
-    def get(self, key):
-        return read_alert(key)
+    def get(self, id):
+        """
+        Get a specific alert with the given alert id
+        """
+        return read_alert(id)
 
     @api.doc(body=resource_fields)
-    def put(self, key):
-        return write_alert(request.json, key)
+    def put(self, id):
+        """
+        Put an alert into the system using the given alert id
+        """
+        return write_alert(request.json, id)
 
 
 @api.route('/alert')
 class Alerts(Resource):
     def get(self):
+        """
+        Get all alerts
+        """
         return read_all_alerts()
 
     @api.doc(body=resource_fields)
     def put(self):
+        """
+        Put a new alert into the system
+        """
         return write_new_alert(request.json)
 
 
