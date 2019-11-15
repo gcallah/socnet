@@ -4,7 +4,7 @@ from flask_restplus import Resource, Api
 from flask_cors import CORS
 from form_api import get_form, get_fields
 from data_store import db_init
-from data_store import read_alert, write_alert
+from data_store import read_alert, write_alert, update_alert
 from data_store import read_all_alerts, write_new_alert
 from api_utils import read_json
 
@@ -44,9 +44,9 @@ class Alert(Resource):
     @api.doc(body=resource_fields)
     def put(self, id):
         """
-        Put an alert into the system using the given alert id
+        Update an alert int the system with the given alert id
         """
-        return write_alert(request.json, id)
+        return update_alert(request.json, id)
 
 
 @api.route('/alert')

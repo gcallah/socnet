@@ -1,5 +1,5 @@
 import os
-from api_utils import read_json, write_json
+from api_utils import read_json, write_json, delete_json
 
 
 CONFIG_PATH = 'api_config.json'
@@ -10,9 +10,20 @@ DB = config['database_path']
 def write_alert(alert, id):
     if read_alert(id) == 'No record found!':
         write_json(DB, 'Alert ' + str(id), alert)
-        return_msg = 'Put key ' + str(id) + ' into DB... Success!'
+        return_msg = 'Put alert ' + str(id) + ' into DB... Success!'
     else:
-        return_msg = 'Key ' + str(id) + ' already exists!'
+        return_msg = 'Alert ' + str(id) + ' already exists!'
+    return return_msg
+
+
+def update_alert(alert, id):
+    if read_alert(id) == 'No record found!':
+        return_msg = 'Can not update. '
+        return_msg += 'Alert ' + str(id) + ' does not exist.'
+    else:
+        delete_json(DB, 'Alert ' + str(id))
+        write_json(DB, 'Alert ' + str(id), alert)
+        return_msg = 'Alert ' + str(id) + ' updated!'
     return return_msg
 
 
