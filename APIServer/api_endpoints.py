@@ -4,7 +4,7 @@ from flask_restplus import Resource, Api
 from flask_cors import CORS
 from form_api import get_form, get_fields
 from data_store import db_init
-from data_store import read_alert, write_alert, update_alert
+from data_store import read_alert, update_alert
 from data_store import read_all_alerts, write_new_alert
 from api_utils import read_json
 
