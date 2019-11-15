@@ -44,7 +44,7 @@ class Alert(Resource):
     @api.doc(body=resource_fields)
     def put(self, id):
         """
-        Update an alert int the system with the given alert id
+        Update an alert in the system with the given alert id
         """
         return update_alert(request.json, id)
 
