@@ -1,5 +1,5 @@
 import os
-from api_utils import read_json
+from api_utils import read_json, write_json
 
 
 CONFIG_PATH = 'api_config.json'
@@ -7,71 +7,42 @@ config = read_json(CONFIG_PATH)
 DB = config['database_path']
 
 
-def get_msg_str(msg, key):
-    msg_str = ('Record '
-               + str(key) + ' : '
-               + 'Date '
-               + msg.get('date', '')
-               + ' | '
-               + 'Location '
-               + msg.get('event_loc', '')
-               + ' | '
-               + 'Type '
-               + msg.get('event_type', '')
-               + ' | '
-               + 'Description '
-               + msg.get('event_description', '')
-               + ' | '
-               + 'Severity '
-               + msg.get('event_severity', '')
-               + ' | '
-               + 'Sender '
-               + msg.get('msg_sender', '')
-               + '\n')
-    return msg_str
-
-
-def write_alert(msg, key):
-    if read_alert(key) == 'No record found!':
-        f = open(DB, 'a')
-        msg_str = get_msg_str(msg, key)
-        f.write(msg_str)
-        f.close()
-        return_msg = 'Put key ' + str(key) + ' into DB... Success!'
+def write_alert(alert, id):
+    if read_alert(id) == 'No record found!':
+        write_json(DB, 'Alert ' + str(id), alert)
+        return_msg = 'Put key ' + str(id) + ' into DB... Success!'
     else:
-        return_msg = 'Key ' + str(key) + ' already exists!'
+        return_msg = 'Key ' + str(id) + ' already exists!'
     return return_msg
 
 
-def read_alert(key):
-    f = open(DB, 'r')
-    for line in f:
-        num = line.split(' ')[1]
-        if int(num) == key:
-            return line
+def read_alert(id):
+    all_alerts = read_json(DB)
+    for alert in all_alerts:
+        if alert == 'Alert ' + str(id):
+            return {alert: all_alerts[alert]}
     return 'No record found!'
 
 
 def get_alert_id():
-    for id in range(1, 65536):
+    MAX_ALERT_ID = 65536
+    for id in range(1, MAX_ALERT_ID):
         if read_alert(id) == 'No record found!':
             return id
     return 0
 
 
-def write_new_alert(msg):
-    key = get_alert_id()
-    return write_alert(msg, key)
+def write_new_alert(alert):
+    id = get_alert_id()
+    return write_alert(alert, id)
 
 
 def read_all_alerts():
-    f = open(DB, 'r')
-    all_alerts = []
-    for line in f:
-        all_alerts.append(line)
-    return all_alerts
+    return read_json(DB)
 
 
 def db_init():
     if not os.path.isfile(DB):
-        open(DB, 'w+')
+        f = open(DB, 'w+')
+        f.write('{}')
+        f.close()
