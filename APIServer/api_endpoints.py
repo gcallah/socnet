@@ -10,7 +10,7 @@ from APIServer.api_utils import read_json
 
 app = Flask(__name__)
 CORS(app)
-api = Api(app)
+api = Api(app, title='SOCNET API')
 
 CONFIG_PATH = 'api_config.json'
 config = read_json(CONFIG_PATH)
@@ -21,12 +21,18 @@ if config.get('Error:', None):
 @api.route('/hello')
 class HelloWorld(Resource):
     def get(self):
+        """
+        A Hello World API for testing
+        """
         return {'hello': 'world'}
 
 
 @api.route('/form')
 class MessageFormat(Resource):
     def get(self):
+        """
+        Get the format of an alert
+        """
         return get_form(config['format_path'])
 
 
