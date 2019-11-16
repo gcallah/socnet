@@ -1,5 +1,5 @@
 import os
-from api_utils import read_json, write_json, delete_json
+from APIServer.api_utils import read_json, write_json, delete_json
 
 
 CONFIG_PATH = 'api_config.json'

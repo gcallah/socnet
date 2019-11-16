@@ -1,9 +1,9 @@
-from api_utils import read_json
 from flask_restplus import fields
+from APIServer.api_utils import read_json
 
 
 def get_form(path):
-    return read_json(path + '/alert_props.json')
+    return read_json(path)
 
 
 def get_fields():
