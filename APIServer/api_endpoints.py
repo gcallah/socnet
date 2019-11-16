@@ -56,7 +56,7 @@ class Alert(Resource):
 
     def delete(self, id):
         """
-        Update an alert in the system with the given alert id
+        Delete an alert in the system with the given alert id
         """
         return delete_alert(request.json, id)
 
