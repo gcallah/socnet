@@ -4,7 +4,7 @@ from flask_restplus import Resource, Api
 from flask_cors import CORS
 from APIServer.form_api import get_form, get_fields
 from APIServer.data_store import db_init
-from APIServer.data_store import read_alert, update_alert
+from APIServer.data_store import read_alert, update_alert, delete_alert
 from APIServer.data_store import read_all_alerts, write_new_alert
 from APIServer.api_utils import read_json
 
@@ -53,6 +53,12 @@ class Alert(Resource):
         Update an alert in the system with the given alert id
         """
         return update_alert(request.json, id)
+
+    def delete(self, id):
+        """
+        Update an alert in the system with the given alert id
+        """
+        return delete_alert(request.json, id)
 
 
 @api.route('/alert')

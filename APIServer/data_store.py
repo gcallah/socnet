@@ -27,6 +27,16 @@ def update_alert(alert, id):
     return return_msg
 
 
+def delete_alert(alert, id):
+    if read_alert(id) == 'No record found!':
+        return_msg = 'Can not delete. '
+        return_msg += 'Alert ' + str(id) + ' does not exist.'
+    else:
+        delete_json(DB, 'Alert ' + str(id))
+        return_msg = 'Alert ' + str(id) + ' deleted!'
+    return return_msg
+
+
 def read_alert(id):
     all_alerts = read_json(DB)
     for alert in all_alerts:
