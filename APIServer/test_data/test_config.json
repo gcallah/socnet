@@ -3,5 +3,5 @@
   "port": 8000,
   "debug": true,
   "format_path": "test_data/test_form.json",
-  "database_path": "test_data/db_temp"
+  "database_path": "test_data/test_db_temp"
 }
