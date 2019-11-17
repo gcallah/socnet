@@ -28,6 +28,16 @@ class HelloWorld(Resource):
         return {'hello': 'world'}
 
 
+@api.route('/endpoints')
+class Endpoints(Resource):
+    def get(self):
+        """
+        List our endpoints.
+        """
+        endpoints = sorted(rule.rule for rule in api.app.url_map.iter_rules())
+        return {"Available endpoints": endpoints}
+
+
 @api.route('/form')
 class MessageFormat(Resource):
     def get(self):
