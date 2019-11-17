@@ -11,6 +11,7 @@ from APIServer.api_utils import read_json
 app = Flask(__name__)
 CORS(app)
 api = Api(app, title='SOCNET API')
+app.config.SWAGGER_UI_DOC_EXPANSION = 'list'
 
 CONFIG_PATH = 'api_config.json'
 config = read_json(CONFIG_PATH)
