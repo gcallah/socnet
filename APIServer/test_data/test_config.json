@@ -1,0 +1,7 @@
+{
+  "host": "127.0.0.1",
+  "port": 8000,
+  "debug": true,
+  "format_path": "test_data/test_form.json",
+  "database_path": "test_data/db_temp"
+}
