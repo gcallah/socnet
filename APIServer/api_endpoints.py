@@ -35,6 +35,9 @@ class Endpoints(Resource):
         List our endpoints.
         """
         endpoints = sorted(rule.rule for rule in api.app.url_map.iter_rules())
+        endpoints = list(filter(lambda x: not x.startswith('/swagger')
+                                and not x.startswith('/static')
+                                and not x == '/', endpoints))
         return {"Available endpoints": endpoints}
 
 
