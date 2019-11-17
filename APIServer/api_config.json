@@ -3,5 +3,5 @@
   "port": 8000,
   "debug": true,
   "format_path": "APIServer/message_formats/alert_props.json",
-  "database_path": "db_temp"
+  "database_path": "APIServer/db_temp"
 }
