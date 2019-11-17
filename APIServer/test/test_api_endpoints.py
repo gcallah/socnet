@@ -40,7 +40,7 @@ class Test(TestCase):
         See if alerts can be added, and called.
         """
 
-        test_db_dir = 'test_data/db_temp'
+        test_db_dir = 'test_data/test_db_temp'
         db_init(test_db_dir)
         
         with app.test_client() as c:
@@ -52,7 +52,7 @@ class Test(TestCase):
         See if alert api works (uses id)
         """
 
-        test_db_dir = 'test_data/db_temp'
+        test_db_dir = 'test_data/test_db_temp'
         db_init(test_db_dir)
 
         # Add full code here 
