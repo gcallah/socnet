@@ -56,20 +56,20 @@ class Alert(Resource):
         """
         Get a specific alert with the given alert id
         """
-        return read_alert(id)
+        return read_alert(config['database_path'], id)
 
     @api.doc(body=resource_fields)
     def put(self, id):
         """
         Update an alert in the system with the given alert id
         """
-        return update_alert(request.json, id)
+        return update_alert(config['database_path'], request.json, id)
 
     def delete(self, id):
         """
         Delete an alert in the system with the given alert id
         """
-        return delete_alert(request.json, id)
+        return delete_alert(config['database_path'], request.json, id)
 
 
 @api.route('/alert')
@@ -78,16 +78,16 @@ class Alerts(Resource):
         """
         Get all alerts
         """
-        return read_all_alerts()
+        return read_all_alerts(config['database_path'])
 
     @api.doc(body=resource_fields)
     def put(self):
         """
         Put a new alert into the system
         """
-        return write_new_alert(request.json)
+        return write_new_alert(config['database_path'], request.json)
 
 
 if __name__ == '__main__':
-    db_init()
+    db_init(config['database_path'])
     app.run(host=config['host'], port=config['port'], debug=config['debug'])
