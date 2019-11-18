@@ -4,4 +4,4 @@
 export user_type="api"
 #export PYTHONPATH="$PWD"
 export PYTHONPATH="$PWD:${PWD%/*}"
-python3 api_endpoints.py
+python3 APIServer/api_endpoints.py
