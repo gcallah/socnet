@@ -90,7 +90,6 @@ class Alerts(Resource):
         """
         return write_new_alert(config['database_path'], request.json)
 
-
 if __name__ == '__main__':
     db_init(config['database_path'])
     app.run(host=config['host'], port=config['port'], debug=config['debug'])

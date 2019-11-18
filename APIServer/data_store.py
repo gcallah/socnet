@@ -1,4 +1,5 @@
 import os
+import sqlite3
 from APIServer.api_utils import read_json, write_json, delete_json
 
 
@@ -52,13 +53,22 @@ def write_new_alert(path, alert):
     id = get_alert_id(path)
     return write_alert(path, alert, id)
 
-
 def read_all_alerts(path):
     return read_json(path)
 
 
 def db_init(path):
+    sqlite_init(get_sqlite_path(path))
     if not os.path.isfile(path):
         f = open(path, 'w+')
         f.write('{}')
         f.close()
+
+def get_sqlite_path(path):
+    return path+'.db'
+
+def get_db(path):
+    return sqlite3.connect(path)
+
+def sqlite_init(path):
+    sqlite3.connect(path)
