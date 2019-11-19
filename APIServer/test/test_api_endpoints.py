@@ -41,7 +41,8 @@ class Test(TestCase):
         """
 
         test_db_dir = 'test_data/test_db_temp'
-        db_init(test_db_dir)
+        test_db_schema = APIServer.api_endpoints.config['table_schema_path']
+        db_init(test_db_dir, test_db_schema)
         
         with app.test_client() as c:
             rv = c.get('/alert')
@@ -53,7 +54,8 @@ class Test(TestCase):
         """
 
         test_db_dir = 'test_data/test_db_temp'
-        db_init(test_db_dir)
+        test_db_schema = APIServer.api_endpoints.config['table_schema_path']
+        db_init(test_db_dir, test_db_schema)
 
         # Add full code here 
 
