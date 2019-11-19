@@ -53,25 +53,29 @@ def write_new_alert(path, alert):
     id = get_alert_id(path)
     return write_alert(path, alert, id)
 
+
 def read_all_alerts(path):
     return read_json(path)
 
 
-def db_init(path):
-    sqlite_init(path)
+def db_init(path, schema):
+    sqlite_init(path, schema)
     if not os.path.isfile(path):
         f = open(path, 'w+')
         f.write('{}')
         f.close()
 
+
 def get_sqlite_path(path):
-    return path+'.db'
+    return path + '.db'
+
 
 def get_db(path):
     sqlite_path = get_sqlite_path(path)
     return sqlite3.connect(sqlite_path)
 
-def sqlite_init(path):
+
+def sqlite_init(path, schema):
     db = get_db(path)
-    with open('APIServer/schema.sql') as f:
+    with open(schema) as f:
         db.executescript(f.read())
