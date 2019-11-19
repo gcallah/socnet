@@ -58,7 +58,7 @@ def read_all_alerts(path):
 
 
 def db_init(path):
-    sqlite_init(get_sqlite_path(path))
+    sqlite_init(path)
     if not os.path.isfile(path):
         f = open(path, 'w+')
         f.write('{}')
@@ -68,7 +68,10 @@ def get_sqlite_path(path):
     return path+'.db'
 
 def get_db(path):
-    return sqlite3.connect(path)
+    sqlite_path = get_sqlite_path(path)
+    return sqlite3.connect(sqlite_path)
 
 def sqlite_init(path):
-    sqlite3.connect(path)
+    db = get_db(path)
+    with open('APIServer/schema.sql') as f:
+        db.executescript(f.read())
