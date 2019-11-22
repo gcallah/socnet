@@ -8,10 +8,12 @@ from APIServer.data_store import read_alert, update_alert, delete_alert
 from APIServer.data_store import read_all_alerts, write_new_alert
 from APIServer.api_utils import read_json
 
+
 app = Flask(__name__)
 CORS(app)
 api = Api(app, title='SOCNET API')
 app.config.SWAGGER_UI_DOC_EXPANSION = 'list'
+app.config.RESTPLUS_MASK_SWAGGER = False
 
 CONFIG_PATH = 'api_config.json'
 config = read_json(CONFIG_PATH)
@@ -53,7 +55,7 @@ class MessageFormat(Resource):
 resource_fields = api.model('Alert', get_fields())
 
 
-@api.route('/alert/<int:id>')
+@api.route('/alerts/<int:id>')
 class Alert(Resource):
     def get(self, id):
         """
@@ -75,7 +77,7 @@ class Alert(Resource):
         return delete_alert(config['database_path'], request.json, id)
 
 
-@api.route('/alert')
+@api.route('/alerts')
 class Alerts(Resource):
     def get(self):
         """
@@ -84,7 +86,7 @@ class Alerts(Resource):
         return read_all_alerts(config['database_path'])
 
     @api.doc(body=resource_fields)
-    def put(self):
+    def post(self):
         """
         Put a new alert into the system
         """
