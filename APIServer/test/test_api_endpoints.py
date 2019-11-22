@@ -45,7 +45,7 @@ class Test(TestCase):
         db_init(test_db_dir, test_db_schema)
         
         with app.test_client() as c:
-            rv = c.get('/alert')
+            rv = c.get('/alerts')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), {})
 
     def test_alert(self):
