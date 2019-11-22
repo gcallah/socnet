@@ -2,23 +2,24 @@
 from flask import Flask, request
 from flask_restplus import Resource, Api
 from flask_cors import CORS
-from APIServer.form_api import get_form, get_fields
-from APIServer.data_store import db_init
-from APIServer.data_store import read_alert, update_alert, delete_alert
-from APIServer.data_store import read_all_alerts, write_new_alert
-from APIServer.api_utils import read_json
+from APIServer.commons.form_api import get_alert_fields, get_alert_form
+from APIServer.commons.api_utils import read_json
+
+from APIServer.alerts.data_operations import db_init
+from APIServer.alerts.data_operations import read_alert, update_alert, delete_alert
+from APIServer.alerts.data_operations import read_all_alerts, write_new_alert
 
 
 app = Flask(__name__)
 CORS(app)
 api = Api(app, title='SOCNET API')
-app.config.SWAGGER_UI_DOC_EXPANSION = 'list'
-app.config.RESTPLUS_MASK_SWAGGER = False
 
 CONFIG_PATH = 'api_config.json'
 config = read_json(CONFIG_PATH)
 if config.get('Error:', None):
     config = read_json('APIServer/' + CONFIG_PATH)
+
+app.config.SWAGGER_UI_DOC_EXPANSION = 'list'
 
 
 @api.route('/hello')
@@ -49,10 +50,10 @@ class MessageFormat(Resource):
         """
         Get the format of an alert
         """
-        return get_form(config['format_path'])
+        return get_alert_fields(config['format_path'])
 
 
-resource_fields = api.model('Alert', get_fields())
+alert = api.schema_model('Alert', get_alert_form(config['format_path']))
 
 
 @api.route('/alerts/<int:id>')
@@ -63,7 +64,7 @@ class Alert(Resource):
         """
         return read_alert(config['database_path'], id)
 
-    @api.doc(body=resource_fields)
+    @api.expect(alert)
     def put(self, id):
         """
         Update an alert in the system with the given alert id
@@ -85,7 +86,7 @@ class Alerts(Resource):
         """
         return read_all_alerts(config['database_path'])
 
-    @api.doc(body=resource_fields)
+    @api.expect(alert)
     def post(self):
         """
         Put a new alert into the system

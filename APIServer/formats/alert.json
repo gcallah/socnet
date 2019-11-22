@@ -1,0 +1,35 @@
+{
+    "required": ["date", "event_loc", "event_type", "event_severity", "msg_sender"],
+    "properties": {
+        "date": {
+            "type": "datetime",
+            "description": "When did event occur?",
+            "example": "2019-11-01 17:45:32"
+        },
+        "event_loc": {
+            "type": "string",
+            "description": "What is the event location?",
+            "example": "Location Name"
+        },
+        "event_type": {
+            "type": "string",
+            "description": "What is the type of emergecy?",
+            "example": "Fire"
+        },
+        "event_description": {
+            "type": "string",
+            "description": "What is the emergency?",
+            "example": "Some description"
+        },
+        "event_severity": {
+            "type": "string",
+            "description": "How severe is the emergency?",
+            "example": "Low"
+        },
+        "msg_sender": {
+            "type": "string",
+            "description": "Who is sending the alert?",
+            "example": "Sender's Name"
+        }
+    }
+}

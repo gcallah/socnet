@@ -1,6 +1,6 @@
 import os
 import sqlite3
-from APIServer.api_utils import read_json, write_json, delete_json
+from APIServer.commons.api_utils import read_json, write_json, delete_json
 
 
 def write_alert(path, alert, id):
