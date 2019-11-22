@@ -2,11 +2,12 @@
 from flask import Flask, request
 from flask_restplus import Resource, Api
 from flask_cors import CORS
-from APIServer.commons.form_api import get_alert_fields, get_alert_form
+from APIServer.commons.form_api import get_alert_form
 from APIServer.commons.api_utils import read_json
 
 from APIServer.alerts.data_operations import db_init
-from APIServer.alerts.data_operations import read_alert, update_alert, delete_alert
+from APIServer.alerts.data_operations import read_alert
+from APIServer.alerts.data_operations import update_alert, delete_alert
 from APIServer.alerts.data_operations import read_all_alerts, write_new_alert
 
 
@@ -50,7 +51,7 @@ class MessageFormat(Resource):
         """
         Get the format of an alert
         """
-        return get_alert_fields(config['format_path'])
+        return get_alert_form(config['format_path'])
 
 
 alert = api.schema_model('Alert', get_alert_form(config['format_path']))

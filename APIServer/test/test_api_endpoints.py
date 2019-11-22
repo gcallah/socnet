@@ -7,8 +7,8 @@ from flask_restplus import Resource, Api, fields
 
 import APIServer.api_endpoints
 from APIServer.api_endpoints import app, HelloWorld, Alert, Alerts, MessageFormat
-from APIServer.api_utils import err_return, read_json
-from APIServer.data_store import write_alert, read_alert, db_init
+from APIServer.commons.api_utils import err_return, read_json
+from APIServer.alerts.data_operations import write_alert, read_alert, db_init
 
 test_config_path = 'test_data/test_config.json'
 APIServer.api_endpoints.config = read_json(test_config_path)
@@ -33,6 +33,7 @@ class Test(TestCase):
         See if MessageFormat returns the form.
         """
         rv = self.messageformat.get()
+        print (rv)
         self.assertEqual(type(rv), dict) 
 
     def test_alerts(self):
