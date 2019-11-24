@@ -101,6 +101,17 @@ class Test(TestCase):
         rv = err_return("error message")
         self.assertEqual(rv, {"Error:": "error message"})
 
+    def test_endpoints(self):
+        """
+        Testing whether or not the available endpoints match
+        """
+        endpoints = ['/alerts', '/alerts/<int:id>', '/endpoints', '/form', '/hello']
+
+        with app.test_client() as c:
+            rv = c.get('/endpoints')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1])['Available endpoints'], endpoints)
+
+
 
 if __name__ == "__main__":
     main()
