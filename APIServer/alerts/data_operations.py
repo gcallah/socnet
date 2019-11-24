@@ -2,6 +2,9 @@ import os
 import sqlite3
 from APIServer.commons.api_utils import read_json, write_json, delete_json
 
+from APIServer.commons.form_api import create_alerts, create_alert
+from APIServer.database.sqlite import get_db
+
 
 def write_alert(path, alert, id):
     if read_alert(path, id) == 'No record found!':
@@ -59,23 +62,10 @@ def read_all_alerts(path):
 
 
 def db_init(path, schema):
-    sqlite_init(path, schema)
+    # sqlite_init(path, schema)
     if not os.path.isfile(path):
         f = open(path, 'w+')
         f.write('{}')
         f.close()
 
 
-def get_sqlite_path(path):
-    return path + '.db'
-
-
-def get_db(path):
-    sqlite_path = get_sqlite_path(path)
-    return sqlite3.connect(sqlite_path)
-
-
-def sqlite_init(path, schema):
-    db = get_db(path)
-    with open(schema) as f:
-        db.executescript(f.read())

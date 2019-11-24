@@ -10,6 +10,10 @@ from APIServer.alerts.data_operations import read_alert
 from APIServer.alerts.data_operations import update_alert, delete_alert
 from APIServer.alerts.data_operations import read_all_alerts, write_new_alert
 
+from APIServer.database.sqlite import sqlite_init
+
+from APIServer.alerts.alerts_data_operations import read_all
+from APIServer.alerts.alerts_data_operations import write_alert
 
 app = Flask(__name__)
 CORS(app)
@@ -95,6 +99,23 @@ class Alerts(Resource):
         return write_new_alert(config['database_path'], request.json)
 
 
+@api.route('/alerts_beta')
+class AlertsLists(Resource):
+    def get(self):
+        """
+        Get all alerts
+        """
+        return read_all(config['database_path'])
+
+    @api.expect(alert)
+    def post(self):
+        """
+        Put a new alert into the system
+        """
+        return write_alert(config['database_path'], request.json)
+
+
 if __name__ == '__main__':
     db_init(config['database_path'], config['table_schema_path'])
+    sqlite_init(config['database_path'], config['table_schema_path'])
     app.run(host=config['host'], port=config['port'], debug=config['debug'])
