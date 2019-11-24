@@ -3,6 +3,7 @@
 from unittest import TestCase, main, skip
 import json
 import random
+import os
 from flask_restplus import Resource, Api, fields
 
 import APIServer.api_endpoints
@@ -41,20 +42,29 @@ class Test(TestCase):
         See if alerts can be added, and called.
         """
 
-        test_db_dir = 'test_data/test_db_temp'
+        test_db_dir = APIServer.api_endpoints.config['database_path']
         test_db_schema = APIServer.api_endpoints.config['table_schema_path']
+        os.remove(test_db_dir)
         db_init(test_db_dir, test_db_schema)
+
+        test_json = read_json('APIServer/test_json.json')
         
         with app.test_client() as c:
             rv = c.get('/alerts')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), {})
+
+            rv = c.post('/alerts', json=test_json)
+            self.assertEqual(rv.status_code, 200)
+
+            rv = c.get('/alerts')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), {'Alert 1':test_json})
 
     def test_alert(self):
         """
         See if alert api works (uses id)
         """
 
-        test_db_dir = 'test_data/test_db_temp'
+        test_db_dir = APIServer.api_endpoints.config['database_path']
         test_db_schema = APIServer.api_endpoints.config['table_schema_path']
         db_init(test_db_dir, test_db_schema)
 
