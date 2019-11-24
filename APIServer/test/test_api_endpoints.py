@@ -47,7 +47,7 @@ class Test(TestCase):
         os.remove(test_db_dir)
         db_init(test_db_dir, test_db_schema)
 
-        test_json = read_json('APIServer/test_json.json')
+        test_json = read_json('test_data/test_json.json')
         
         with app.test_client() as c:
             rv = c.get('/alerts')
@@ -66,7 +66,31 @@ class Test(TestCase):
 
         test_db_dir = APIServer.api_endpoints.config['database_path']
         test_db_schema = APIServer.api_endpoints.config['table_schema_path']
+        os.remove(test_db_dir)
         db_init(test_db_dir, test_db_schema)
+
+        test_json = read_json('test_data/test_json.json')
+        
+        with app.test_client() as c:
+            rv = c.get('/alerts')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), {})
+
+            rv = c.post('/alerts', json=test_json)
+            self.assertEqual(rv.status_code, 200)
+
+            test_json['event_type'] = 'Flood'
+
+            rv = c.put('/alerts/1', json=test_json)
+            self.assertEqual(rv.status_code, 200)
+
+            rv = c.get('/alerts')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), {'Alert 1':test_json})
+
+            rv = c.delete('/alerts/1')
+            self.assertEqual(rv.status_code, 200)
+
+            rv = c.get('/alerts')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), {})
 
         # Add full code here 
 
