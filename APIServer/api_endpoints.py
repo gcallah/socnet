@@ -14,6 +14,7 @@ from APIServer.database.sqlite import sqlite_init
 
 from APIServer.alerts.alerts_data_operations import read_all
 from APIServer.alerts.alerts_data_operations import write_alert
+from APIServer.alerts.alerts_data_operations import read_alert_country
 
 app = Flask(__name__)
 CORS(app)
@@ -113,6 +114,15 @@ class AlertsLists(Resource):
         Put a new alert into the system
         """
         return write_alert(config['database_path'], request.json)
+
+
+@api.route('/alerts/<string:country>')
+class AlertByCountry(Resource):
+    def get(self, country):
+        """
+        Get all alerts for the given country
+        """
+        return read_alert_country(config['database_path'], country)
 
 
 if __name__ == '__main__':

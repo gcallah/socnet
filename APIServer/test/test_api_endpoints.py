@@ -105,7 +105,7 @@ class Test(TestCase):
         """
         Testing whether or not the available endpoints match
         """
-        endpoints = ['/alerts', '/alerts/<int:id>', '/alerts_beta', '/endpoints', '/form', '/hello']
+        endpoints = ['/alerts', '/alerts/<int:id>', '/alerts/<string:country>', '/alerts_beta', '/endpoints', '/form', '/hello']
 
         with app.test_client() as c:
             rv = c.get('/endpoints')
