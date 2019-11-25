@@ -34,3 +34,9 @@ def write_alert(path, alert):
     conn.close()  
     return 
 
+
+def read_alert_country(path, country):
+    conn = get_db(path)
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM alert WHERE event_country = \'%s\'' % (country))
+    return create_alerts(cur.fetchall())
