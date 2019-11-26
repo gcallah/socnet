@@ -125,6 +125,36 @@ class AlertByCountry(Resource):
         return read_alert_country(config['database_path'], country)
 
 
+@api.route('/threads')
+class AllThreads(Resource):
+    def get(self):
+        """
+        Get all threads
+        """
+        return [], 200
+
+    def post(self):
+        """
+        Start a new thread
+        """
+        return None, 200
+
+
+@api.route('/threads/<int:id>')
+class Threads(Resource):
+    def get(self, id):
+        """
+        Get comments under a certain thread
+        """
+        return [], 200
+
+    def put(self, id):
+        """
+        Post a new comment under a certain thread
+        """
+        return None, 200
+
+
 if __name__ == '__main__':
     db_init(config['database_path'], config['table_schema_path'])
     sqlite_init(config['database_path'], config['table_schema_path'])
