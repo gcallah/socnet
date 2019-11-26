@@ -36,12 +36,14 @@ def validate_alert(alert_format, alert):
         req_type = alert_format['properties'][r]['type']
         given_type = type(test)
         if req_type == 'string' and given_type != str:
-            return '{} not given as string'.format(r)
+            return False, '{} not given as string'.format(r)
         elif req_type == 'int' and given_type != int:
-            return '{} not given as int'.format(r)
+            return False, '{} not given as int'.format(r)
         else:
             pass
             # Object Type
+
+    return True, ''
 
 
     
