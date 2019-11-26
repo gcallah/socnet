@@ -21,3 +21,27 @@ def create_alerts(db_records):
 		alerts.append(alert)
 	print (alerts)
 	return alerts
+
+def validate_alert(alert_format, alert):
+    """
+    Validate that the alert has the correct format
+    """
+
+    required = alert_format['required']
+    for r in required:
+        test = alert.get(r, None)
+        if test is None:
+            return False, 'Missing {}'.format(r)
+
+        req_type = alert_format['properties'][r]['type']
+        given_type = type(test)
+        if req_type == 'string' and given_type != str:
+            return '{} not given as string'.format(r)
+        elif req_type == 'int' and given_type != int:
+            return '{} not given as int'.format(r)
+        else:
+            pass
+            # Object Type
+
+
+    
