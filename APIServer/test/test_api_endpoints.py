@@ -7,7 +7,7 @@ import os
 from flask_restplus import Resource, Api, fields
 
 import APIServer.api_endpoints
-from APIServer.api_endpoints import app, HelloWorld, Alert, Alerts, MessageFormat, AlertByCountry
+from APIServer.api_endpoints import app, HelloWorld, Alert, Alerts, MessageFormat, AlertByCountry, AlertsLists
 from APIServer.commons.api_utils import err_return, read_json
 from APIServer.alerts.data_operations import write_alert, read_alert, db_init
 
@@ -24,6 +24,7 @@ class Test(TestCase):
         self.alert = Alert(Resource)
         self.alerts = Alerts(Resource)
         self.AlertByCountry = AlertByCountry(Resource)
+        self.alerts_beta = AlertsLists(Resource)
 
     def test_hello_world(self):
         """
@@ -113,6 +114,25 @@ class Test(TestCase):
         with app.test_client() as c:
             rv = c.get('/endpoints')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1])['Available endpoints'], endpoints)
+
+    def test_alerts_beta(self):
+        """
+        Testing whether or not the alerts_beta module works
+        """
+        test_db_dir = APIServer.api_endpoints.config['database_path']
+        test_db_schema = APIServer.api_endpoints.config['table_schema_path']
+        sqlite_db_dir = test_db_dir+".db"
+        if os.path.exists(sqlite_db_dir):
+            os.remove(sqlite_db_dir)
+        sqlite_init(test_db_dir, test_db_schema)
+        test_json = read_json('test_data/test_json.json')
+        
+        with app.test_client() as c:
+            rv = c.get('/alerts_beta')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
+
+            rv = c.post('/alerts_beta', json=test_json)
+            self.assertEqual(rv.status_code, 200)
 
     def test_AlertByCountry(self):
         """
