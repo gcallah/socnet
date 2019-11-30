@@ -1,0 +1,6 @@
+{
+    "integer":"int",
+    "string":"str",
+    "datetime": "datetime.datetime",
+    "object":"dict"
+}
