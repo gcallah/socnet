@@ -34,7 +34,7 @@ def write_alert(path, alert):
     conn.close()  
     return 
 
-def update_alert(path, alert):
+def update_alert(path, alert, id):
     event_zipcode = alert['event_loc']['event_zipcode']
     event_city = alert['event_loc']['event_city']
     event_state = alert['event_loc']['event_state']
@@ -44,55 +44,28 @@ def update_alert(path, alert):
     event_datetime = alert['event_datetime']
     severity = alert['event_severity']
 
-    columns = '(event_zipcode, event_city, event_state, event_country, event_description, sender, event_date, severity)'    
-    values = '(\'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\')' % \
-                (event_zipcode, event_city, event_state, event_country, event_description, msg_sender, event_datetime, severity)
+    columns = '(id, event_zipcode, event_city, event_state, event_country, event_description, sender, event_date, severity)'    
+    values = '(\'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\')' % \
+                (id, event_zipcode, event_city, event_state, event_country, event_description, msg_sender, event_datetime, severity)
     
     conn = get_db(path)
     cur = conn.cursor()
+    cur.execute('DELETE FROM alert WHERE id = \'%d\'' % (id))
     cur.execute("INSERT INTO alert " + columns +" VALUES " + values)
     conn.commit()
     conn.close()  
     return 
 
-def read_alert(path, alert):
-    event_zipcode = alert['event_loc']['event_zipcode']
-    event_city = alert['event_loc']['event_city']
-    event_state = alert['event_loc']['event_state']
-    event_country = alert['event_loc']['event_country']
-    event_description = alert['event_description']
-    msg_sender = alert['msg_sender']
-    event_datetime = alert['event_datetime']
-    severity = alert['event_severity']
-
-    columns = '(event_zipcode, event_city, event_state, event_country, event_description, sender, event_date, severity)'    
-    values = '(\'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\')' % \
-                (event_zipcode, event_city, event_state, event_country, event_description, msg_sender, event_datetime, severity)
-    
+def read_alert(path, id):
     conn = get_db(path)
     cur = conn.cursor()
-    cur.execute("INSERT INTO alert " + columns +" VALUES " + values)
-    conn.commit()
-    conn.close()  
-    return 
+    cur.execute('SELECT * FROM alert WHERE id = \'%d\'' % (id))
+    return create_alerts(cur.fetchall())
 
-def delete_alert(path, alert):
-    event_zipcode = alert['event_loc']['event_zipcode']
-    event_city = alert['event_loc']['event_city']
-    event_state = alert['event_loc']['event_state']
-    event_country = alert['event_loc']['event_country']
-    event_description = alert['event_description']
-    msg_sender = alert['msg_sender']
-    event_datetime = alert['event_datetime']
-    severity = alert['event_severity']
-
-    columns = '(event_zipcode, event_city, event_state, event_country, event_description, sender, event_date, severity)'    
-    values = '(\'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\')' % \
-                (event_zipcode, event_city, event_state, event_country, event_description, msg_sender, event_datetime, severity)
-    
+def delete_alert(path, id):
     conn = get_db(path)
     cur = conn.cursor()
-    cur.execute("INSERT INTO alert " + columns +" VALUES " + values)
+    cur.execute('DELETE FROM alert WHERE id = \'%d\'' % (id))
     conn.commit()
     conn.close()  
     return 

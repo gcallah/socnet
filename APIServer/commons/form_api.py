@@ -6,21 +6,22 @@ def get_alert_form(path):
 
 
 def create_alert(db_record):
-	alert = db_record
-	print (alert)
-	return db_record
+    if db_record is None:
+        return None
+    else:
+        alert = db_record
+        return alert
 
 
 def create_alerts(db_records):
-	'''
-	Create alerts from db records
-	'''
-	alerts = []
-	for record in db_records:
-		alert = create_alert(record)
-		alerts.append(alert)
-	print (alerts)
-	return alerts
+    '''
+    Create alerts from db records
+    '''
+    alerts = []
+    for record in db_records:
+        alert = create_alert(record)
+        alerts.append(alert)
+    return alerts
 
 def validate_alert(alert_format, alert):
     """

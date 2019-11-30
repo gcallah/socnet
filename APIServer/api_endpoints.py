@@ -140,7 +140,7 @@ class Alerts(Resource):
         """
         Delete an alert in the system with the given alert id
         """
-        return delete_alert(config['database_path'], request.json, id)
+        return delete_alert(config['database_path'], id)
 
 
 @api.route('/alerts/<string:country>')
