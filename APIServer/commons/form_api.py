@@ -25,17 +25,20 @@ def create_alerts(db_records):
     return alerts
 
 
-def validate_alert(alert_format, alert):
+def validate_alert(alert_format, type_dict, alert):
     """
     Validate that the alert has the correct format
     """
 
     def test_prop(prop, submitted):
-        type_dict = {}
         req_type = prop.get('type', None)
         if req_type is not None:
             if submitted is not None:
-                pass
+                convert_type = type_dict[req_type]
+                if isinstance(submitted, eval(convert_type)):
+                    return True, ''
+                else:
+                    return False, 'Not the appropriate type {}'.format(req_type)
             else:
                 return False, 'Missing entry of type {}'.format(req_type)
         else:
