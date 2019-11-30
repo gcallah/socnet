@@ -6,14 +6,19 @@ from APIServer.commons.form_api import get_alert_form
 from APIServer.commons.api_utils import read_json
 
 from APIServer.alerts.data_operations import db_init
-from APIServer.alerts.data_operations import read_alert
-from APIServer.alerts.data_operations import update_alert, delete_alert
-from APIServer.alerts.data_operations import read_all_alerts, write_new_alert
+from APIServer.alerts.data_operations import read_alert_legacy
+from APIServer.alerts.data_operations import update_alert_legacy
+from APIServer.alerts.data_operations import delete_alert_legacy
+from APIServer.alerts.data_operations import read_all_alerts_legacy
+from APIServer.alerts.data_operations import write_new_alert_legacy
 
 from APIServer.database.sqlite import sqlite_init
 
-from APIServer.alerts.alerts_data_operations import read_all
+from APIServer.alerts.alerts_data_operations import read_all_alerts
 from APIServer.alerts.alerts_data_operations import write_alert
+from APIServer.alerts.alerts_data_operations import read_alert
+from APIServer.alerts.alerts_data_operations import update_alert
+from APIServer.alerts.alerts_data_operations import delete_alert
 from APIServer.alerts.alerts_data_operations import read_alert_country
 
 app = Flask(__name__)
@@ -62,8 +67,62 @@ class MessageFormat(Resource):
 alert = api.schema_model('Alert', get_alert_form(config['format_path']))
 
 
+@api.route('/alerts_legacy/<int:id>')
+class Alert_Legacy(Resource):
+    def get(self, id):
+        """
+        Get a specific alert with the given alert id
+        """
+        return read_alert_legacy(config['database_path'], id)
+
+    @api.expect(alert)
+    def put(self, id):
+        """
+        Update an alert in the system with the given alert id
+        """
+        return update_alert_legacy(config['database_path'], request.json, id)
+
+    def delete(self, id):
+        """
+        Delete an alert in the system with the given alert id
+        """
+        return delete_alert_legacy(config['database_path'], request.json, id)
+
+
+@api.route('/alerts_legacy')
+class Alerts_Legacy(Resource):
+    def get(self):
+        """
+        Get all alerts
+        """
+        return read_all_alerts_legacy(config['database_path'])
+
+    @api.expect(alert)
+    def post(self):
+        """
+        Put a new alert into the system
+        """
+        return write_new_alert_legacy(config['database_path'], request.json)
+
+
+@api.route('/alerts')
+class AlertsLists(Resource):
+    def get(self):
+        """
+        Get all alerts
+        """
+        return read_all_alerts(config['database_path'])
+
+    @api.expect(alert)
+    def post(self):
+        """
+        Put a new alert into the system
+        """
+        return write_alert(config['database_path'], request.json)
+
+
 @api.route('/alerts/<int:id>')
-class Alert(Resource):
+class Alerts(Resource):
     def get(self, id):
         """
         Get a specific alert with the given alert id
@@ -82,38 +141,6 @@ class Alert(Resource):
         Delete an alert in the system with the given alert id
         """
         return delete_alert(config['database_path'], request.json, id)
-
-
-@api.route('/alerts')
-class Alerts(Resource):
-    def get(self):
-        """
-        Get all alerts
-        """
-        return read_all_alerts(config['database_path'])
-
-    @api.expect(alert)
-    def post(self):
-        """
-        Put a new alert into the system
-        """
-        return write_new_alert(config['database_path'], request.json)
-
-
-@api.route('/alerts_beta')
-class AlertsLists(Resource):
-    def get(self):
-        """
-        Get all alerts
-        """
-        return read_all(config['database_path'])
-
-    @api.expect(alert)
-    def post(self):
-        """
-        Put a new alert into the system
-        """
-        return write_alert(config['database_path'], request.json)
 
 
 @api.route('/alerts/<string:country>')

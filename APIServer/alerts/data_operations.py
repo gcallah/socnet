@@ -6,8 +6,8 @@ from APIServer.commons.form_api import create_alerts, create_alert
 from APIServer.database.sqlite import get_db
 
 
-def write_alert(path, alert, id):
-    if read_alert(path, id) == 'No record found!':
+def write_alert_legacy(path, alert, id):
+    if read_alert_legacy(path, id) == 'No record found!':
         write_json(path, 'Alert ' + str(id), alert)
         return_msg = 'Put alert ' + str(id) + ' into DB... Success!'
     else:
@@ -15,8 +15,8 @@ def write_alert(path, alert, id):
     return return_msg
 
 
-def update_alert(path, alert, id):
-    if read_alert(path, id) == 'No record found!':
+def update_alert_legacy(path, alert, id):
+    if read_alert_legacy(path, id) == 'No record found!':
         return_msg = 'Can not update. '
         return_msg += 'Alert ' + str(id) + ' does not exist.'
     else:
@@ -26,8 +26,8 @@ def update_alert(path, alert, id):
     return return_msg
 
 
-def delete_alert(path, alert, id):
-    if read_alert(path, id) == 'No record found!':
+def delete_alert_legacy(path, alert, id):
+    if read_alert_legacy(path, id) == 'No record found!':
         return_msg = 'Can not delete. '
         return_msg += 'Alert ' + str(id) + ' does not exist.'
     else:
@@ -36,7 +36,7 @@ def delete_alert(path, alert, id):
     return return_msg
 
 
-def read_alert(path, id):
+def read_alert_legacy(path, id):
     all_alerts = read_json(path)
     for alert in all_alerts:
         if alert == 'Alert ' + str(id):
@@ -47,17 +47,17 @@ def read_alert(path, id):
 def get_alert_id(path):
     MAX_ALERT_ID = 65536
     for id in range(1, MAX_ALERT_ID):
-        if read_alert(path, id) == 'No record found!':
+        if read_alert_legacy(path, id) == 'No record found!':
             return id
     return 0
 
 
-def write_new_alert(path, alert):
+def write_new_alert_legacy(path, alert):
     id = get_alert_id(path)
-    return write_alert(path, alert, id)
+    return write_alert_legacy(path, alert, id)
 
 
-def read_all_alerts(path):
+def read_all_alerts_legacy(path):
     return read_json(path)
 
 

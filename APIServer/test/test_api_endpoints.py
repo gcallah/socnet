@@ -7,9 +7,9 @@ import os
 from flask_restplus import Resource, Api, fields
 
 import APIServer.api_endpoints
-from APIServer.api_endpoints import app, HelloWorld, Alert, Alerts, MessageFormat, AlertByCountry, AlertsLists
+from APIServer.api_endpoints import app, HelloWorld, Alert_Legacy, Alerts_Legacy, MessageFormat, AlertByCountry, AlertsLists
 from APIServer.commons.api_utils import err_return, read_json
-from APIServer.alerts.data_operations import write_alert, read_alert, db_init
+from APIServer.alerts.data_operations import write_alert_legacy, read_alert_legacy, db_init
 
 from APIServer.database.sqlite import sqlite_init
 
@@ -21,8 +21,8 @@ class Test(TestCase):
         # none of the object's members names should have caps!
         self.messageformat = MessageFormat(Resource)
         self.HelloWorld = HelloWorld(Resource)
-        self.alert = Alert(Resource)
-        self.alerts = Alerts(Resource)
+        self.alert = Alert_Legacy(Resource)
+        self.alerts = Alerts_Legacy(Resource)
         self.AlertByCountry = AlertByCountry(Resource)
         self.alerts_beta = AlertsLists(Resource)
 
@@ -76,24 +76,24 @@ class Test(TestCase):
         test_json = read_json('test_data/test_json.json')
         
         with app.test_client() as c:
-            rv = c.get('/alerts')
+            rv = c.get('/alerts_legacy')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), {})
 
-            rv = c.post('/alerts', json=test_json)
+            rv = c.post('/alerts_legacy', json=test_json)
             self.assertEqual(rv.status_code, 200)
 
             test_json['event_type'] = 'Flood'
 
-            rv = c.put('/alerts/1', json=test_json)
+            rv = c.put('/alerts_legacy/1', json=test_json)
             self.assertEqual(rv.status_code, 200)
 
-            rv = c.get('/alerts')
+            rv = c.get('/alerts_legacy')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), {'Alert 1':test_json})
 
-            rv = c.delete('/alerts/1')
+            rv = c.delete('/alerts_legacy/1')
             self.assertEqual(rv.status_code, 200)
 
-            rv = c.get('/alerts')
+            rv = c.get('/alerts_legacy')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), {})
 
         # Add full code here 
@@ -109,13 +109,13 @@ class Test(TestCase):
         """
         Testing whether or not the available endpoints match
         """
-        endpoints = ['/alerts', '/alerts/<int:id>', '/alerts/<string:country>', '/alerts_beta', '/endpoints', '/form', '/hello', '/threads', '/threads/<int:id>']
+        endpoints = ['/alerts', '/alerts/<int:id>', '/alerts/<string:country>', '/alerts_legacy', '/alerts_legacy/<int:id>', '/endpoints', '/form', '/hello', '/threads', '/threads/<int:id>']
 
         with app.test_client() as c:
             rv = c.get('/endpoints')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1])['Available endpoints'], endpoints)
 
-    def test_alerts_beta(self):
+    def test_alerts(self):
         """
         Testing whether or not the alerts_beta module works
         """
@@ -128,10 +128,10 @@ class Test(TestCase):
         test_json = read_json('test_data/test_json.json')
         
         with app.test_client() as c:
-            rv = c.get('/alerts_beta')
+            rv = c.get('/alerts')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
 
-            rv = c.post('/alerts_beta', json=test_json)
+            rv = c.post('/alerts', json=test_json)
             self.assertEqual(rv.status_code, 200)
 
     def test_AlertByCountry(self):
@@ -150,10 +150,10 @@ class Test(TestCase):
         test_response = read_json('test_data/test_response.json')
 
         with app.test_client() as c:
-            rv = c.get('/alerts_beta')
+            rv = c.get('/alerts')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
 
-            rv = c.post('/alerts_beta', json=test_json)
+            rv = c.post('/alerts', json=test_json)
             self.assertEqual(rv.status_code, 200)
 
             rv = c.get('/alerts/USA')
