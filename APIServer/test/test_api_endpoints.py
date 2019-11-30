@@ -10,8 +10,9 @@ import APIServer.api_endpoints
 from APIServer.api_endpoints import app, HelloWorld, Alert_Legacy, Alerts_Legacy, MessageFormat, AlertByCountry, AlertsLists
 from APIServer.commons.api_utils import err_return, read_json
 from APIServer.alerts.data_operations_legacy import write_alert_legacy, read_alert_legacy, db_init
-from APIServer.alerts.alerts_data_operations import read_alert, update_alert, delete_alert
-from APIServer.alerts.alerts_data_operations import read_all_alerts, write_alert, read_alert_country
+from APIServer.alerts.operations import read_alert, update_alert, delete_alert
+from APIServer.alerts.operations import read_all_alerts, write_alert, read_alert_country
+from APIServer.commons.form_api import validate_alert
 
 from APIServer.database.sqlite import sqlite_init
 

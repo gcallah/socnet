@@ -14,12 +14,12 @@ from APIServer.alerts.data_operations_legacy import write_new_alert_legacy
 
 from APIServer.database.sqlite import sqlite_init
 
-from APIServer.alerts.alerts_data_operations import read_all_alerts
-from APIServer.alerts.alerts_data_operations import write_alert
-from APIServer.alerts.alerts_data_operations import read_alert
-from APIServer.alerts.alerts_data_operations import update_alert
-from APIServer.alerts.alerts_data_operations import delete_alert
-from APIServer.alerts.alerts_data_operations import read_alert_country
+from APIServer.alerts.operations import read_all_alerts
+from APIServer.alerts.operations import write_alert
+from APIServer.alerts.operations import read_alert
+from APIServer.alerts.operations import update_alert
+from APIServer.alerts.operations import delete_alert
+from APIServer.alerts.operations import read_alert_country
 
 app = Flask(__name__)
 CORS(app)
