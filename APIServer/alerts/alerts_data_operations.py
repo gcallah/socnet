@@ -2,7 +2,7 @@ import os
 import sqlite3
 from APIServer.commons.api_utils import read_json, write_json, delete_json
 
-from APIServer.commons.form_api import create_alerts, create_alert
+from APIServer.commons.form_api import create_alerts, create_alert, validate_alert
 from APIServer.database.sqlite import get_db
 
 

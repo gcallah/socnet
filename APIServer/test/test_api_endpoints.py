@@ -11,7 +11,7 @@ from APIServer.api_endpoints import app, HelloWorld, Alert_Legacy, Alerts_Legacy
 from APIServer.commons.api_utils import err_return, read_json
 from APIServer.alerts.data_operations_legacy import write_alert_legacy, read_alert_legacy, db_init
 from APIServer.alerts.alerts_data_operations import read_alert, update_alert, delete_alert
-from APIServer.alerts.alerts_data_operations import read_all_alerts, write_alert
+from APIServer.alerts.alerts_data_operations import read_all_alerts, write_alert, read_alert_country
 
 from APIServer.database.sqlite import sqlite_init
 
@@ -89,7 +89,7 @@ class Test(TestCase):
             rv = c.put('/alerts_legacy/1', json=test_json)
             self.assertEqual(rv.status_code, 200)
 
-            rv = c.get('/alerts_legacy')
+            rv = c.get('/alerts_legacy/1')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), {'Alert 1':test_json})
 
             rv = c.delete('/alerts_legacy/1')
@@ -141,7 +141,7 @@ class Test(TestCase):
             rv = c.put('/alerts/1', json=test_json)
             self.assertEqual(rv.status_code, 200)
 
-            rv = c.get('/alerts')
+            rv = c.get('/alerts/1')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
 
             rv = c.delete('/alerts/1')

@@ -23,6 +23,7 @@ def create_alerts(db_records):
         alerts.append(alert)
     return alerts
 
+
 def validate_alert(alert_format, alert):
     """
     Validate that the alert has the correct format
@@ -45,6 +46,3 @@ def validate_alert(alert_format, alert):
             # Object Type
 
     return True, ''
-
-
-    
