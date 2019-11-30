@@ -9,7 +9,7 @@ from flask_restplus import Resource, Api, fields
 import APIServer.api_endpoints
 from APIServer.api_endpoints import app, HelloWorld, Alert_Legacy, Alerts_Legacy, MessageFormat, AlertByCountry, AlertsLists
 from APIServer.commons.api_utils import err_return, read_json
-from APIServer.alerts.data_operations import write_alert_legacy, read_alert_legacy, db_init
+from APIServer.alerts.data_operations_legacy import write_alert_legacy, read_alert_legacy, db_init
 
 from APIServer.database.sqlite import sqlite_init
 

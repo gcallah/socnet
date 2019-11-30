@@ -5,12 +5,12 @@ from flask_cors import CORS
 from APIServer.commons.form_api import get_alert_form
 from APIServer.commons.api_utils import read_json
 
-from APIServer.alerts.data_operations import db_init
-from APIServer.alerts.data_operations import read_alert_legacy
-from APIServer.alerts.data_operations import update_alert_legacy
-from APIServer.alerts.data_operations import delete_alert_legacy
-from APIServer.alerts.data_operations import read_all_alerts_legacy
-from APIServer.alerts.data_operations import write_new_alert_legacy
+from APIServer.alerts.data_operations_legacy import db_init
+from APIServer.alerts.data_operations_legacy import read_alert_legacy
+from APIServer.alerts.data_operations_legacy import update_alert_legacy
+from APIServer.alerts.data_operations_legacy import delete_alert_legacy
+from APIServer.alerts.data_operations_legacy import read_all_alerts_legacy
+from APIServer.alerts.data_operations_legacy import write_new_alert_legacy
 
 from APIServer.database.sqlite import sqlite_init
 
