@@ -10,6 +10,8 @@ import APIServer.api_endpoints
 from APIServer.api_endpoints import app, HelloWorld, Alert_Legacy, Alerts_Legacy, MessageFormat, AlertByCountry, AlertsLists
 from APIServer.commons.api_utils import err_return, read_json
 from APIServer.alerts.data_operations_legacy import write_alert_legacy, read_alert_legacy, db_init
+from APIServer.alerts.alerts_data_operations import read_alert, update_alert, delete_alert
+from APIServer.alerts.alerts_data_operations import read_all_alerts, write_alert
 
 from APIServer.database.sqlite import sqlite_init
 
@@ -63,9 +65,9 @@ class Test(TestCase):
             rv = c.get('/alerts')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), {'Alert 1':test_json})
 
-    def test_alert(self):
+    def test_alert_legacy(self):
         """
-        See if alert api works (uses id)
+        See if alert_legacy api works (uses id)
         """
 
         test_db_dir = APIServer.api_endpoints.config['database_path']
@@ -117,7 +119,7 @@ class Test(TestCase):
 
     def test_alerts(self):
         """
-        Testing whether or not the alerts_beta module works
+        Testing whether or not the alerts module works
         """
         test_db_dir = APIServer.api_endpoints.config['database_path']
         test_db_schema = APIServer.api_endpoints.config['table_schema_path']
@@ -126,6 +128,7 @@ class Test(TestCase):
             os.remove(sqlite_db_dir)
         sqlite_init(test_db_dir, test_db_schema)
         test_json = read_json('test_data/test_json.json')
+        test_response = read_json('test_data/test_response.json')
         
         with app.test_client() as c:
             rv = c.get('/alerts')
@@ -133,6 +136,20 @@ class Test(TestCase):
 
             rv = c.post('/alerts', json=test_json)
             self.assertEqual(rv.status_code, 200)
+
+
+            rv = c.put('/alerts/1', json=test_json)
+            self.assertEqual(rv.status_code, 200)
+
+            rv = c.get('/alerts')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
+
+            rv = c.delete('/alerts/1')
+            self.assertEqual(rv.status_code, 200)
+
+            rv = c.get('/alerts')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
+
 
     def test_AlertByCountry(self):
         """
