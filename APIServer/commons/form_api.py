@@ -44,22 +44,14 @@ def validate_alert(alert_format, type_dict, alert):
         else:
             return True, 'Nothing required'
             
-
     required = alert_format.get('required', None)
     if required is not None:
+        properties = alert_format.get('properties', None)
         for r in required:
             test = alert.get(r, None)
             if test is None:
                 return False, 'Missing {}'.format(r)
 
-            req_type = alert_format['properties'][r]['type']
-            given_type = type(test)
-            if req_type == 'string' and given_type != str:
-                return False, '{} not given as string'.format(r)
-            elif req_type == 'int' and given_type != int:
-                return False, '{} not given as int'.format(r)
-            else:
-                pass
-                # Object Type
+            return test_prop(properties[r], test)
 
     return True, ''
