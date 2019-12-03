@@ -1,5 +1,5 @@
 {
-    "required": ["date", "event_loc", "event_type", "event_severity", "msg_sender"],
+    "required": ["event_datetime", "event_zipcode", "event_city","event_state","event_country", "event_type", "event_severity", "msg_sender"],
     "properties": {
         "event_datetime": {
             "type": "datetime",
