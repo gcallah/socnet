@@ -21,6 +21,10 @@ from APIServer.alerts.operations import update_alert
 from APIServer.alerts.operations import delete_alert
 from APIServer.alerts.operations import read_alert_country
 
+from APIServer.threads.operations import add_comment
+from APIServer.threads.operations import get_comments
+from APIServer.threads.operations import list_threads
+
 app = Flask(__name__)
 CORS(app)
 api = Api(app, title='SOCNET API')
@@ -153,33 +157,27 @@ class AlertByCountry(Resource):
 
 
 @api.route('/threads')
-class AllThreads(Resource):
+class Threads(Resource):
     def get(self):
         """
-        Get all threads
+        List all threads
         """
         return [], 200
 
-    def post(self):
-        """
-        Start a new thread
-        """
-        return None, 200
-
 
 @api.route('/threads/<int:id>')
-class Threads(Resource):
+class Comments(Resource):
     def get(self, id):
         """
-        Get comments under a certain thread
+        List all comments under a thread(thread id is given)
         """
         return [], 200
 
     def put(self, id):
         """
-        Post a new comment under a certain thread
+        Post a new comment under a thread(thread id is given)
         """
-        return None, 200
+        return {"message": "Successs"}, 200
 
 
 if __name__ == '__main__':
