@@ -21,10 +21,6 @@ from APIServer.alerts.operations import update_alert
 from APIServer.alerts.operations import delete_alert
 from APIServer.alerts.operations import read_alert_country
 
-from APIServer.threads.operations import add_comment
-from APIServer.threads.operations import get_comments
-from APIServer.threads.operations import list_threads
-
 app = Flask(__name__)
 CORS(app)
 api = Api(app, title='SOCNET API')
