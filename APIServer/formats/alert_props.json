@@ -1,31 +1,46 @@
 {
-  "date": {
+  "event_datetime": {
     "question ID": 0,
     "question": "When did even occur?",
     "atype": "datetime"
   },
-  "event_loc": {
+  "event_zipcode": {
+    "question ID": 1,
+    "question": "What is the event zipcode?",
+    "atype": "string"
+  },
+  "event_city": {
+    "question ID": 2,
+    "question": "What is the event city?",
+    "atype": "string"
+  },
+  "event_state": {
     "question ID": 3,
-    "question": "What is the event location?",
+    "question": "What is the event state?",
+    "atype": "string"
+  },
+  "event_country": {
+    "question ID": 4,
+    "question": "What is the event country?",
     "atype": "string"
   },
   "event_type": {
-    "question ID": 1,
+    "question ID": 5,
     "question": "What is the type of emergecy?",
     "atype": "string"
   },
-  "event_discription": {
-    "question ID": 4,
+  "event_description": {
+    "question ID": 6,
     "question": "What is the emergency?",
     "atype": "string"
   },
   "event_severity": {
-    "question ID": 5,
+    "question ID": 7,
     "question": "How severe is the emergency?",
     "atype": "string"
   },
   "msg_sender": {
-    "question ID": 6,
+    "question ID": 8,
     "question": "Who is sending the alert?",
     "atype": "string"
   }
