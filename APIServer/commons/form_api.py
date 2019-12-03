@@ -51,7 +51,19 @@ def validate_alert(alert_format, type_dict, alert):
             test = alert.get(r, None)
             if test is None:
                 return False, 'Missing {}'.format(r)
+            else:
+                check, mess = test_prop(properties[r], test)
+                if check is False:
+                    return False, mess
+        for p in properties.keys():
+            check, mess = test_prop(properties[p], alert.get(p, None))
+            if check is False:
+                return False, mess
 
-            return test_prop(properties[r], test)
+    else:
+        for p in alert_format.keys():
+            check, mess = test_prop(alert_format[p], alert.get(p, None))
+            if check is False:
+                return False, mess
 
     return True, ''
