@@ -7,9 +7,8 @@ import os
 from flask_restplus import Resource, Api, fields
 
 import APIServer.api_endpoints
-from APIServer.api_endpoints import app, HelloWorld, Alert_Legacy, Alerts_Legacy, MessageFormat, AlertByCountry, AlertsLists
+from APIServer.api_endpoints import app, HelloWorld, MessageFormat, AlertByCountry, AlertsLists
 from APIServer.commons.api_utils import err_return, read_json
-from APIServer.alerts.data_operations_legacy import write_alert_legacy, read_alert_legacy, db_init
 from APIServer.alerts.operations import read_alert, update_alert, delete_alert
 from APIServer.alerts.operations import read_all_alerts, write_alert, read_alert_country
 from APIServer.commons.form_api import validate_alert
@@ -24,10 +23,8 @@ class Test(TestCase):
         # none of the object's members names should have caps!
         self.messageformat = MessageFormat(Resource)
         self.HelloWorld = HelloWorld(Resource)
-        self.alert = Alert_Legacy(Resource)
-        self.alerts = Alerts_Legacy(Resource)
         self.AlertByCountry = AlertByCountry(Resource)
-        self.alerts_beta = AlertsLists(Resource)
+        self.alerts = AlertsLists(Resource)
 
     def test_hello_world(self):
         """
@@ -66,41 +63,6 @@ class Test(TestCase):
             rv = c.get('/alerts')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), {'Alert 1':test_json})
 
-    def test_alert_legacy(self):
-        """
-        See if alert_legacy api works (uses id)
-        """
-
-        test_db_dir = APIServer.api_endpoints.config['database_path']
-        test_db_schema = APIServer.api_endpoints.config['table_schema_path']
-        os.remove(test_db_dir)
-        db_init(test_db_dir, test_db_schema)
-
-        test_json = read_json('test_data/test_json.json')
-        
-        with app.test_client() as c:
-            rv = c.get('/alerts_legacy')
-            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), {})
-
-            rv = c.post('/alerts_legacy', json=test_json)
-            self.assertEqual(rv.status_code, 200)
-
-            test_json['event_type'] = 'Flood'
-
-            rv = c.put('/alerts_legacy/1', json=test_json)
-            self.assertEqual(rv.status_code, 200)
-
-            rv = c.get('/alerts_legacy/1')
-            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), {'Alert 1':test_json})
-
-            rv = c.delete('/alerts_legacy/1')
-            self.assertEqual(rv.status_code, 200)
-
-            rv = c.get('/alerts_legacy')
-            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), {})
-
-        # Add full code here 
-
     def test_err_return(self):
         """
         Testing whether we are able to get the right error message
@@ -112,7 +74,7 @@ class Test(TestCase):
         """
         Testing whether or not the available endpoints match
         """
-        endpoints = ['/alerts', '/alerts/<int:id>', '/alerts/<string:country>', '/alerts_legacy', '/alerts_legacy/<int:id>', '/endpoints', '/form', '/hello', '/threads', '/threads/<int:id>']
+        endpoints = ['/alerts', '/alerts/<int:id>', '/alerts/<string:country>', '/endpoints', '/form', '/hello', '/threads', '/threads/<int:id>']
 
         with app.test_client() as c:
             rv = c.get('/endpoints')

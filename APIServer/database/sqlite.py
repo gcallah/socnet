@@ -10,7 +10,6 @@ def get_db(path):
 
 
 def sqlite_init(path, schema):
-    print ('a' + path)
     db = get_db(path)
     with open(schema) as f:
         db.executescript(f.read())

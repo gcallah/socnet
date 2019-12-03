@@ -5,13 +5,6 @@ from flask_cors import CORS
 from APIServer.commons.form_api import get_alert_form
 from APIServer.commons.api_utils import read_json
 
-from APIServer.alerts.data_operations_legacy import db_init
-from APIServer.alerts.data_operations_legacy import read_alert_legacy
-from APIServer.alerts.data_operations_legacy import update_alert_legacy
-from APIServer.alerts.data_operations_legacy import delete_alert_legacy
-from APIServer.alerts.data_operations_legacy import read_all_alerts_legacy
-from APIServer.alerts.data_operations_legacy import write_new_alert_legacy
-
 from APIServer.database.sqlite import sqlite_init
 
 from APIServer.alerts.operations import read_all_alerts
@@ -65,44 +58,6 @@ class MessageFormat(Resource):
 
 
 alert = api.schema_model('Alert', get_alert_form(config['format_path']))
-
-
-@api.route('/alerts_legacy/<int:id>')
-class Alert_Legacy(Resource):
-    def get(self, id):
-        """
-        Get a specific alert with the given alert id
-        """
-        return read_alert_legacy(config['database_path'], id)
-
-    @api.expect(alert)
-    def put(self, id):
-        """
-        Update an alert in the system with the given alert id
-        """
-        return update_alert_legacy(config['database_path'], request.json, id)
-
-    def delete(self, id):
-        """
-        Delete an alert in the system with the given alert id
-        """
-        return delete_alert_legacy(config['database_path'], request.json, id)
-
-
-@api.route('/alerts_legacy')
-class Alerts_Legacy(Resource):
-    def get(self):
-        """
-        Get all alerts
-        """
-        return read_all_alerts_legacy(config['database_path'])
-
-    @api.expect(alert)
-    def post(self):
-        """
-        Put a new alert into the system
-        """
-        return write_new_alert_legacy(config['database_path'], request.json)
 
 
 @api.route('/alerts')
@@ -177,6 +132,5 @@ class Comments(Resource):
 
 
 if __name__ == '__main__':
-    db_init(config['database_path'], config['table_schema_path'])
     sqlite_init(config['database_path'], config['table_schema_path'])
     app.run(host=config['host'], port=config['port'], debug=config['debug'])
