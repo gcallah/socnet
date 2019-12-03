@@ -43,6 +43,13 @@ def validate_alert(alert_format, type_dict, alert):
                 return False, 'Missing entry of type {}'.format(req_type)
         else:
             return True, 'Nothing required'
+
+    def test_all_prop(all_prop, given):
+        for p in all_prop.keys():
+            check, mess = test_prop(all_prop[p], given.get(p, None))
+            if check is False:
+                return False, mess
+        return True, ''
             
     required = alert_format.get('required', None)
     if required is not None:
@@ -55,15 +62,13 @@ def validate_alert(alert_format, type_dict, alert):
                 check, mess = test_prop(properties[r], test)
                 if check is False:
                     return False, mess
-        for p in properties.keys():
-            check, mess = test_prop(properties[p], alert.get(p, None))
-            if check is False:
-                return False, mess
+        check, mess = test_all_prop(properties, alert)
+        if check is False:
+            return False, mess
 
     else:
-        for p in alert_format.keys():
-            check, mess = test_prop(alert_format[p], alert.get(p, None))
-            if check is False:
-                return False, mess
+        check, mess = test_all_prop(alert_format, alert)
+        if check is False:
+            return False, mess
 
     return True, ''
