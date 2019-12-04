@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Segment, Loader, Dimmer } from 'semantic-ui-react';
+import { Loader, Dimmer } from 'semantic-ui-react';
 import Header from './Header';
+import Alert from './Alert';
 
 class Home extends Component {
   constructor(props) {
@@ -32,11 +33,9 @@ class Home extends Component {
 
     if (loadingData) {
       return (
-        <Segment>
-          <Dimmer active inverted>
-            <Loader inverted>Loading</Loader>
-          </Dimmer>
-        </Segment>
+        <Dimmer active inverted>
+          <Loader size="massive">Loading</Loader>
+        </Dimmer>
       );
     }
 
@@ -44,7 +43,7 @@ class Home extends Component {
       <div className="container">
         <Header title="Socnet" />
         {alerts.map((alert) =>{
-          return alert
+          return <Alert data={alert}/>
         })}
       </div>
     );
