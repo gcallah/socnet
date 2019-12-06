@@ -138,7 +138,7 @@ class Test(TestCase):
             rv = c.get('/alerts/USA')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
        
-    def test_Threads(self):
+    def test_threads(self):
         """
         Testing whether or not the threads module works
         """
@@ -160,10 +160,16 @@ class Test(TestCase):
             rv = c.put('/threads/1', json={ 'text' : 'some comment'})
             self.assertEqual(rv.status_code, 200)
 
+            rv = c.put('/threads/1', json={ 'text' : 'new comment'})
+            self.assertEqual(rv.status_code, 200)
+
+            rv = c.put('/threads/1', json={ 'text' : '3rd comment'})
+            self.assertEqual(rv.status_code, 200)
+
             rv = c.get('/threads/1')
-            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [{"1": "some comment"}])
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [{"1": "some comment"}, {"2": "new comment"}, {"3": "3rd comment"}])
        
-    def test_Threads(self):
+    def test_threads_err(self):
         """
         Testing whether or not the threads module returns 404 code when a thread does not exist
         """
