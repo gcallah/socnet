@@ -107,17 +107,8 @@ class AlertByCountry(Resource):
         return read_alert_country(config['database_path'], country)
 
 
-@api.route('/threads')
-class Threads(Resource):
-    def get(self):
-        """
-        List all threads
-        """
-        return [], 200
-
-
 @api.route('/threads/<int:id>')
-class Comments(Resource):
+class Threads(Resource):
     def get(self, id):
         """
         List all comments under a thread(thread id is given)

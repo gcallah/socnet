@@ -12,9 +12,14 @@ def list_threads(path):
     return create_alerts(cur.fetchall())
 
 
-def add_comment(thread_id):
+def add_comment(path, thread_id):
+	conn = get_db(path)
+	cur = conn.cursor()
     return
 
 
-def get_comments(thread_id):
-    return
+def get_comments(path, thread_id):
+	conn = get_db(path)
+	cur = conn.cursor()
+	comments = []
+    return comments
