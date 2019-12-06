@@ -113,7 +113,6 @@ class Test(TestCase):
             rv = c.get('/alerts')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
 
-
     def test_AlertByCountry(self):
         """
         Testing whether the filter by country endpoint works
@@ -141,7 +140,7 @@ class Test(TestCase):
        
     def test_Threads(self):
         """
-        Testing whether or not the alerts module works
+        Testing whether or not the threads module works
         """
         test_db_dir = APIServer.api_endpoints.config['database_path']
         test_db_schema = APIServer.api_endpoints.config['table_schema_path']
@@ -163,6 +162,22 @@ class Test(TestCase):
 
             rv = c.get('/threads/1')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [{"1": "some comment"}])
+       
+    def test_Threads(self):
+        """
+        Testing whether or not the threads module returns 404 code when a thread does not exist
+        """
+        test_db_dir = APIServer.api_endpoints.config['database_path']
+        test_db_schema = APIServer.api_endpoints.config['table_schema_path']
+        sqlite_db_dir = test_db_dir+".db"
+        if os.path.exists(sqlite_db_dir):
+            os.remove(sqlite_db_dir)
+        sqlite_init(test_db_dir, test_db_schema)
+
+        with app.test_client() as c:
+
+            rv = c.put('/threads/1', json={ 'text' : 'some comment'})
+            self.assertEqual(rv.status_code, 404)
 
        
 if __name__ == "__main__":
