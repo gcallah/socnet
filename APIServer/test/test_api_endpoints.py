@@ -139,5 +139,31 @@ class Test(TestCase):
             rv = c.get('/alerts/USA')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
        
+    def test_Threads(self):
+        """
+        Testing whether or not the alerts module works
+        """
+        test_db_dir = APIServer.api_endpoints.config['database_path']
+        test_db_schema = APIServer.api_endpoints.config['table_schema_path']
+        sqlite_db_dir = test_db_dir+".db"
+        if os.path.exists(sqlite_db_dir):
+            os.remove(sqlite_db_dir)
+        sqlite_init(test_db_dir, test_db_schema)
+
+        test_json = read_json('test_data/test_json.json')
+        test_threads_json = read_json('test_data/test_threads_json.json')
+
+        with app.test_client() as c:
+
+            rv = c.post('/alerts', json=test_json)
+            self.assertEqual(rv.status_code, 200)
+
+            rv = c.put('/threads/1', json={ 'text' : 'some comment'})
+            self.assertEqual(rv.status_code, 200)
+
+            rv = c.get('/threads/1')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [{"1": "some comment"}])
+
+       
 if __name__ == "__main__":
     main()
