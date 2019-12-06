@@ -1,16 +1,21 @@
 import React, { Component } from "react";
 
 class Alert extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
-      eventDetails: {},
+      eventDetails: this.props.data,
     }
   }
+
   render() {
+    const { eventDetails } = this.state;
+
     return (
-      <div>
-      work in progress
+      <div style={{ marginBottom: '15px' }}>
+        {eventDetails.map((i) => {
+          return <div>{i}</div>
+        })}
       </div>
     );
   }
