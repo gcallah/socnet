@@ -47,7 +47,6 @@ def get_comments(path, thread_id):
         return {'message' : 'Thread ' + str(thread_id) + ' does not exist'}, 404
 
     comment_id = result[0]
-    print (comment_id)
     while True:
         if comment_id == -1:
             break

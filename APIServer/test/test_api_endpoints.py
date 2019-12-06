@@ -185,6 +185,9 @@ class Test(TestCase):
             rv = c.put('/threads/1', json={ 'text' : 'some comment'})
             self.assertEqual(rv.status_code, 404)
 
+            rv = c.get('/threads/1')
+            self.assertEqual(rv.status_code, 404)
+
        
 if __name__ == "__main__":
     main()
