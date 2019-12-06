@@ -1,6 +1,6 @@
 # SOCNET API server
 from flask import Flask, request
-from flask_restplus import Resource, Api
+from flask_restplus import Resource, Api, fields
 from flask_cors import CORS
 from APIServer.commons.form_api import get_alert_form
 from APIServer.commons.api_utils import read_json
@@ -13,6 +13,9 @@ from APIServer.alerts.operations import read_alert
 from APIServer.alerts.operations import update_alert
 from APIServer.alerts.operations import delete_alert
 from APIServer.alerts.operations import read_alert_country
+
+from APIServer.threads.operations import get_comments
+from APIServer.threads.operations import add_comment
 
 app = Flask(__name__)
 CORS(app)
@@ -107,19 +110,23 @@ class AlertByCountry(Resource):
         return read_alert_country(config['database_path'], country)
 
 
+comment = api.model('Comment', {'text': fields.String})
+
+
 @api.route('/threads/<int:id>')
 class Threads(Resource):
     def get(self, id):
         """
         List all comments under a thread(thread id is given)
         """
-        return [], 200
+        return get_comments(config['database_path'], id)
 
+    @api.expect(comment)
     def put(self, id):
         """
         Post a new comment under a thread(thread id is given)
         """
-        return {"message": "Successs"}, 200
+        return add_comment(config['database_path'], request.json, id)
 
 
 if __name__ == '__main__':
