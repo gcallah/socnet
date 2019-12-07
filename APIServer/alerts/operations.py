@@ -38,9 +38,11 @@ def write_alert(path, alert):
     conn = get_db(path)
     cur = conn.cursor()
     cur.execute("INSERT INTO alert " + columns +" VALUES " + values)
+    alert_id = cur.lastrowid
+    cur.execute('INSERT INTO thread (id, first_comment_id, last_comment_id) VALUES (%d, %d, %d)' % (alert_id, -1, -1))
     conn.commit()
     conn.close()
-    return
+    return 'Alert ' + str(alert_id) + ' inserted'
 
 
 def write_alert_beta(alert):

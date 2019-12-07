@@ -9,4 +9,14 @@ CREATE TABLE IF NOT EXISTS alert (
     event_description TEXT,
     event_severity TEXT,
     msg_sender TEXT
-)
+);
+CREATE TABLE IF NOT EXISTS thread (
+    id INTEGER PRIMARY KEY,
+    first_comment_id INTEGER,
+    last_comment_id INTEGER
+);
+CREATE TABLE IF NOT EXISTS comment (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    content TEXT,
+    next_comment_id INTEGER
+);

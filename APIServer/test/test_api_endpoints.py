@@ -74,7 +74,7 @@ class Test(TestCase):
         """
         Testing whether or not the available endpoints match
         """
-        endpoints = ['/alerts', '/alerts/<int:id>', '/alerts/<string:country>', '/alerts_beta', '/endpoints', '/form', '/hello', '/threads', '/threads/<int:id>']
+        endpoints = ['/alerts', '/alerts/<int:id>', '/alerts/<string:country>', '/alerts_beta', '/endpoints', '/form', '/hello', '/threads/<int:id>']
 
         with app.test_client() as c:
             rv = c.get('/endpoints')
@@ -113,7 +113,6 @@ class Test(TestCase):
             rv = c.get('/alerts')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
 
-
     def test_AlertByCountry(self):
         """
         Testing whether the filter by country endpoint works
@@ -138,6 +137,69 @@ class Test(TestCase):
 
             rv = c.get('/alerts/USA')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
+       
+    def test_threads(self):
+        """
+        Testing whether or not the threads module works
+        """
+        test_db_dir = APIServer.api_endpoints.config['database_path']
+        test_db_schema = APIServer.api_endpoints.config['table_schema_path']
+        sqlite_db_dir = test_db_dir+".db"
+        if os.path.exists(sqlite_db_dir):
+            os.remove(sqlite_db_dir)
+        sqlite_init(test_db_dir, test_db_schema)
+
+        test_json = read_json('test_data/test_json.json')
+        test_threads_json = read_json('test_data/test_threads_json.json')
+
+        with app.test_client() as c:
+
+            rv = c.post('/alerts', json=test_json)
+            rv = c.post('/alerts', json=test_json)
+
+            rv = c.put('/threads/1', json={ 'text' : 'some comment'})
+            self.assertEqual(rv.status_code, 200)
+
+            rv = c.put('/threads/2', json={ 'text' : 'comment x'})
+            self.assertEqual(rv.status_code, 200)
+
+            rv = c.put('/threads/1', json={ 'text' : 'new comment'})
+            self.assertEqual(rv.status_code, 200)
+
+            rv = c.put('/threads/1', json={ 'text' : '3rd comment'})
+            self.assertEqual(rv.status_code, 200)
+
+            rv = c.put('/threads/2', json={ 'text' : 'comment yy'})
+            self.assertEqual(rv.status_code, 200)
+
+            rv = c.put('/threads/2', json={ 'text' : 'comment zzz'})
+            self.assertEqual(rv.status_code, 200)
+
+            rv = c.get('/threads/1')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [{"1": "some comment"}, {"3": "new comment"}, {"4": "3rd comment"}])
+
+            rv = c.get('/threads/2')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [{"2": "comment x"}, {"5": "comment yy"}, {"6": "comment zzz"}])
+       
+    def test_threads_err(self):
+        """
+        Testing whether or not the threads module returns 404 code when a thread does not exist
+        """
+        test_db_dir = APIServer.api_endpoints.config['database_path']
+        test_db_schema = APIServer.api_endpoints.config['table_schema_path']
+        sqlite_db_dir = test_db_dir+".db"
+        if os.path.exists(sqlite_db_dir):
+            os.remove(sqlite_db_dir)
+        sqlite_init(test_db_dir, test_db_schema)
+
+        with app.test_client() as c:
+
+            rv = c.put('/threads/1', json={ 'text' : 'some comment'})
+            self.assertEqual(rv.status_code, 404)
+
+            rv = c.get('/threads/1')
+            self.assertEqual(rv.status_code, 404)
+
        
 if __name__ == "__main__":
     main()
