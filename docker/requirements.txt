@@ -7,3 +7,5 @@ flask-cors
 propargs
 seaborn
 flask-sqlalchemy
+flask-marshmallow
+marshmallow-sqlalchemy
