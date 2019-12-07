@@ -1,7 +1,7 @@
 # SOCNET API server
-from flask import Flask, request
+from flask import request
 from flask_restplus import Resource, Api
-from flask_cors import CORS
+from APIServer import create_app
 from APIServer.commons.form_api import get_alert_form
 from APIServer.commons.api_utils import read_json
 
@@ -13,15 +13,18 @@ from APIServer.alerts.operations import read_alert
 from APIServer.alerts.operations import update_alert
 from APIServer.alerts.operations import delete_alert
 from APIServer.alerts.operations import read_alert_country
+from APIServer.alerts.operations import read_all_alerts_beta
+from APIServer.alerts.operations import write_alert_beta
 
-app = Flask(__name__)
-CORS(app)
-api = Api(app, title='SOCNET API')
 
 CONFIG_PATH = 'api_config.json'
 config = read_json(CONFIG_PATH)
 if config.get('Error:', None):
     config = read_json('APIServer/' + CONFIG_PATH)
+
+app = create_app(config)
+
+api = Api(app, title='SOCNET API')
 
 app.config.SWAGGER_UI_DOC_EXPANSION = 'list'
 
@@ -129,6 +132,22 @@ class Comments(Resource):
         Post a new comment under a thread(thread id is given)
         """
         return {"message": "Successs"}, 200
+
+
+@api.route('/alerts_beta')
+class AlertsListsBeta(Resource):
+    def get(self):
+        """
+        Get all alerts
+        """
+        return read_all_alerts_beta()
+
+    @api.expect(alert)
+    def post(self):
+        """
+        Put a new alert into the system
+        """
+        return write_alert_beta(request.json)
 
 
 if __name__ == '__main__':
