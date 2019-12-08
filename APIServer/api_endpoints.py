@@ -46,10 +46,15 @@ class Endpoints(Resource):
         """
         List our endpoints.
         """
-        endpoints = sorted(rule.rule for rule in api.app.url_map.iter_rules())
-        endpoints = list(filter(lambda x: not x.startswith('/swagger')
-                                and not x.startswith('/static')
-                                and not x == '/', endpoints))
+        # invalid_rules = ['/swagger', '/static', '/']
+
+        rules = [rule for rule in api.app.url_map.iter_rules()]
+        endpoints = [[rule.rule, list(rule.methods)] for rule in rules]
+        for i in range(len(endpoints)):
+            short_methods = list(filter(lambda x:
+                                        x != 'HEAD' and x != 'OPTIONS',
+                                        endpoints[i][1]))
+            endpoints[i][1] = short_methods
         return {"Available endpoints": endpoints}
 
 
