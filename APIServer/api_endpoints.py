@@ -54,14 +54,15 @@ class Endpoints(Resource):
         ]
 
         rules = [rule for rule in api.app.url_map.iter_rules()]
-        endpoints = [[rule.rule, list(rule.methods)] for rule in rules]
-        endpoints = list(filter(lambda x: x[0] not in invalid_rules,
-                                endpoints))
-        for i in range(len(endpoints)):
-            short_methods = list(filter(lambda x:
-                                        x != 'HEAD' and x != 'OPTIONS',
-                                        endpoints[i][1]))
-            endpoints[i][1] = short_methods
+        endpoints = {rule.rule: list(rule.methods) for rule in rules}
+        for ep in list(endpoints.keys()):
+            if ep in invalid_rules:
+                endpoints.pop(ep)
+            else:
+                endpoints[ep] = list(filter(lambda x:
+                                            x != 'HEAD' and x != 'OPTIONS',
+                                            endpoints[ep]))
+
         return {"Available endpoints": endpoints}
 
 
