@@ -82,6 +82,7 @@ class AlertsLists(Resource):
 
 
 @api.route('/alerts/<int:id>')
+@api.doc(params={'id': 'An Alert id number'})
 class Alerts(Resource):
     def get(self, id):
         """
@@ -104,6 +105,7 @@ class Alerts(Resource):
 
 
 @api.route('/alerts/<string:country>')
+@api.doc(params={'country': 'A country to retrieve all alerts from'})
 class AlertByCountry(Resource):
     def get(self, country):
         """
@@ -116,6 +118,7 @@ comment = api.model('Comment', {'text': fields.String})
 
 
 @api.route('/threads/<int:id>')
+@api.doc(params={'id': 'An Alert id number'})
 class Threads(Resource):
     def get(self, id):
         """
