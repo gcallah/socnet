@@ -46,10 +46,17 @@ class Endpoints(Resource):
         """
         List our endpoints.
         """
-        # invalid_rules = ['/swagger', '/static', '/']
+        invalid_rules = [
+            "/",
+            "/swagger.json",
+            "/swaggerui/<path:filename>",
+            "/static/<path:filename>"
+        ]
 
         rules = [rule for rule in api.app.url_map.iter_rules()]
         endpoints = [[rule.rule, list(rule.methods)] for rule in rules]
+        endpoints = list(filter(lambda x: x[0] not in invalid_rules,
+                                endpoints))
         for i in range(len(endpoints)):
             short_methods = list(filter(lambda x:
                                         x != 'HEAD' and x != 'OPTIONS',
