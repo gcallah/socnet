@@ -53,15 +53,29 @@ class Endpoints(Resource):
             "/static/<path:filename>"
         ]
 
+        def get_rule_method(rule):
+            rule_class = app.view_functions[rule.endpoint].view_class
+            methods = list(app.view_functions[rule.endpoint].methods)
+            method_dict = {}
+
+            for m in methods:
+                if m == 'GET':
+                    method_dict[m] = rule_class.get.__doc__.strip()
+                elif m == 'PUT':
+                    method_dict[m] = rule_class.put.__doc__.strip()
+                elif m == 'POST':
+                    method_dict[m] = rule_class.post.__doc__.strip()
+                elif m == 'DELETE':
+                    method_dict[m] = rule_class.delete.__doc__.strip()
+                else:
+                    method_dict[m] = 'NO DOC'
+
+            return method_dict
+
         rules = [rule for rule in api.app.url_map.iter_rules()]
-        endpoints = {rule.rule: list(rule.methods) for rule in rules}
-        for ep in list(endpoints.keys()):
-            if ep in invalid_rules:
-                endpoints.pop(ep)
-            else:
-                endpoints[ep] = list(filter(lambda x:
-                                            x != 'HEAD' and x != 'OPTIONS',
-                                            endpoints[ep]))
+        rules = list(filter(lambda x: x.rule not in invalid_rules, rules))
+
+        endpoints = {rule.rule: get_rule_method(rule) for rule in rules}
 
         return {"Available endpoints": endpoints}
 
