@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Loader, Dimmer } from 'semantic-ui-react';
 import Header from './Header';
@@ -42,6 +43,7 @@ class Home extends Component {
     return (
       <div className="container">
         <Header title="Socnet" />
+        <Link to='/createAlert'><button type="button" className="btn btn-primary">Create Alert</button></Link>
         {alerts.map((alert) =>{
           return (
             <Alert
