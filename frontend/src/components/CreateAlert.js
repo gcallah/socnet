@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Loader, Dimmer } from 'semantic-ui-react';
 import Header from './Header';
 import FormInputField from './FormInputField';
+import moment from 'moment';
 
 class Home extends Component {
   constructor(props) {
@@ -42,8 +42,19 @@ class Home extends Component {
     })
   }
 
-  handleSubmit = () => {
+  handleSubmit = async(event) => {
     console.log(this.state.payload);
+    event.preventDefault();
+    const { payload } = this.state;
+    const { history } = this.props;
+    payload['event_datetime'] = moment(new Date().toLocaleString()).format('YYYY/MM/DD h:mm:ss');
+    try {
+      const res = await axios.put(`${this.apiServer}alerts`, payload);
+      history.push('/');
+    } catch (e) {
+      console.log(e)
+    }
+
   }
 
   render() {
@@ -77,7 +88,7 @@ class Home extends Component {
               }
             })}
           </div>
-          <Link to="/"><button onClick={this.handleSubmit} type="button" className="btn btn-primary">Create</button></Link>
+          <button onClick={this.handleSubmit} type="button" className="btn btn-primary">Create</button>
         </form>
       </div>
     );
