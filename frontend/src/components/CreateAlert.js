@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Loader, Dimmer } from 'semantic-ui-react';
 import Header from './Header';
 import { FormControl, Form, Button, InputGroup } from 'react-bootstrap';
-import FormInputField from './FormInputField';
-import Input from '../components/Input';
-
-
+import FormInputField from './FormInputField'
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -44,8 +40,19 @@ class Home extends Component {
     })
   }
 
-  handleSubmit = () => {
+  handleSubmit = async(event) => {
     console.log(this.state.payload);
+    event.preventDefault();
+    const { payload } = this.state;
+    const { history } = this.props;
+    payload['event_datetime'] = moment(new Date().toLocaleString()).format('YYYY/MM/DD h:mm:ss');
+    try {
+      const res = await axios.put(`${this.apiServer}alerts`, payload);
+      history.push('/');
+    } catch (e) {
+      console.log(e)
+    }
+
   }
   formatItem = (item) => {
     if (item.includes("event")){
@@ -99,7 +106,6 @@ class Home extends Component {
             </Button>
           </Form>
           </div>
-
         </form>
       </div>
     );
