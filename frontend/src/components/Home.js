@@ -43,7 +43,12 @@ class Home extends Component {
       <div className="container">
         <Header title="Socnet" />
         {alerts.map((alert) =>{
-          return <Alert data={alert}/>
+          return (
+            <Alert
+              data={alert}
+              key={alert[0]}
+            />
+          )
         })}
       </div>
     );
