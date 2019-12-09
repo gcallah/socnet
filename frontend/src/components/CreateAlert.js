@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Loader, Dimmer } from 'semantic-ui-react';
 import Header from './Header';
+import { FormControl, Form, Button, InputGroup } from 'react-bootstrap';
 import FormInputField from './FormInputField';
+import Input from '../components/Input';
+
 
 class Home extends Component {
   constructor(props) {
@@ -32,7 +35,6 @@ class Home extends Component {
       console.log('error')
     }
   }
-
   propChanged = (e) => {
     const { properties } = this.state;
     const { name, value } = e.target;
@@ -45,7 +47,15 @@ class Home extends Component {
   handleSubmit = () => {
     console.log(this.state.payload);
   }
-
+  formatItem = (item) => {
+    if (item.includes("event")){
+      item=item.substring(6,item.length);
+    }
+    else {
+      item="sender's name";
+    }
+    return item;
+  }
   render() {
     const { loadingData, properties, requiredProperties } = this.state
 
@@ -58,26 +68,38 @@ class Home extends Component {
     }
 
     return (
+
       <div className="container">
+        <div>
         <Header title="Socnet" />
+        </div>
         <form>
           <div className="container">
+          <Form className="container-fluid mt-4">
             {Object.keys(properties).map((item) => {
               if (item !== 'event_datetime') {
                 return (
-                  <FormInputField
-                    label={item}
-                    type={properties[item].type}
-                    placeholder={properties[item].example}
-                    name={item}
-                    key={item}
-                    propChanged={this.propChanged}
-                  />
+                  <InputGroup className="mb-3">
+                    <InputGroup.Prepend>
+                      <InputGroup.Text id="basic-addon1">
+                      {this.formatItem(item)}
+                      </InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <FormControl
+                      placeholder={properties[item].example}
+                      aria-label="Username"
+                      aria-describedby="basic-addon1"
+                    />
+                  </InputGroup>
                 );
               }
             })}
+            <Button variant="primary" type="submit">
+              Submit Alert
+            </Button>
+          </Form>
           </div>
-          <Link to="/"><button onClick={this.handleSubmit} type="button" className="btn btn-primary">Create</button></Link>
+
         </form>
       </div>
     );
