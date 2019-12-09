@@ -13,7 +13,7 @@ class Alert extends Component {
   render() {
     const { eventDetails } = this.state;
     return (
-      <Card>
+      <Card className="m-3">
         <Card.Header as="h5">{ eventDetails[6] }</Card.Header>
         <Card.Body>
           <Card.Title>{ eventDetails[7] }</Card.Title>
