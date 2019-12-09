@@ -11,9 +11,11 @@ class Home extends Component {
     this.state = {
       loadingData: false,
       properties: {},
-      requiredProperties: []
+      requiredProperties: [],
+      payload: {}
     };
     this.apiServer = 'http://socnet.pythonanywhere.com/'
+
   }
 
   async componentDidMount() {
@@ -29,6 +31,19 @@ class Home extends Component {
     } catch (e) {
       console.log('error')
     }
+  }
+
+  propChanged = (e) => {
+    const { properties } = this.state;
+    const { name, value } = e.target;
+    properties[name] = value
+    this.setState({
+      payload: properties,
+    })
+  }
+
+  handleSubmit = () => {
+    console.log(this.state.payload);
   }
 
   render() {
@@ -56,12 +71,13 @@ class Home extends Component {
                     placeholder={properties[item].example}
                     name={item}
                     key={item}
+                    propChanged={this.propChanged}
                   />
                 );
               }
             })}
           </div>
-          <Link to='/'><button type="button" className="btn btn-primary">Create</button></Link>
+          <Link to="/"><button onClick={this.handleSubmit} type="button" className="btn btn-primary">Create</button></Link>
         </form>
       </div>
     );

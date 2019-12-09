@@ -2,7 +2,7 @@ import React from 'react';
 
 function FormInputField(props) {
   const {
-    label, name, type, placeholder,
+    label, name, type, placeholder, propChanged
   } = props;
   return (
     <div key={label} className="form-group">
@@ -19,10 +19,11 @@ function FormInputField(props) {
         <input
           id={name}
           type={type}
-          className="col-sm-2 col-md-2 col-lg-2"
+          className="col-md-7"
           style={{ fontSize: '15pt' }}
           placeholder={placeholder}
           name={name}
+          onChange={propChanged}
         />
         <br />
       </div>
