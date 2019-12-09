@@ -3,7 +3,8 @@ import axios from 'axios';
 import { Loader, Dimmer } from 'semantic-ui-react';
 import Header from './Header';
 import { FormControl, Form, Button, InputGroup } from 'react-bootstrap';
-import FormInputField from './FormInputField'
+import FormInputField from './FormInputField';
+import moment from 'react-moment';
 class Home extends Component {
   constructor(props) {
     super(props);
