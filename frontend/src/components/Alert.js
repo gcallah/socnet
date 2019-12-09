@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Card from 'react-bootstrap/Card';
 
 class Alert extends Component {
   constructor(props){
@@ -12,11 +13,13 @@ class Alert extends Component {
     const { eventDetails } = this.state;
 
     return (
-      <div style={{ marginBottom: '15px' }}>
-        {eventDetails.map((i) => {
-          return <div>{i}</div>
-        })}
-      </div>
+      <Card>
+        <div style={{ marginBottom: '15px' }}>
+          {eventDetails.map((i) => {
+            return <div>{i}</div>
+          })}
+        </div>
+      </Card>
     );
   }
 }
