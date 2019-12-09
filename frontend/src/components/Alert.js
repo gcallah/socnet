@@ -14,11 +14,15 @@ class Alert extends Component {
     const { eventDetails } = this.state;
     return (
       <Card>
-        <Card.Header as="h5">{ eventDetails[0] }</Card.Header>
+        <Card.Header as="h5">{ eventDetails[6] }</Card.Header>
         <Card.Body>
-          <Card.Title>{ eventDetails[6] }</Card.Title>
+          <Card.Title>{ eventDetails[7] }</Card.Title>
           <Card.Text>
-            { eventDetails[7] }
+            { `${eventDetails[3]}, ${eventDetails[4]} ${eventDetails[2]}, ${eventDetails[5]} at ${eventDetails[1]}` }
+            <br />
+            { `Priority: ${eventDetails[8]}` }
+            <br />
+            { `Author: ${eventDetails[9]}` }
           </Card.Text>
           <Button variant="dark">View Thread</Button>
         </Card.Body>
