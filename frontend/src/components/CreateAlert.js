@@ -4,7 +4,7 @@ import { Loader, Dimmer } from 'semantic-ui-react';
 import Header from './Header';
 import { FormControl, Form, Button, InputGroup } from 'react-bootstrap';
 import FormInputField from './FormInputField';
-import moment from 'react-moment';
+import moment from 'moment';
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +14,9 @@ class Home extends Component {
       requiredProperties: [],
       payload: {}
     };
-    this.apiServer = 'http://socnet.pythonanywhere.com/'
+
+    this.apiServer = 'http://socnet.pythonanywhere.com/';
+    this.handleSubmit = this.handleSubmit.bind(this);
 
   }
 
@@ -27,29 +29,35 @@ class Home extends Component {
         requiredProperties: res.data.required,
         loadingData: false,
       })
-      console.log(this.state.form.properties);
     } catch (e) {
       console.log('error')
     }
   }
-  propChanged = (e) => {
+  propChanged = (e, item) => {
+
     const { properties } = this.state;
     const { name, value } = e.target;
-    properties[name] = value
+    console.log("props changed properties ", properties);
+    properties[item] = value;
     this.setState({
       payload: properties,
     })
   }
 
   handleSubmit = async(event) => {
-    console.log(this.state.payload);
+    console.log("event is ", this.inputNode);
+    console.log("before payload", this.state.payload);
     event.preventDefault();
     const { payload } = this.state;
     const { history } = this.props;
-    payload['event_datetime'] = moment(new Date().toLocaleString()).format('YYYY/MM/DD h:mm:ss');
+
+    payload["event_datetime"] = moment(new Date().toLocaleString()).format('YYYY/MM/DD h:mm:ss');
+    console.log("after payload", payload);
     try {
-      const res = await axios.put(`${this.apiServer}alerts`, payload);
+
+      const res = await axios.post(`${this.apiServer}alerts`, payload);
       history.push('/');
+
     } catch (e) {
       console.log(e)
     }
@@ -78,33 +86,30 @@ class Home extends Component {
     return (
 
       <div className="container">
-        <div>
-        <Header title="Socnet" />
-        </div>
+      <div>
+      <Header title="Socnet" />
+      </div>
         <form>
-          <div className="container">
+          <div className="container" style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '60vh'}} >
           <Form className="container-fluid mt-4">
             {Object.keys(properties).map((item) => {
               if (item !== 'event_datetime') {
                 return (
                   <InputGroup className="mb-3">
                     <InputGroup.Prepend>
-                      <InputGroup.Text id="basic-addon1">
-                      {this.formatItem(item)}
-                      </InputGroup.Text>
+                      <InputGroup.Text id="basic-addon1">{this.formatItem(item)}</InputGroup.Text>
                     </InputGroup.Prepend>
                     <FormControl
                       placeholder={properties[item].example}
                       aria-label="Username"
                       aria-describedby="basic-addon1"
+                      onChange={e => this.propChanged(e, item)}
                     />
                   </InputGroup>
                 );
               }
             })}
-            <Button variant="primary" type="submit">
-              Submit Alert
-            </Button>
+            <Button variant="primary" type="submit" onClick= {e => this.handleSubmit(e)}>Submit Alert</Button>
           </Form>
           </div>
         </form>
