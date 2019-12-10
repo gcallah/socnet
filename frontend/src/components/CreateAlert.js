@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Loader, Dimmer } from 'semantic-ui-react';
-import Header from './Header';
-import { FormControl, Form, Button, InputGroup } from 'react-bootstrap';
+import { FormControl, Form, Button, InputGroup, Card } from 'react-bootstrap';
 import FormInputField from './FormInputField';
 import moment from 'moment';
+import { Header, Icon, Image, Segment } from 'semantic-ui-react';
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -86,8 +87,13 @@ class Home extends Component {
     return (
 
       <div className="container">
-      <div>
-      <Header title="Socnet" />
+      <div className="container mt-5">
+      <Segment placeholde >
+        <Header icon>
+          <Icon name='shield alternate' circular/>
+          Please help us stay safe by entering the information about the incident you wish to report.
+        </Header>
+        </Segment>
       </div>
         <form>
           <div className="container" style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '60vh'}} >
@@ -109,7 +115,7 @@ class Home extends Component {
                 );
               }
             })}
-            <Button variant="primary" type="submit" onClick= {e => this.handleSubmit(e)}>Submit Alert</Button>
+            <Button variant="outline-secondary" type="submit" onClick= {e => this.handleSubmit(e)}>Submit Alert</Button>
           </Form>
           </div>
         </form>
