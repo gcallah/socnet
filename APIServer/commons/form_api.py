@@ -52,23 +52,17 @@ def validate_alert(alert_format, type_dict, alert):
         return True, ''
             
     required = alert_format.get('required', None)
-    if required is not None:
-        properties = alert_format.get('properties', None)
-        for r in required:
-            test = alert.get(r, None)
-            if test is None:
-                return False, 'Missing {}'.format(r)
-            else:
-                check, mess = test_prop(properties[r], test)
-                if check is False:
-                    return False, mess
-        check, mess = test_all_prop(properties, alert)
-        if check is False:
-            return False, mess
-
-    else:
-        check, mess = test_all_prop(alert_format, alert)
-        if check is False:
-            return False, mess
+    properties = alert_format.get('properties', None)
+    for r in required:
+        test = alert.get(r, None)
+        if test is None:
+            return False, 'Missing {}'.format(r)
+        else:
+            check, mess = test_prop(properties[r], test)
+            if check is False:
+                return False, mess
+    check, mess = test_all_prop(properties, alert)
+    if check is False:
+        return False, mess
 
     return True, ''
