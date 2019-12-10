@@ -88,6 +88,7 @@ class Home extends Component {
 
       <div className="container">
       <div className="container mt-5">
+      <style>{'body { background-color: grey; }'}</style>
       <Segment placeholde >
         <Header icon>
           <Icon name='shield alternate' circular/>
@@ -115,7 +116,7 @@ class Home extends Component {
                 );
               }
             })}
-            <Button variant="outline-secondary" type="submit" onClick= {e => this.handleSubmit(e)}>Submit Alert</Button>
+            <Button variant="dark" type="submit" onClick= {e => this.handleSubmit(e)}>Submit Alert</Button>
           </Form>
           </div>
         </form>
