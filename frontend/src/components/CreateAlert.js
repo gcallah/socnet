@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Loader, Dimmer } from 'semantic-ui-react';
-import { FormControl, Form, Button, InputGroup, Card } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import FormInputField from './FormInputField';
 import moment from 'moment';
 import { Header, Icon, Image, Segment } from 'semantic-ui-react';
@@ -96,30 +96,19 @@ class Home extends Component {
         </Header>
         </Segment>
       </div>
-        <form>
-          <div className="container" style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '60vh'}} >
           <Form className="container-fluid mt-4">
             {Object.keys(properties).map((item) => {
-              if (item !== 'event_datetime') {
-                return (
-                  <InputGroup className="mb-3">
-                    <InputGroup.Prepend>
-                      <InputGroup.Text id="basic-addon1">{this.formatItem(item)}</InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <FormControl
-                      placeholder={properties[item].example}
-                      aria-label="Username"
-                      aria-describedby="basic-addon1"
-                      onChange={e => this.propChanged(e, item)}
-                    />
-                  </InputGroup>
-                );
-              }
+              return (
+                <FormInputField
+                  label={this.formatItem(item)}
+                  type={properties[item].type}
+                  placeholder={properties[item].example}
+                  propChanged={e => this.propChanged(e, item)}
+                ></FormInputField>
+              );
             })}
             <Button variant="dark" type="submit" onClick= {e => this.handleSubmit(e)}>Submit Alert</Button>
           </Form>
-          </div>
-        </form>
       </div>
     );
   }

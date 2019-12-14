@@ -1,33 +1,23 @@
 import React from 'react';
+import { FormControl, InputGroup } from 'react-bootstrap';
 
 function FormInputField(props) {
   const {
-    label, name, type, placeholder, propChanged
+    label, type, placeholder, propChanged
   } = props;
   return (
-    <div key={label} className="form-group">
-      <div>
-        <label
-          htmlFor={name}
-          className="col-sm-4 col-md-4 col-lg-4"
-          key={label}
-        >
-          {label}
-          {' '}
-          {' '}
-        </label>
-        <input
-          id={name}
-          type={type}
-          className="col-md-7"
-          style={{ fontSize: '15pt' }}
-          placeholder={placeholder}
-          name={name}
-          onChange={propChanged}
-        />
-        <br />
-      </div>
-    </div>
+    <InputGroup className="mb-3">
+      <InputGroup.Prepend>
+        <InputGroup.Text id="basic-addon1">{label}</InputGroup.Text>
+      </InputGroup.Prepend>
+      <FormControl
+        placeholder={placeholder}
+        type={type}
+        aria-label="Username"
+        aria-describedby="basic-addon1"
+        onChange={propChanged}
+      />
+    </InputGroup>
   );
 }
 
