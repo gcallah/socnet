@@ -8,12 +8,17 @@ class Alert extends Component {
     this.state = {
       eventDetails: this.props.data,
     }
+    this.background = {
+      "Low": "light",
+      "Medium": "warning",
+      "High": "danger",
+    };
   }
 
   render() {
     const { eventDetails } = this.state;
     return (
-      <Card className="m-3">
+      <Card bg={this.background[eventDetails[8]]} className="m-3">
         <Card.Header as="h5">{ eventDetails[6] }</Card.Header>
         <Card.Body>
           <Card.Title>{ eventDetails[7] }</Card.Title>
