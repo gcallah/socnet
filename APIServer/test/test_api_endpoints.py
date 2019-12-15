@@ -70,6 +70,13 @@ class Test(TestCase):
         rv = err_return("error message")
         self.assertEqual(rv, {"Error:": "error message"})
 
+    def test_validate_alert(self):
+        """
+        Testing whether the validate alert function is correctly parsing
+        """
+        test_format = APIServer.api_endpoints.config['format_path']
+
+
     def test_endpoints(self):
         """
         Testing whether or not the available endpoints show the right information
