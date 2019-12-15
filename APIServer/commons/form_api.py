@@ -31,6 +31,9 @@ def validate_alert(alert_format, type_dict, alert):
     """
 
     def test_prop(prop, submitted):
+        """
+        Tests a property against what was submitted.
+        """
         req_type = prop.get('type', None)
         if req_type is not None:
             if submitted is not None:
@@ -45,6 +48,9 @@ def validate_alert(alert_format, type_dict, alert):
             return True, 'Nothing required'
 
     def test_all_prop(all_prop, given):
+        """
+        Tests all properties against the submitted data
+        """
         for p in all_prop.keys():
             check, mess = test_prop(all_prop[p], given.get(p, None))
             if check is False:
