@@ -4,7 +4,7 @@ import { Loader, Dimmer } from 'semantic-ui-react';
 import { Form, Button } from 'react-bootstrap';
 import FormInputField from './FormInputField';
 import moment from 'moment';
-import { Header, Icon, Image, Segment } from 'semantic-ui-react';
+import { Header, Icon, Segment } from 'semantic-ui-react';
 
 class Home extends Component {
   constructor(props) {
@@ -37,9 +37,9 @@ class Home extends Component {
   propChanged = (e, item) => {
 
     const { properties } = this.state;
-    const { name, value } = e.target;
+    const { value } = e.target;
     console.log("props changed properties ", properties);
-    properties[item] = value;
+    properties[item].value = value;
     this.setState({
       payload: properties,
     })
@@ -51,6 +51,13 @@ class Home extends Component {
     event.preventDefault();
     const { payload } = this.state;
     const { history } = this.props;
+
+    Object.keys(payload).map((payloadKey) => {
+      if (payloadKey === "event_severity" && payload[payloadKey].value === "Choose...")
+        payload[payloadKey] = undefined;
+      else
+        payload[payloadKey] = payload[payloadKey].value;
+    });
 
     payload["event_datetime"] = moment(new Date().toLocaleString()).format('YYYY/MM/DD h:mm:ss');
     console.log("after payload", payload);
@@ -73,8 +80,20 @@ class Home extends Component {
     }
     return item;
   }
+  formatType = (type, values) => {
+    if (typeof values === "undefined") {
+      if (type === "datetime") {
+        return "datetime-local";
+      } else {
+        return "text";
+      }
+    } else {
+      return "select";
+    }
+  };
+
   render() {
-    const { loadingData, properties, requiredProperties } = this.state
+    const { loadingData, properties } = this.state
 
     if (loadingData) {
       return (
@@ -101,9 +120,11 @@ class Home extends Component {
               return (
                 <FormInputField
                   label={this.formatItem(item)}
-                  type={properties[item].type}
+                  type={this.formatType(properties[item].type, properties[item].values)}
                   placeholder={properties[item].example}
                   propChanged={e => this.propChanged(e, item)}
+                  values={properties[item].values}
+                  key={this.formatItem(item)}
                 ></FormInputField>
               );
             })}
