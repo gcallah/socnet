@@ -76,8 +76,12 @@ class Test(TestCase):
         """
         with app.test_client() as c:
             rv = c.get('/endpoints')
-            # Disabling test
-            #self.assertEqual(eval(rv.data.decode('utf-8')[:-1])['Available endpoints'], endpoints)
+            endpoints = eval(rv.data.decode('utf-8')[:-1])['Available endpoints']
+            self.assertEqual(type(endpoints), dict)
+            for ep in endpoints:
+                self.assertEqual(type(endpoints[ep]), dict)
+                for method in endpoints[ep]:
+                    self.assertEqual(type(endpoints[ep][method]), str)
 
     def test_alerts(self):
         """
