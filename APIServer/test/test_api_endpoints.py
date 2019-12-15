@@ -4,6 +4,7 @@ from unittest import TestCase, main, skip
 import json
 import random
 import os
+import datetime
 from flask_restplus import Resource, Api, fields
 
 import APIServer.api_endpoints
@@ -75,6 +76,16 @@ class Test(TestCase):
         Testing whether the validate alert function is correctly parsing
         """
         test_format = APIServer.api_endpoints.config['format_path']
+        test_format = read_json(test_format)
+        type_dict = APIServer.api_endpoints.config['format_dict']
+        type_dict = read_json(type_dict)
+        test_submission = {
+                            "event_datetime": datetime.datetime.now(),
+                            "event_type": "Fire",
+                            "event_description": "A Fire",
+                            "msg_sender": "Test"
+                            }
+        rv = validate_alert(test_format, type_dict, test_submission)
 
 
     def test_endpoints(self):
