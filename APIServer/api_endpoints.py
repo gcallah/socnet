@@ -54,10 +54,17 @@ class Endpoints(Resource):
         ]
 
         def get_rule_method(rule):
+            """
+            Function used to look up the methods for endpoints
+            and their related docstrings.
+            """
+            # Accessing class that defines endpoint
             rule_class = app.view_functions[rule.endpoint].view_class
+            # Accessing the methods available to that class/endpoint
             methods = list(app.view_functions[rule.endpoint].methods)
             method_dict = {}
 
+            # Based on available methods, pulls the docstring from the class
             for m in methods:
                 if m == 'GET':
                     method_dict[m] = rule_class.get.__doc__.strip()
