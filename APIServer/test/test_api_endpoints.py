@@ -86,6 +86,10 @@ class Test(TestCase):
                             "msg_sender": "Test"
                             }
         rv = validate_alert(test_format, type_dict, test_submission)
+        self.assertEqual(rv[0], True)
+        test_submission['msg_sender'] = 1
+        rv = validate_alert(test_format, type_dict, test_submission)
+        self.assertEqual(rv[0], False)
 
 
     def test_endpoints(self):
