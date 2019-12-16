@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
@@ -29,7 +30,7 @@ class Alert extends Component {
             <br />
             { `Author: ${eventDetails[9]}` }
           </Card.Text>
-          <Button variant="dark">View Thread</Button>
+          <Link to={`/thread/${this.props.id}`}><button type="button" className="btn btn-primary">View Thread</button></Link>
         </Card.Body>
       </Card>
     );

@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import CreateAlert from './components/CreateAlert';
+import ThreadView from './components/ThreadView';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={ Home } />
           <Route exact path="/createAlert" component={ CreateAlert } />
+          <Route exact path="/thread/:id" component={ ThreadView } />
         </Switch>
       </HashRouter>
     </div>

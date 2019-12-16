@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Loader, Dimmer } from 'semantic-ui-react';
+import { useParams } from 'react-router-dom';
+import Header from './Header';
 
 class ThreadView extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loadingData: false,
-      threadId: this.props.id,
       comments: [],
     }
     this.apiServer = 'http://socnet.pythonanywhere.com/'
@@ -16,7 +17,9 @@ class ThreadView extends Component {
   async componentDidMount() {
     try {
       this.setState({ loadingData: true });
-      const res = await axios.get(`${this.apiServer}threads/${this.threadId}`);
+      console.log(this.props);
+      console.log(`${this.apiServer}threads/${this.state.id}`);
+      const res = await axios.get(`${this.apiServer}threads/${this.props.match.params.id}`);
       this.setState({
         comments: res,
         loadingData: false,
@@ -41,8 +44,10 @@ class ThreadView extends Component {
     return (
       <div className="container">
         <Header title="Socnet" />
-        
+
       </div>
     );
   }
 }
+
+export default ThreadView;

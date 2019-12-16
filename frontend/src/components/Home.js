@@ -49,6 +49,7 @@ class Home extends Component {
             <Alert
               data={alert}
               key={alert[0]}
+              id={alert[0]}
             />
           )
         })}
