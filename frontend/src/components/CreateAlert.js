@@ -106,8 +106,7 @@ class Home extends Component {
 
       <div className="container">
       <div className="container mt-5">
-      <style>{'body { background-color: grey; }'}</style>
-      <Segment placeholde >
+      <Segment placeholder>
         <Header icon>
           <Icon name='shield alternate' circular/>
           Please help us stay safe by entering the information about the incident you wish to report.
