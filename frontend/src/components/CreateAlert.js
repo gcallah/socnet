@@ -16,7 +16,7 @@ class Home extends Component {
       payload: {}
     };
 
-    this.apiServer = 'http://socnet.pythonanywhere.com/';
+    this.apiServer = 'https://socnet.pythonanywhere.com/';
     this.handleSubmit = this.handleSubmit.bind(this);
 
   }

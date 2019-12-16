@@ -12,7 +12,7 @@ class Home extends Component {
       loadingData: false,
       alerts: [],
     };
-    this.apiServer = 'http://socnet.pythonanywhere.com/'
+    this.apiServer = 'https://socnet.pythonanywhere.com/'
   }
 
   async componentDidMount() {
