@@ -87,7 +87,13 @@ class Test(TestCase):
                             }
         rv = validate_alert(test_format, type_dict, test_submission)
         self.assertEqual(rv[0], True)
-        test_submission['msg_sender'] = 1
+        test_submission['event_description'] = 1
+        rv = validate_alert(test_format, type_dict, test_submission)
+        self.assertEqual(rv[0], False)
+        test_submission['event_description'] = None
+        rv = validate_alert(test_format, type_dict, test_submission)
+        self.assertEqual(rv[0], False)
+        test_submission['msg_sender'] = None
         rv = validate_alert(test_format, type_dict, test_submission)
         self.assertEqual(rv[0], False)
 
