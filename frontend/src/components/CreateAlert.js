@@ -59,13 +59,12 @@ class Home extends Component {
         payload[payloadKey] = payload[payloadKey].value;
     });
 
-    payload["event_datetime"] = moment(new Date().toLocaleString()).format('YYYY/MM/DD h:mm:ss');
-    console.log("after payload", payload);
+    payload["event_datetime"] = moment().format("YYYY/MM/DD h:mm:ss");
+    console.log("after payload", moment().format("YYYY/MM/DD h:mm:ss"));
+    
     try {
-
       const res = await axios.post(`${this.apiServer}alerts`, payload);
       history.push('/');
-
     } catch (e) {
       console.log(e)
     }
@@ -117,16 +116,18 @@ class Home extends Component {
       </div>
           <Form className="container-fluid mt-4">
             {Object.keys(properties).map((item) => {
-              return (
-                <FormInputField
-                  label={this.formatItem(item)}
-                  type={this.formatType(properties[item].type, properties[item].values)}
-                  placeholder={properties[item].example}
-                  propChanged={e => this.propChanged(e, item)}
-                  values={properties[item].values}
-                  key={this.formatItem(item)}
-                ></FormInputField>
-              );
+              if (item !== 'event_datetime') {
+                return (
+                  <FormInputField
+                    label={this.formatItem(item)}
+                    type={this.formatType(properties[item].type, properties[item].values)}
+                    placeholder={properties[item].example}
+                    propChanged={e => this.propChanged(e, item)}
+                    values={properties[item].values}
+                    key={this.formatItem(item)}
+                  ></FormInputField>
+                );
+              }
             })}
             <Button variant="dark" type="submit" onClick= {e => this.handleSubmit(e)}>Submit Alert</Button>
           </Form>

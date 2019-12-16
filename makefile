@@ -68,9 +68,5 @@ $(WEB_PUBLIC)/index.html: $(WEBFILES)
 
 deploy_webapp: webapp
 	@echo "After completion you must run `make prod`"
-	git add static/js/*js
-	git add static/js/*map
-	git add $(WEB_DIR)/build/static/js/*js
-	git add $(WEB_DIR)/build/static/js/*map
-	git add $(WEB_DIR)/build/webapp.html
+	git add .
 	cd $(WEB_DIR); npm run deploy
