@@ -17,8 +17,8 @@ class Home extends Component {
     };
 
     this.apiServer = 'https://socnet.pythonanywhere.com/';
+    
     this.handleSubmit = this.handleSubmit.bind(this);
-
   }
 
   async componentDidMount() {
