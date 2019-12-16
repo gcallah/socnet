@@ -7,6 +7,12 @@ REPO = socnet
 DOCKER_DIR = docker
 REQ_DIR = requirements
 API_DIR = APIServer
+WEB_DIR = frontend
+WEB_PUBLIC = $(WEB_DIR)/public
+WEB_SRC = $(WEB_DIR)/src
+WEBFILES = $(shell ls $(WEB_SRC)/*.js)
+WEBFILES += $(shell ls $(WEB_SRC)/components/*.js)
+WEBFILES += $(shell ls $(WEB_SRC)/*.css)
 
 INCS = $(TEMPLATE_DIR)/head.txt $(TEMPLATE_DIR)/logo.txt $(TEMPLATE_DIR)/menu.txt
 
@@ -48,3 +54,23 @@ nocrud:
 
 clean:
 	touch $(PTML_DIR)/*.ptml; make local
+
+webapp: $(WEB_PUBLIC)/index.html
+
+$(WEB_PUBLIC)/index.html: $(WEBFILES)
+	- rm -r static || true
+	- rm webapp.html || true
+	- cd $(WEB_DIR) && \
+	npm run build && \
+	mv build/index.html build/webapp.html && \
+	cp -r build/* .. && \
+	cd ..
+
+deploy_webapp: webapp
+	@echo "After completion you must run `make prod`"
+	git add static/js/*js
+	git add static/js/*map
+	git add $(WEB_DIR)/build/static/js/*js
+	git add $(WEB_DIR)/build/static/js/*map
+	git add $(WEB_DIR)/build/webapp.html
+	cd $(WEB_DIR); npm run deploy
