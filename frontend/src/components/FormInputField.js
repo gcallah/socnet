@@ -3,7 +3,7 @@ import { FormControl, InputGroup } from 'react-bootstrap';
 
 function FormInputField(props) {
   const {
-    label, type, placeholder, propChanged, values
+    label, type, placeholder, propChanged, values, errorMessage
   } = props;
   if (typeof values !== "undefined") {
     return (
@@ -15,12 +15,14 @@ function FormInputField(props) {
           placeholder={placeholder}
           as={type}
           onChange={propChanged}
+          required
         >
           <option key="Choose...">Choose...</option>
           {values.map((value) => {
             return (<option key={value}>{value}</option>);
           })}
         </FormControl>
+        <div>{errorMessage}</div>
       </InputGroup>
     );
   } else {
@@ -33,6 +35,7 @@ function FormInputField(props) {
           placeholder={placeholder}
           type={type}
           onChange={propChanged}
+          required
         />
       </InputGroup>
     );

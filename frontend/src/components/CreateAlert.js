@@ -49,13 +49,14 @@ class Home extends Component {
     console.log("event is ", this.inputNode);
     console.log("before payload", this.state.payload);
     event.preventDefault();
+
     const { payload } = this.state;
     const { history } = this.props;
 
     Object.keys(payload).map((payloadKey) => {
-      if (payloadKey === "event_severity" && payload[payloadKey].value === "Choose...")
-        payload[payloadKey] = undefined;
-      else
+      if (payloadKey === "event_severity" && payload[payloadKey].value === undefined) {
+        payload[payloadKey] = 'Low';
+      } else
         payload[payloadKey] = payload[payloadKey].value;
     });
 
@@ -63,7 +64,7 @@ class Home extends Component {
     console.log("after payload", moment().format("YYYY/MM/DD h:mm:ss"));
     
     try {
-      const res = await axios.post(`${this.apiServer}alerts`, payload);
+      await axios.post(`${this.apiServer}alerts`, payload);
       history.push('/');
     } catch (e) {
       console.log(e)
@@ -92,7 +93,7 @@ class Home extends Component {
   };
 
   render() {
-    const { loadingData, properties } = this.state
+    const { loadingData, properties, errorMessage } = this.state
 
     if (loadingData) {
       return (
@@ -113,7 +114,7 @@ class Home extends Component {
         </Header>
         </Segment>
       </div>
-          <Form className="container-fluid mt-4">
+          <Form className="container-fluid mt-4" onSubmit={e => this.handleSubmit(e)}>
             {Object.keys(properties).map((item) => {
               if (item !== 'event_datetime') {
                 return (
@@ -124,11 +125,12 @@ class Home extends Component {
                     propChanged={e => this.propChanged(e, item)}
                     values={properties[item].values}
                     key={this.formatItem(item)}
+                    errorMessage={errorMessage}
                   ></FormInputField>
                 );
               }
             })}
-            <Button variant="dark" type="submit" onClick= {e => this.handleSubmit(e)}>Submit Alert</Button>
+            <Button variant="dark" type="submit">Submit Alert</Button>
           </Form>
       </div>
     );
