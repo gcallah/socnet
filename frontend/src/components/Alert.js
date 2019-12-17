@@ -29,7 +29,7 @@ class Alert extends Component {
             <br />
             { `Author: ${eventDetails[9]}` }
           </Card.Text>
-          <Link to={`/thread/${this.props.id}`}><button type="button" className="btn btn-primary">View Thread</button></Link>
+          <Link to={`/thread/${this.props.id}`}><button type="button" className="btn btn-dark">View Thread</button></Link>
         </Card.Body>
       </Card>
     );
