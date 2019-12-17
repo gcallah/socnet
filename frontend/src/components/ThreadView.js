@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Loader, Dimmer } from 'semantic-ui-react';
 import Header from './Header';
+import Alert from './Alert';
 import { ListGroup, InputGroup, FormControl, Button } from 'react-bootstrap';
 
 class ThreadView extends Component {
@@ -10,6 +11,7 @@ class ThreadView extends Component {
     this.state = {
       loadingData: false,
       comments: [],
+      alert: [],
     }
     this.apiServer = 'https://socnet.pythonanywhere.com/'
 
@@ -21,9 +23,11 @@ class ThreadView extends Component {
       this.setState({ loadingData: true });
       console.log(this.props);
       const res = await axios.get(`${this.apiServer}threads/${this.props.match.params.id}`);
+      const alert = await axios.get(`${this.apiServer}alerts/${this.props.match.params.id}`);
       this.setState({
         comments: res.data,
         loadingData: false,
+        alert: alert.data[0],
       })
       console.log(this.state.comments);
     } catch (e) {
@@ -59,7 +63,7 @@ class ThreadView extends Component {
   }
 
   render() {
-    const { loadingData, comments } = this.state;
+    const { loadingData, comments, alert } = this.state;
 
     if (loadingData) {
       return(
@@ -72,6 +76,10 @@ class ThreadView extends Component {
     return (
       <div className="container">
         <Header title="Socnet" />
+        <Alert
+          data={alert}
+          id={alert[0]}
+        />
         <ListGroup>
           {comments.map((comment, i) => {
             return(

@@ -17,6 +17,7 @@ class Alert extends Component {
 
   render() {
     const { eventDetails } = this.state;
+    const { linkable } = this.props
     return (
       <Card bg={this.background[eventDetails[8]]} className="m-3">
         <Card.Header as="h5">{ eventDetails[6] }</Card.Header>
@@ -29,7 +30,7 @@ class Alert extends Component {
             <br />
             { `Author: ${eventDetails[9]}` }
           </Card.Text>
-          <Link to={`/thread/${this.props.id}`}><button type="button" className="btn btn-dark">View Thread</button></Link>
+          {linkable ? <Link to={`/thread/${this.props.id}`}><button type="button" className="btn btn-dark">View Thread</button></Link> : null}
         </Card.Body>
       </Card>
     );

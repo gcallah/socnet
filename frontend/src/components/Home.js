@@ -50,6 +50,7 @@ class Home extends Component {
               data={alert}
               key={alert[0]}
               id={alert[0]}
+              linkable
             />
           )
         })}
