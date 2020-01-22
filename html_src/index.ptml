@@ -23,9 +23,11 @@
         </p>
 
         <p>
-            Our "minimal viable product" server will exist at
-            <a href="http://socnet.pythonanywhere.com">this location</a>;
-            we are working out a few kinks in our deployment here!
+            Our "minimal viable product" server exists at
+            <a href="http://socnet.pythonanywhere.com">this location</a>.
+            We are also building a
+            <a href="https://gcallah.github.io/socnet/webapp.html#/">sample
+                front-end app</a> to illustrate how to use the API. 
         </p>
 
         <figure>
