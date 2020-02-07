@@ -1,0 +1,48 @@
+{
+    "required": ["event_datetime", "event_zipcode", "event_city","event_state","event_country", "event_type", "event_severity", "msg_sender"],
+    "properties": {
+        "datetime": {
+            "required": true,
+            "type": "datetime",
+            "description": "When did event occur?",
+            "example": "2019-11-01 17:45:32"
+        },
+        "event_zipcode": {
+            "type": "string",
+            "example": "10001"
+        },
+        "event_city": {
+            "type": "string",
+            "example": "New York City"
+        },
+        "event_state": {
+            "type": "string",
+            "example": "New York"
+        },
+        "event_country": {
+            "type": "string",
+            "example": "USA"
+        },
+        "event_type": {
+            "type": "string",
+            "description": "What is the type of emergecy?",
+            "example": "Fire"
+        },
+        "event_description": {
+            "type": "string",
+            "description": "What is the emergency?",
+            "example": "Some description"
+        },
+        "event_severity": {
+            "type": "string",
+            "values": ["High", "Medium", "Low"],
+            "description": "How severe is the emergency?",
+            "example": "Low"
+        },
+        "msg_sender": {
+            "type": "string",
+            "description": "Who is sending the alert?",
+            "example": "Sender Name"
+        }
+    }
+}
