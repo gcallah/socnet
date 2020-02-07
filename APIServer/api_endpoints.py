@@ -50,6 +50,15 @@ class Endpoints(Resource):
         return get_endpoints(api, app)
 
 
+@api.route('/alert_format')
+class MessageFormat(Resource):
+    def get(self):
+        """
+        Get the format of an alert
+        """
+        return get_alert_form(config['format_path'])
+
+
 @api.route('/form')
 class MessageFormat(Resource):
     def get(self):
