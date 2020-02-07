@@ -7,33 +7,33 @@
             "description": "When did event occur?",
             "example": "2019-11-01 17:45:32"
         },
-        "event_zipcode": {
+        "zipcode": {
             "type": "string",
             "example": "10001"
         },
-        "event_city": {
+        "city": {
             "type": "string",
             "example": "New York City"
         },
-        "event_state": {
+        "state": {
             "type": "string",
             "example": "New York"
         },
-        "event_country": {
+        "country": {
             "type": "string",
             "example": "USA"
         },
-        "event_type": {
+        "type": {
             "type": "string",
             "description": "What is the type of emergecy?",
             "example": "Fire"
         },
-        "event_description": {
+        "description": {
             "type": "string",
             "description": "What is the emergency?",
             "example": "Some description"
         },
-        "event_severity": {
+        "severity": {
             "type": "string",
             "values": ["High", "Medium", "Low"],
             "description": "How severe is the emergency?",
