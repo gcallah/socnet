@@ -20,6 +20,8 @@ from APIServer.alerts.operations import write_alert_beta
 from APIServer.threads.operations import get_comments
 from APIServer.threads.operations import add_comment
 
+from APIServer.slack.push import push_to_slack
+
 CONFIG_PATH = 'api_config.json'
 config = read_json(CONFIG_PATH)
 if config.get('Error:', None):
@@ -154,6 +156,16 @@ class AlertsListsBeta(Resource):
         Put a new alert into the system
         """
         return write_alert_beta(request.json)
+
+
+@api.route('/slack_alerts')
+class SlackAlerts(Resource):
+    def get(self):
+        """
+        Get all alerts and send it to Slack
+        """
+        text = read_all_alerts(config['database_path'])
+        return push_to_slack(text)
 
 
 if __name__ == '__main__':
