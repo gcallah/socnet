@@ -2,6 +2,7 @@
   "host": "127.0.0.1",
   "port": 8000,
   "debug": true,
+  "alert_format_path": "APIServer/formats/alert_format.json",
   "format_path": "APIServer/formats/alert.json",
   "format_dict": "APIServer/formats/alert_type_dict.json",
   "database_path": "APIServer/db_temp",

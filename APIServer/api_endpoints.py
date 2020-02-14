@@ -23,6 +23,7 @@ from APIServer.threads.operations import add_comment
 from APIServer.slack.push import push_to_slack
 
 CONFIG_PATH = 'api_config.json'
+# config is a dictionary of configuration params:
 config = read_json(CONFIG_PATH)
 if config.get('Error:', None):
     config = read_json('APIServer/' + CONFIG_PATH)
@@ -58,7 +59,7 @@ class AlertFormat(Resource):
         """
         Get the format of an alert
         """
-        return get_alert_form(config['format_path'])
+        return get_alert_form(config['alert_format_path'])
 
 
 @api.route('/form')
@@ -70,7 +71,8 @@ class MessageFormat(Resource):
         return get_alert_form(config['format_path'])
 
 
-alert = api.schema_model('Alert', get_alert_form(config['format_path']))
+alert = api.schema_model('Alert',
+                         get_alert_form(config['format_path']))
 
 
 @api.route('/alerts')
