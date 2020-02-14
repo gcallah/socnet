@@ -5,3 +5,4 @@ flask-cors
 flask-sqlalchemy
 flask-marshmallow
 marshmallow-sqlalchemy
+requests
