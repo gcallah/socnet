@@ -167,6 +167,15 @@ class SlackAlerts(Resource):
         text = read_all_alerts(config['database_path'])
         return push_to_slack(text)
 
+@api.route('/slack_alert/<int:id>')
+@api.doc(params={'id': 'An Alert id number'})
+class SlackAlert(Resource):
+    def get(self, id):
+        """
+        Get a specific alert with the given alert id and send it to Slack
+        """
+        text = read_alert(config['database_path'], id)
+        return push_to_slack(text)
 
 if __name__ == '__main__':
     sqlite_init(config['database_path'], config['table_schema_path'])
