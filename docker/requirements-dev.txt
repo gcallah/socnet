@@ -1,7 +1,0 @@
--r requirements.txt
-jupyter
-flake8
-coverage
-nose
-selenium
-urllib3

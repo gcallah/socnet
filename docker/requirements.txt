@@ -1,8 +1,0 @@
-werkzeug==0.16.1
-numpy
-flask
-flask_restplus
-flask-cors
-flask-sqlalchemy
-flask-marshmallow
-marshmallow-sqlalchemy
