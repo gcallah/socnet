@@ -1,12 +1,8 @@
-ipython
-matplotlib
+werkzeug==0.16.1
 numpy
 flask
-werkzeug==0.16.1
 flask_restplus
 flask-cors
-propargs
-seaborn
 flask-sqlalchemy
 flask-marshmallow
 marshmallow-sqlalchemy
