@@ -185,11 +185,9 @@ class SlackAlert(Resource):
 class SlackEcho(Resource):
     def post(self):
         """
-        An API for echoing back Slack messages
+        A test API for echoing back Slack messages
         """
-        username = request.json['json']['user_name']
-        text = request.json['json']['text']
-        return push_to_slack(username + ':' + text)
+        return request.json
 
 
 if __name__ == '__main__':
