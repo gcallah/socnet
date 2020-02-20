@@ -7,6 +7,7 @@
     "@babel/runtime": "^7.7.4",
     "axios": "^0.19.0",
     "bootstrap": "^4.4.1",
+    "file": "^0.2.2",
     "gh-pages": "^2.1.1",
     "moment": "^2.24.0",
     "react": "^16.12.0",

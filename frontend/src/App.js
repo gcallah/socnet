@@ -6,6 +6,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import CreateAlert from './components/CreateAlert';
 import ThreadView from './components/ThreadView';
+import FilterForm from './components/FilterForm';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route exact path="/" component={ Home } />
           <Route exact path="/createAlert" component={ CreateAlert } />
           <Route exact path="/thread/:id" component={ ThreadView } />
+          <Route exact path ="/filterForm" component = {FilterForm} />
         </Switch>
       </HashRouter>
     </div>
