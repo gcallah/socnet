@@ -1,5 +1,5 @@
 # SOCNET API server
-from flask import request
+from flask import request, jsonify
 from APIServer import create_app
 from flask_restplus import Resource, Api, fields
 from APIServer.commons.form_api import get_alert_form
@@ -21,6 +21,9 @@ from APIServer.threads.operations import get_comments
 from APIServer.threads.operations import add_comment
 
 from APIServer.slack.push import push_to_slack
+
+from APIServer.telegram.config import TELEGRAM_INIT_WEBHOOK_URL
+from APIServer.telegram.telegram_bot import TelegramBot
 
 CONFIG_PATH = 'api_config.json'
 # config is a dictionary of configuration params:
@@ -191,6 +194,30 @@ class SlackEcho(Resource):
         text = request.form['text']
         return push_to_slack(user + ' : ' + text)
 
+TelegramBot.init_webhook(TELEGRAM_INIT_WEBHOOK_URL)
+@app.route('/telegram_webhook', methods=['POST'])
+def telegram_webhook():
+    """
+        API Webhook for telegram
+    """
+    req = request.get_json()
+    bot = TelegramBot()
+    bot.parse_webhook_data(req)
+    success = bot.action()
+    return jsonify(success=success)
+
+@api.route('/telegram_alert/<int:id>')
+@api.doc(params={'id': 'An Alert id number'})
+class SlackAlert(Resource):
+    def get(self, id):
+        """
+        Get a specific alert with the given alert id and send it to Telegram
+        """
+        text = read_alert(config['database_path'], id)
+        bot = TelegramBot()
+        bot.outgoing_message_text = text[0][5]
+        status = bot.send_message()
+        return status
 
 if __name__ == '__main__':
     sqlite_init(config['database_path'], config['table_schema_path'])
