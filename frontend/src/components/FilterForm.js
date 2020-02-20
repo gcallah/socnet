@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
-import DatePicker from 'react-date-picker'
+// import DatePicker from 'react-date-picker'
 import { Grid, Button, Form, Header, Icon, Divider, Segment} from 'semantic-ui-react';
 import DropdownList from "./DropdownList";
 

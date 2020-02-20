@@ -44,7 +44,7 @@ class Home extends Component {
       <div className="container">
         <Header title="Socnet" />
         <Link to='/createAlert'><button type="button" className="btn btn-primary">Create Alert</button></Link> <br /> <br />
-        <Link to='/filterForm'><button type="button" className="btn btn-primary">Filter Results</button></Link>
+        <Link to='/filterAlert'><button type="button" className="btn btn-primary">Filter Results</button></Link>
         {alerts.map((alert) =>{
           return (
             <Alert
