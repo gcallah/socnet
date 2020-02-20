@@ -187,7 +187,7 @@ class SlackEcho(Resource):
         """
         A test API for echoing back Slack messages
         """
-        return request.json
+        return push_to_slack(request.form)
 
 
 if __name__ == '__main__':
