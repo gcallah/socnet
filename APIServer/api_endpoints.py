@@ -181,6 +181,17 @@ class SlackAlert(Resource):
         return push_to_slack(text)
 
 
+@api.route('/slack_echo')
+class SlackEcho(Resource):
+    def post(self):
+        """
+        An API for echoing back Slack messages
+        """
+        username = request.json['json']['user_name']
+        text = request.json['json']['text']
+        return push_to_slack(username + ':' + text)
+
+
 if __name__ == '__main__':
     sqlite_init(config['database_path'], config['table_schema_path'])
     app.run(host=config['host'], port=config['port'], debug=config['debug'])
