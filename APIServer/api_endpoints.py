@@ -169,6 +169,13 @@ class SlackAlerts(Resource):
         text = read_all_alerts(config['database_path'])
         return push_to_slack(text)
 
+    def post(self):
+        """
+        Put a new alert into the system through a Slack message
+        """
+        alert_text = request.form['text']
+        return write_alert(config['database_path'], alert_text)
+
 
 @api.route('/slack_alert/<int:id>')
 @api.doc(params={'id': 'An Alert id number'})
@@ -179,12 +186,6 @@ class SlackAlert(Resource):
         """
         text = read_alert(config['database_path'], id)
         return push_to_slack(text)
-    def post(self):
-        """
-        Put a new alert into the system through a Slack message
-        """
-        alert_text = request.form['text']
-        return write_alert(config['database_path'], alert_text)
 
 
 @api.route('/slack_echo')
