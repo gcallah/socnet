@@ -16,6 +16,8 @@ from APIServer.alerts.operations import delete_alert
 from APIServer.alerts.operations import read_alert_country
 from APIServer.alerts.operations import read_all_alerts_beta
 from APIServer.alerts.operations import write_alert_beta
+from APIServer.alerts.operations import update_alert_beta
+from APIServer.alerts.operations import delete_alert_beta
 
 from APIServer.threads.operations import get_comments
 from APIServer.threads.operations import add_comment
@@ -160,6 +162,23 @@ class AlertsListsBeta(Resource):
         Put a new alert into the system
         """
         return write_alert_beta(request.json)
+
+
+@api.route('/alerts_beta/<int:id>')
+@api.doc(params={'id': 'An Alert id number'})
+class AlertsBeta(Resource):
+    @api.expect(alert)
+    def put(self, id):
+        """
+        Update an alert in the system with the given alert id
+        """
+        return update_alert_beta(request.json, id)
+
+    def delete(self, id):
+        """
+        Delete an alert in the system with the given alert id
+        """
+        return delete_alert_beta(id)
 
 
 @api.route('/slack_alerts')
