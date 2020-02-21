@@ -82,12 +82,33 @@ def update_alert(path, alert, id):
     conn.close()  
     return 
 
+def update_alert_beta(alert, id):
+    fetched_alert = Alert.query.get(id)
+    fetched_alert.event_zipcode = alert['event_zipcode']
+    fetched_alert.event_city = alert['event_city']
+    fetched_alert.event_state = alert['event_state']
+    fetched_alert.event_country = alert['event_country']
+    fetched_alert.event_type = alert['event_type']
+    fetched_alert.event_description = alert['event_description']
+    fetched_alert.msg_sender = alert['msg_sender']
+    fetched_alert.event_datetime = alert['event_datetime']
+    fetched_alert.event_severity = alert['event_severity']
+    db.session.commit()
+
 
 def read_alert(path, id):
     conn = get_db(path)
     cur = conn.cursor()
     cur.execute('SELECT * FROM alert WHERE id = \'%d\'' % (id))
     return create_alerts(cur.fetchall())
+
+def read_alert_beta(id):
+    fetched_alert = Alert.query.get(id)
+    alert_schema = AlertSchema()
+    alert_json = alert_schema.dump(alert_schema)
+    print('alert_json: ', alert_json)
+    return jsonify({'alert:' : alert_json})
+
 
 
 def delete_alert(path, id):
@@ -98,9 +119,15 @@ def delete_alert(path, id):
     conn.close()  
     return 
 
+def delete_alert_beta(id):
+    alert = Alert.query.get(id)
+    db.session.delete(alert)
+    db.session.commit()
+
 
 def read_alert_country(path, country):
     conn = get_db(path)
     cur = conn.cursor()
     cur.execute('SELECT * FROM alert WHERE event_country = \'%s\'' % (country))
     return create_alerts(cur.fetchall())
+
