@@ -18,6 +18,7 @@ from APIServer.alerts.operations import read_all_alerts_beta
 from APIServer.alerts.operations import write_alert_beta
 from APIServer.alerts.operations import update_alert_beta
 from APIServer.alerts.operations import delete_alert_beta
+from APIServer.alerts.operations import read_alert_beta
 
 from APIServer.threads.operations import get_comments
 from APIServer.threads.operations import add_comment
@@ -167,6 +168,12 @@ class AlertsListsBeta(Resource):
 @api.route('/alerts_beta/<int:id>')
 @api.doc(params={'id': 'An Alert id number'})
 class AlertsBeta(Resource):
+    def get(self, id):
+        """
+        Get a specific alert with the given alert id
+        """
+        return read_alert_beta(id)
+
     @api.expect(alert)
     def put(self, id):
         """

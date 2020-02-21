@@ -105,7 +105,7 @@ def read_alert(path, id):
 def read_alert_beta(id):
     fetched_alert = Alert.query.get(id)
     alert_schema = AlertSchema()
-    alert_json = alert_schema.dump(alert_schema)
+    alert_json = alert_schema.dump(fetched_alert)
     print('alert_json: ', alert_json)
     return jsonify({'alert:' : alert_json})
 
