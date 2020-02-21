@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 // import DatePicker from 'react-date-picker'
 import { Grid, Button, Form, Header, Icon, Divider, Segment} from 'semantic-ui-react';
 import DropdownList from "./DropdownList";
+import createHistory from "history/createBrowserHistory";
 
+const history = createHistory();
 
 export default class FilterForm extends Component {
     state = {
@@ -33,10 +35,10 @@ export default class FilterForm extends Component {
         });
     };
     
-
     // Excecuted when the back button is clicked
     handleBack = () => {
-        window.location.href = "/"; // this probably should change
+        // Soon to be depreciated
+        history.goBack()
     }
 
     /// TODO: Merge handleChange with handelSubmit
@@ -51,8 +53,7 @@ export default class FilterForm extends Component {
         this.setState({ severity: field1, date: field2, region: field3, type: field4 })
 
         // for now as there is no functionality in the API
-        window.location.href = "/";
-
+        history.goBack()
     }
 
     render() {
