@@ -22,6 +22,8 @@ from APIServer.threads.operations import add_comment
 
 from APIServer.slack.push import push_to_slack
 
+import json
+
 CONFIG_PATH = 'api_config.json'
 # config is a dictionary of configuration params:
 config = read_json(CONFIG_PATH)
@@ -173,8 +175,8 @@ class SlackAlerts(Resource):
         """
         Put a new alert into the system through a Slack message
         """
-        alert_text = request.form['text']
-        return write_alert(config['database_path'], alert_text)
+        alert_json = json.loads(request.form['text'])
+        return write_alert(config['database_path'], alert_json)
 
 
 @api.route('/slack_alert/<int:id>')
