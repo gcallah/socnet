@@ -179,6 +179,12 @@ class SlackAlert(Resource):
         """
         text = read_alert(config['database_path'], id)
         return push_to_slack(text)
+    def post(self):
+        """
+        Put a new alert into the system through a Slack message
+        """
+        alert_text = request.form['text']
+        return write_alert(config['database_path'], alert_text)
 
 
 @api.route('/slack_echo')
