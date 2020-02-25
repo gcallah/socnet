@@ -46,7 +46,7 @@ class HelloWorld(Resource):
         """
         A Hello World API for testing
         """
-        return {'hello': 'world'}
+        return {'hello': 'socnet'}
 
 
 @api.route('/endpoints')
