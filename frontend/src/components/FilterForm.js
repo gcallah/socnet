@@ -4,10 +4,11 @@ import React, { Component } from 'react';
 import { Grid, Button, Form, Header, Icon, Divider, Segment} from 'semantic-ui-react';
 import DropdownList from "./DropdownList";
 import createHistory from "history/createBrowserHistory";
+import { Redirect, withRouter } from 'react-router-dom';
 
 const history = createHistory();
 
-export default class FilterForm extends Component {
+class FilterForm extends Component {
     state = {
         loading: false,
         severity: [], 
@@ -16,6 +17,7 @@ export default class FilterForm extends Component {
         type: [],
         //properties: {}
     };
+    
     apiServer = 'https://socnet.pythonanywhere.com/';
 
     // Sample Input: Development time only
@@ -38,7 +40,7 @@ export default class FilterForm extends Component {
     // Excecuted when the back button is clicked
     handleBack = () => {
         // Soon to be depreciated
-        history.goBack()
+        this.props.history.push('/main')
     }
 
     /// TODO: Merge handleChange with handelSubmit
@@ -53,7 +55,7 @@ export default class FilterForm extends Component {
         this.setState({ severity: field1, date: field2, region: field3, type: field4 })
 
         // for now as there is no functionality in the API
-        history.goBack()
+        this.props.history.push('/main')
     }
 
     render() {
@@ -61,65 +63,65 @@ export default class FilterForm extends Component {
 
         return (
             <div>
-
                 <Segment basic padded> <Header as="h1"> Filter Alerts </Header> </Segment>
-                <Segment padded='very' raised color='teal'>
-                    <Grid className="center aligned">
-                    <Form loading={loading} onSubmit={this.handleSubmit} size="large" style={{width: "60%"}}>
-                            <Form.Field>
-                                <label> Since (Date)</label>
-                                <input type="date" 
-                                    onChange={(event) => this.setState({ date: event.target.value })}
-                                    value={this.state.date} 
-                                />
-                            </Form.Field>
+                    <Segment padded='very' raised color='teal'>
+                        <Grid className="center aligned">
+                            <Form loading={loading} onSubmit={this.handleSubmit.bind(this)} size="large" style={{width: "60%"}}>
+                                <Form.Field>
+                                    <label> Since (Date)</label>
+                                    <input type="date" 
+                                        onChange={(event) => this.setState({ date: event.target.value })}
+                                        value={this.state.date} 
+                                    />
+                                </Form.Field>
                             
-                            {/* TO-DO: Write a for loop for this after making 
-                                APIs to fetch form properties */}
+                                {/* TO-DO: Write a for loop for this after making 
+                                    APIs to fetch form properties */}
 
-                            <Form.Field inline >
-                                <label > Severity </label>
-                                < DropdownList
-                                    placeholder={this.severityList.name}
-                                    options={this.severityList.optionList}
-                                    handleDropdown={this.handleDropdown}
-                                />
-                            </Form.Field>
+                                <Form.Field inline >
+                                    <label > Severity </label>
+                                    < DropdownList
+                                        placeholder={this.severityList.name}
+                                        options={this.severityList.optionList}
+                                        handleDropdown={this.handleDropdown}
+                                    />
+                                </Form.Field>
                         
-                            <Form.Field inline>
-                                <label> Region </label>
-                                < DropdownList
-                                    placeholder={this.severityList.name}
-                                    options={this.severityList.optionList}
-                                    handleDropdown={this.handleDropdown}
-                                />
-                            </Form.Field>
+                                <Form.Field inline>
+                                    <label> Region </label>
+                                    < DropdownList
+                                        placeholder={this.severityList.name}
+                                        options={this.severityList.optionList}
+                                        handleDropdown={this.handleDropdown}
+                                    />
+                                </Form.Field>
 
-                            <Form.Field inline>
-                                <label> Type </label>
-                                < DropdownList
-                                    placeholder={this.severityList.name}
-                                    options={this.severityList.optionList}
-                                    handleDropdown={this.handleDropdown}
-                                />
-                            </Form.Field>
+                                <Form.Field inline>
+                                    <label> Type </label>
+                                    < DropdownList
+                                        placeholder={this.severityList.name}
+                                        options={this.severityList.optionList}
+                                        handleDropdown={this.handleDropdown}
+                                    />
+                                </Form.Field>
 
-                            {/* <Form.Field>
-                                <Checkbox label='' />
-                            </Form.Field>  */}
+                                {/* <Form.Field>
+                                    <Checkbox label='' />
+                                </Form.Field>  */}
 
-                            <Button animated onClick= {e => this.handleBack(e)}>
-                                <Button.Content visible> Back </Button.Content>
-                                <Button.Content hidden>
-                                    <Icon name='arrow left' />
-                                </Button.Content>
-                            </Button>
-                            <Button type="submit" animated>
-                                <Button.Content visible>Submit</Button.Content>
-                                <Button.Content hidden>
-                                    <Icon name='arrow right' />
-                                </Button.Content>
-                            </Button>
+                                <Button animated onClick= {e => this.handleBack.bind(this)}>
+                                    <Button.Content visible> Back </Button.Content>
+                                    <Button.Content hidden>
+                                        <Icon name='arrow left' />
+                                    </Button.Content>
+                                </Button>
+
+                                <Button type="submit" animated>
+                                    <Button.Content visible>Submit</Button.Content>
+                                    <Button.Content hidden>
+                                        <Icon name='arrow right' />
+                                    </Button.Content>
+                                </Button>
                         </Form>
                        
                     </Grid>
@@ -134,3 +136,6 @@ export default class FilterForm extends Component {
         );
     }
 }
+
+
+export default withRouter(FilterForm);

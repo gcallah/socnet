@@ -65,7 +65,7 @@ class Home extends Component {
     
     try {
       await axios.post(`${this.apiServer}alerts`, payload);
-      history.push('/');
+      history.push('/main');
     } catch (e) {
       console.log(e)
     }
