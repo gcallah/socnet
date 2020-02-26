@@ -25,6 +25,8 @@ from APIServer.threads.operations import add_comment
 
 from APIServer.slack.push import push_to_slack
 
+from APIServer.mattermost.push import push_to_mattermost
+
 import json
 
 CONFIG_PATH = 'api_config.json'
@@ -225,6 +227,16 @@ class SlackEcho(Resource):
         user = request.form['user_name']
         text = request.form['text']
         return push_to_slack(user + ' : ' + text)
+
+
+@api.route('/mattermost_hello')
+class MattermostHello(Resource):
+    def post(self):
+        """
+        An API to send hello_world messages to Mattermost
+        """
+        text = 'HELLO_WORLD from API Server!'
+        return push_to_mattermost(text)
 
 
 if __name__ == '__main__':
