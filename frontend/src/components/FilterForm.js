@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 // import DatePicker from 'react-date-picker'
-import { Grid, Button, Form, Header, Icon, Divider, Segment} from 'semantic-ui-react';
+import { Grid, Label, Button, Form, Header, Icon, Divider, Segment, Table} from 'semantic-ui-react';
 import DropdownList from "./DropdownList";
 import createHistory from "history/createBrowserHistory";
 import { Redirect, withRouter } from 'react-router-dom';
+import "./Filters.css"
 
 const history = createHistory();
 
@@ -28,6 +29,22 @@ class FilterForm extends Component {
                     {key: "L", text: "Low", value: "low"}, 
                     {key: "M", text: "Medium", value: "medium"}]
     };
+
+    regionList = {
+        name: "region", 
+        type: "dropdown", 
+        optionList: [{key: "NY", text: "NY - New York", value: "NY"}, 
+                    { key: "NJ", text: "NJ - New Jersey", value: "NJ" },
+                    { key: "NY", text: "CT - Conneticut", value: "CT" }]
+    };
+
+    typeList = {
+        name: "type",
+        type: "dropdown",
+        optionList: [{ key: "Fire", text: "Fire", value: "Fire" },
+        { key: "Earthquake", text: "Earthquake", value: "Earthquake" },
+        { key: "Ransomware", text: "Ransomware", value: "Ransomware" }]
+    }
 
     handleDropdown = (name, value) => {
         this.setState({[name]: value}, () => {
@@ -65,65 +82,73 @@ class FilterForm extends Component {
             <div>
                 <Segment basic padded> <Header as="h1"> Filter Alerts </Header> </Segment>
                     <Segment padded='very' raised color='teal'>
-                        <Grid className="center aligned">
-                            <Form loading={loading} onSubmit={this.handleSubmit.bind(this)} size="large" style={{width: "60%"}}>
-                                <Form.Field>
-                                    <label> Since (Date)</label>
-                                    <input type="date" 
-                                        onChange={(event) => this.setState({ date: event.target.value })}
-                                        value={this.state.date} 
-                                    />
-                                </Form.Field>
-                            
-                                {/* TO-DO: Write a for loop for this after making 
-                                    APIs to fetch form properties */}
+                        <Grid centered>
+                        <Form loading={loading} onSubmit={this.handleSubmit.bind(this)} size="large" style={{ width: "60%" }}>
+                            <table align="center" className="filters" cellPadding="5px">
+                                <tbody>
 
-                                <Form.Field inline >
-                                    <label > Severity </label>
-                                    < DropdownList
-                                        placeholder={this.severityList.name}
-                                        options={this.severityList.optionList}
-                                        handleDropdown={this.handleDropdown}
-                                    />
-                                </Form.Field>
-                        
-                                <Form.Field inline>
-                                    <label> Region </label>
-                                    < DropdownList
-                                        placeholder={this.severityList.name}
-                                        options={this.severityList.optionList}
-                                        handleDropdown={this.handleDropdown}
-                                    />
-                                </Form.Field>
+                                
+                                    {/* Date */}
+                                    <tr>
+                                        <td> <label> Since (Date): </label>  </td>
+                                        <td>
+                                            {/* TO-DO: Input type date doesn't work with Safari and IE. */}
+                                            <input type="date" placeholder="mm/dd/yyyy"
+                                                onChange={(event) => this.setState({ date: event.target.value })}
+                                                value={this.state.date}
+                                            />
+                                        </td>
+                                    </tr>
 
-                                <Form.Field inline>
-                                    <label> Type </label>
-                                    < DropdownList
-                                        placeholder={this.severityList.name}
-                                        options={this.severityList.optionList}
-                                        handleDropdown={this.handleDropdown}
-                                    />
-                                </Form.Field>
+                                    <tr>  
+                                        <td> <label> Severity: </label> </td>
+                                        <td>
+                                            < DropdownList
+                                                placeholder={this.severityList.name}
+                                                options={this.severityList.optionList}
+                                                handleDropdown={this.handleDropdown}
+                                            />
+                                        </td>
+                                    </tr>
 
-                                {/* <Form.Field>
-                                    <Checkbox label='' />
-                                </Form.Field>  */}
+                                    <tr >
+                                        <td > <label> Type: </label> </td>
+                                        <td> 
+                                            < DropdownList
+                                                placeholder={this.typeList.name}
+                                                options={this.typeList.optionList}
+                                                handleDropdown={this.handleDropdown}
+                                            />
+                                        </td>
+                                    </tr>
 
-                                <Button animated onClick= {e => this.handleBack.bind(this)}>
-                                    <Button.Content visible> Back </Button.Content>
-                                    <Button.Content hidden>
-                                        <Icon name='arrow left' />
-                                    </Button.Content>
-                                </Button>
+                                    <tr>
+                                        <td> <label> Region: </label></td>
+                                        <td> 
+                                            < DropdownList
+                                                placeholder={this.regionList.name}
+                                                options={this.regionList.optionList}
+                                                handleDropdown={this.handleDropdown}
+                                            />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br /> 
+                            <Button animated onClick={e => this.handleBack.bind(this)}>
+                                <Button.Content visible> Back </Button.Content>
+                                <Button.Content hidden>
+                                    <Icon name='arrow left' />
+                                </Button.Content>
+                            </Button>
 
-                                <Button type="submit" animated>
-                                    <Button.Content visible>Submit</Button.Content>
-                                    <Button.Content hidden>
-                                        <Icon name='arrow right' />
-                                    </Button.Content>
-                                </Button>
+                            <Button type="submit" animated>
+                                <Button.Content visible>Submit</Button.Content>
+                                <Button.Content hidden>
+                                    <Icon name='arrow right' />
+                                </Button.Content>
+                            </Button>
                         </Form>
-                       
                     </Grid>
                 </Segment> 
                     <br />

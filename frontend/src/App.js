@@ -7,6 +7,7 @@ import Home from './components/Home';
 import CreateAlert from './components/CreateAlert';
 import ThreadView from './components/ThreadView';
 import FilterForm from './components/FilterForm';
+import ThreadAlerts from './components/ThreadAlerts';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
             <Route exact path="/main" component={Home} />
             <Route exact path="/createAlert" component={CreateAlert} />
             <Route exact path="/thread/:id" component={ThreadView} />
-          <Route exact path="/(|filterAlert)" component={FilterForm} />  
+            <Route exact path="/(|filterAlert)" component={FilterForm} />  
         </Switch>
       </HashRouter>
     </div>
