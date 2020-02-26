@@ -32,7 +32,7 @@ class Test(TestCase):
         See if HelloWorld works.
         """
         rv = self.HelloWorld.get()
-        self.assertEqual(rv, {'hello': 'world'})
+        self.assertEqual(rv, {'hello': 'socnet'})
 
     def test_get_message_format(self):
         """
