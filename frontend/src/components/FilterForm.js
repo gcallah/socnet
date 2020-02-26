@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 // import DatePicker from 'react-date-picker'
-import { Grid, Label, Button, Form, Header, Icon, Divider, Segment, Table} from 'semantic-ui-react';
+import { Grid, Button, Form, Header, Icon, Divider, Segment } from 'semantic-ui-react';
 import DropdownList from "./DropdownList";
 import createHistory from "history/createBrowserHistory";
-import { Redirect, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import "./Filters.css"
 
 const history = createHistory();

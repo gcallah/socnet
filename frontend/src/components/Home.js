@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Loader, Dimmer } from 'semantic-ui-react';
 import Header from './Header';
-import Alert from './Alert';
+// import Alert from './Alert';
 import ThreadAlerts from './ThreadAlerts';
 
 class Home extends Component {
@@ -16,21 +16,21 @@ class Home extends Component {
     this.apiServer = 'https://socnet.pythonanywhere.com/'
   }
 
-  async componentDidMount() {
-    try {
-      this.setState({ loadingData: true });
-      // get the alerts from the server
-      const res = await axios.get(`${this.apiServer}alerts`);
-      // add them to the state
-      this.setState({
-        alerts: res.data,
-        loadingData: false,
-      })
-      console.log(this.state);
-    } catch (e) {
-      console.log('error')
-    }
-  }
+  // async componentDidMount() {
+  //   try {
+  //     this.setState({ loadingData: true });
+  //     // get the alerts from the server
+  //     const res = await axios.get(`${this.apiServer}alerts`);
+  //     // add them to the state
+  //     this.setState({
+  //       alerts: res.data,
+  //       loadingData: false,
+  //     })
+  //     console.log(this.state);
+  //   } catch (e) {
+  //     console.log('error')
+  //   }
+  // }
 
   render() {
     const { loadingData, alerts } = this.state
