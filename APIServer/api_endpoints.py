@@ -19,6 +19,7 @@ from APIServer.alerts.operations import write_alert_beta
 from APIServer.alerts.operations import update_alert_beta
 from APIServer.alerts.operations import delete_alert_beta
 from APIServer.alerts.operations import read_alert_beta
+from APIServer.alerts.operations import read_alert_country_beta
 
 from APIServer.threads.operations import get_comments
 from APIServer.threads.operations import add_comment
@@ -197,6 +198,16 @@ class AlertsBeta(Resource):
         Delete an alert in the system with the given alert id
         """
         return delete_alert_beta(id)
+
+
+@api.route('/alerts_beta/<string:country>')
+@api.doc(params={'country': 'A country to retrieve all alerts from'})
+class AlertByCountryBeta(Resource):
+    def get(self, country):
+        """
+        Get all alerts for the given country
+        """
+        return read_alert_country_beta(country)
 
 
 @api.route('/slack_alerts')
