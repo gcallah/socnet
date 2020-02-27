@@ -239,6 +239,38 @@ class MattermostHello(Resource):
         return push_to_mattermost(text)
 
 
+@api.route('/mattermost_alert/<int:id>')
+@api.doc(params={'id': 'An Alert id number'})
+class MattermostAlert(Resource):
+    def get(self, id):
+        """
+        Get alert with the given alert id and send it to mattermost
+        """
+        text = read_alert(config['database_path'], id)
+        return push_to_mattermost(text)
+
+
+@api.route('/mattermost_echo')
+class MattermostEcho(Resource):
+    def post(self):
+        """
+        A test API for echoing back Mattermost messages
+        """
+        user = request.form['user_name']
+        text = request.form['text']
+        return push_to_mattermost('msg sent.\ntext:' + text + '\nuser:' + user)
+
+
+@api.route('/mattermost_alerts')
+class MattermostAlerts(Resource):
+    def get(self):
+        """
+        Get all alerts and send it to Mattermost
+        """
+        text = read_all_alerts(config['database_path'])
+        return push_to_mattermost(text)
+
+
 if __name__ == '__main__':
     sqlite_init(config['database_path'], config['table_schema_path'])
     app.run(host=config['host'], port=config['port'], debug=config['debug'])
