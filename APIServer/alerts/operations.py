@@ -131,3 +131,9 @@ def read_alert_country(path, country):
     cur.execute('SELECT * FROM alert WHERE event_country = \'%s\'' % (country))
     return create_alerts(cur.fetchall())
 
+def read_alert_country_beta(country):
+    alerts = Alert.query.filter_by(event_country=country).all()
+    alert_schema = AlertSchema(many=True)
+    alerts_json = alert_schema.dump(alerts)
+    print('alerts_json: ', alerts_json)
+    return jsonify({'alerts:' : alerts_json})

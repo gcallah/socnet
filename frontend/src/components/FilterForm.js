@@ -95,10 +95,9 @@ class FilterForm extends Component {
                 
                 // this.setState({ loading: true });
 
-                console.log("Inside 1")
+                
                 axios.get(`${this.apiServer}alerts`)
                 .then( payload => { 
-                    console.log("Inside 2")
                     this.setState({ loading: false });
 
                     this.props.history.push('/alerts', { alerts: payload.data } ); 
