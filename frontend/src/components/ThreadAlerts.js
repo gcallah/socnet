@@ -7,11 +7,33 @@ import { withRouter } from 'react-router-dom';
 const history = createHistory()
 
 class ThreadAlerts extends Component {
-
-    state = {
-        loadingData: false, 
-        alerts: [],
-    };
+    constructor(props) {
+        super(props)
+        this.state = {
+            loadingData: false,
+            alerts: []
+        };
+    }
+    
+    async componentDidMount() {
+        try {
+            const alerts = this.props.location.state.alerts
+            this.setState({alerts: alerts})
+            console.log("Prop value: ", this.props.location.state.alerts)
+            console.log("Alerts State: ", this.state.alerts);
+        } catch (e) {
+            try {
+                this.setState({ loadingData: true });
+                const payload = await axios.get(`${this.apiServer}alerts`)
+                this.setState({
+                    loadingData: false,
+                    alerts: payload.data,
+                });
+            } catch (e) {
+                console.log('Error while fetching alterts')
+            }
+        }
+    }
 
     background = {
         "Low": "#FFFFFF",
@@ -21,22 +43,8 @@ class ThreadAlerts extends Component {
 
     apiServer = 'https://socnet.pythonanywhere.com/';
 
-    async componentDidMount() {
-        try {
-            this.setState({ loadingData: true });
-            const payload = await axios.get(`${this.apiServer}alerts`) 
-            this.setState ({
-                loadingData: false,
-                alerts: payload.data,
-            });
-        } catch(e) {
-            console.log('Error while fetching alterts')
-        }
-    }
-    
-
-    renderTableData = () => {
-        return this.state.alerts.map((alertData) => {
+    renderTableData = (alerts) => {
+        return alerts.map((alertData) => {
             const id = alertData[0]
             const date = alertData[1]
             const region = alertData[4]
@@ -46,8 +54,11 @@ class ThreadAlerts extends Component {
             const bgcolor = this.background
 
             return (
-                <Table.Row style={{background: bgcolor[alertData[8]]}} onClick = {() => {this.props.history.push(`/thread/${id}`)}}>
-                {/* <Table.Row >  */}
+                <Table.Row style={{background: bgcolor[alertData[8]]}} 
+                    onClick = {() => {
+                        this.props.history.push(`/thread/${id}`)
+                    }
+                }>
                     <Table.Cell> {title} </Table.Cell>
                     <Table.Cell> {description} </Table.Cell>
                     <Table.Cell> {region} </Table.Cell>
@@ -79,12 +90,7 @@ class ThreadAlerts extends Component {
                         <Table.HeaderCell textAlign="right"> Date </Table.HeaderCell>
                     </Table.Header>
                     <Table.Body>
-                        {/* { alerts.map((eventData) => {
-                            return (
-                                <AlertsCard data={eventData} />
-                            )}
-                        )}; */}
-                        { this.renderTableData() }
+                        { this.renderTableData(alerts) }
                     </Table.Body>
                 </Table>
             </div>

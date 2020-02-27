@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
-// import DatePicker from 'react-date-picker'
-import { Grid, Button, Form, Header, Icon, Divider, Segment } from 'semantic-ui-react';
+import { Dimmer, Loader, Grid, Button, Form, Header, Icon, Divider, Segment } from 'semantic-ui-react';
 import DropdownList from "./DropdownList";
 import createHistory from "history/createBrowserHistory";
 import { withRouter } from 'react-router-dom';
 import "./Filters.css"
+import axios from 'axios'
 
 const history = createHistory();
 
 class FilterForm extends Component {
     state = {
         loading: false,
+        date: "", 
         severity: [], 
-        date: '', 
-        region: [], 
         type: [],
-        //properties: {}
+        region: [], 
     };
     
     apiServer = 'https://socnet.pythonanywhere.com/';
@@ -35,7 +33,7 @@ class FilterForm extends Component {
         type: "dropdown", 
         optionList: [{key: "NY", text: "NY - New York", value: "NY"}, 
                     { key: "NJ", text: "NJ - New Jersey", value: "NJ" },
-                    { key: "NY", text: "CT - Conneticut", value: "CT" }]
+                    { key: "CT", text: "CT - Conneticut", value: "CT" }]
     };
 
     typeList = {
@@ -62,21 +60,81 @@ class FilterForm extends Component {
 
     /// TODO: Merge handleChange with handelSubmit
     // Debugging: Maintaining constant state 
-
     handleChange = (e, {name, value}) => { 
         this.setState({[name]:value})
     }
 
-    handleSubmit = () => {
-        const { loading, field1, field2, field3, field4 } = this.state
-        this.setState({ severity: field1, date: field2, region: field3, type: field4 })
+    handleValidation = (fields) => {
+        if (fields["date"] || fields["severity"].length > 0 || fields["type"].length > 0 || fields["region"].length > 0) {
+            return true
+        } else {
+            return false
+        }
+    }
 
-        // for now as there is no functionality in the API
-        this.props.history.push('/main')
+    handleSubmit = (e) => {
+        e.preventDefault()
+
+        const { loading, date, severity, type, region } = this.state
+        const apiServer = this.apiServer
+
+        let fields = {
+            date: date, 
+            severity: severity, 
+            type: type, 
+            region: region
+        };
+        
+        if (this.handleValidation(fields)) {
+            console.log("Form had entries.")
+            try {
+                // axios.post({ apiServer }, { fields })
+                //     .then(payload => {
+                //         console.log("Result form callback: ", payload)
+                //         console.log(payload.data)
+                
+                // this.setState({ loading: true });
+
+                console.log("Inside 1")
+                axios.get(`${this.apiServer}alerts`)
+                .then( payload => { 
+                    console.log("Inside 2")
+                    this.setState({ loading: false });
+
+                    this.props.history.push('/alerts', { alerts: payload.data } ); 
+                });
+
+            } catch (e) {
+                console.log("ERROR: UNABLE TO FETCH FILTERED RESULTS")
+            }
+        } else {
+            // The user has not added any valid entries to the form
+            console.log("The form had no entries. Attempting to load all alerts.")
+            try {
+                // this.setState({ loading: true });
+                axios.get(`${this.apiServer}alerts`)
+                .then (
+                    payload => { this.setState({ loading: false, });
+                    console.log("Alerts loaded. Payload looks like: ", payload.data)
+                    this.props.history.push('/alerts', {alerts: payload.data})
+                })
+                
+            } catch (e) {
+                console.log('ERROR: UNABLE TO GET ALL RESULTS.')
+            }
+        }
     }
 
     render() {
         const { loading, severity, date, region, type } = this.state
+
+        if (loading) {
+            return (
+                <Dimmer active inverted>
+                    <Loader size="massive"> Loading: fetching alerts..</Loader>
+                </Dimmer>
+            )
+        }
 
         return (
             <div>
@@ -86,8 +144,6 @@ class FilterForm extends Component {
                         <Form loading={loading} onSubmit={this.handleSubmit.bind(this)} size="large" style={{ width: "60%" }}>
                             <table align="center" className="filters" cellPadding="5px">
                                 <tbody>
-
-                                
                                     {/* Date */}
                                     <tr>
                                         <td> <label> Since (Date): </label>  </td>
@@ -95,7 +151,6 @@ class FilterForm extends Component {
                                             {/* TO-DO: Input type date doesn't work with Safari and IE. */}
                                             <input type="date" placeholder="mm/dd/yyyy"
                                                 onChange={(event) => this.setState({ date: event.target.value })}
-                                                value={this.state.date}
                                             />
                                         </td>
                                     </tr>

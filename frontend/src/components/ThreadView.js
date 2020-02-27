@@ -7,28 +7,32 @@ import { ListGroup, InputGroup, FormControl, Button } from 'react-bootstrap';
 
 class ThreadView extends Component {
   constructor(props) {
-    super(props);
+    super(props)
+
     this.state = {
       loadingData: false,
       comments: [],
       alert: [],
     }
+    // console.log("Constructor: ", this.props.match.params.id )
     this.apiServer = 'https://socnet.pythonanywhere.com/'
-
     this.handleSubmit = this.handleSubmit.bind(this);
-  };
+  }
 
   async componentDidMount() {
     try {
       this.setState({ loadingData: true });
       console.log(this.props);
+
       const res = await axios.get(`${this.apiServer}threads/${this.props.match.params.id}`);
       const alert = await axios.get(`${this.apiServer}alerts/${this.props.match.params.id}`);
+
       this.setState({
         comments: res.data,
         loadingData: false,
         alert: alert.data[0],
       })
+
       console.log(this.state.comments);
     } catch (e) {
       console.log('error')
@@ -53,6 +57,7 @@ class ThreadView extends Component {
       console.log(`${this.apiServer}threads/${this.props.match.params.id}`)
       let res = await axios.put(`${this.apiServer}threads/${this.props.match.params.id}`, payload);
       res = await axios.get(`${this.apiServer}threads/${this.props.match.params.id}`);
+
       this.setState({
         comments: res.data,
         loadingData: false,
@@ -76,10 +81,9 @@ class ThreadView extends Component {
     return (
       <div className="container">
         <Header title="Socnet" />
-        <Alert
-          data={alert}
-          id={alert[0]}
-        />
+        
+        <Alert data={alert} id={alert[0]} />
+
         <ListGroup>
           {comments.map((comment, i) => {
             return(
