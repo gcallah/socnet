@@ -216,7 +216,8 @@ class SlackAlertsBeta(Resource):
         """
         Get all alerts and send it to Slack
         """
-        text = read_all_alerts(config['database_path'])
+        text = read_all_alerts_beta()
+        text = text.get_json()  # return a dictionary
         return push_to_slack(text)
 
     def post(self):
@@ -234,7 +235,8 @@ class SlackAlertBeta(Resource):
         """
         Get a specific alert with the given alert id and send it to Slack
         """
-        text = read_alert(config['database_path'], id)
+        text = read_alert_beta(id)
+        text = text.get_json()  # return a dictionary
         return push_to_slack(text)
 
 
