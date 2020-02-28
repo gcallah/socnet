@@ -13,14 +13,19 @@ class Alert extends Component {
       "Medium": "warning",
       "High": "danger",
     };
+    this.bgcolor = {
+      "Low": "#FFFFFF",
+      "Medium": "#FFCC00",
+      "High": "#CC0000",
+    }
   }
 
   render() {
     const { eventDetails } = this.state;
     const { linkable } = this.props
     return (
-      <Card bg={this.background[eventDetails[8]]} className="m-3">
-        <Card.Header as="h5">{ eventDetails[6] }</Card.Header>
+      <Card className="m-3">
+        <Card.Header style={{background: this.bgcolor[eventDetails[8]]}}  as="h5">{ eventDetails[6] }</Card.Header>
         <Card.Body>
           <Card.Title>{ eventDetails[7] }</Card.Title>
           <Card.Text>

@@ -16,12 +16,13 @@ class ThreadAlerts extends Component {
     }
     
     async componentDidMount() {
+        // In case we reached this page from the filters first page.
         try {
             const alerts = this.props.location.state.alerts
             this.setState({alerts: alerts})
             console.log("Prop value: ", this.props.location.state.alerts)
             console.log("Alerts State: ", this.state.alerts);
-        } catch (e) {
+        } catch (e) {  // In case we navigate straight to the main page
             try {
                 this.setState({ loadingData: true });
                 const payload = await axios.get(`${this.apiServer}alerts`)
@@ -36,9 +37,11 @@ class ThreadAlerts extends Component {
     }
 
     background = {
-        "Low": "#FFFFFF",
+        "Low": "#000000",
         "Medium": "#FFCC00",
-        "High": "#FF0000",
+        // "High": "#FF0000",
+        "High": "#CC0000",
+        
     };
 
     apiServer = 'https://socnet.pythonanywhere.com/';
@@ -54,12 +57,12 @@ class ThreadAlerts extends Component {
             const bgcolor = this.background
 
             return (
-                <Table.Row style={{background: bgcolor[alertData[8]]}} 
+                <Table.Row 
                     onClick = {() => {
                         this.props.history.push(`/thread/${id}`)
                     }
                 }>
-                    <Table.Cell> {title} </Table.Cell>
+                    <Table.Cell style={{ color: bgcolor[alertData[8]] }}> {title} </Table.Cell>
                     <Table.Cell> {description} </Table.Cell>
                     <Table.Cell> {region} </Table.Cell>
                     <Table.Cell textAlign="right"> {date} </Table.Cell>
