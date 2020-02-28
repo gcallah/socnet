@@ -270,6 +270,13 @@ class MattermostAlerts(Resource):
         text = read_all_alerts(config['database_path'])
         return push_to_mattermost(text)
 
+    def post(self):
+        """
+        Put a new alert into the system through a Mattermost message
+        """
+        alert_json = json.loads(request.form['text'])
+        return write_alert(config['database_path'], alert_json)
+
 
 if __name__ == '__main__':
     sqlite_init(config['database_path'], config['table_schema_path'])
