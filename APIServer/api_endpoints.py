@@ -210,6 +210,36 @@ class AlertByCountryBeta(Resource):
         return read_alert_country_beta(country)
 
 
+@api.route('/slack_alerts_beta')
+class SlackAlertsBeta(Resource):
+    def get(self):
+        """
+        Get all alerts and send it to Slack
+        """
+        text = read_all_alerts_beta()
+        text = text.get_json()  # return a dictionary
+        return push_to_slack(text)
+
+    def post(self):
+        """
+        Put a new alert into the system through a Slack message
+        """
+        alert_json = json.loads(request.form['text'])
+        return write_alert_beta(alert_json)
+
+
+@api.route('/slack_alert_beta/<int:id>')
+@api.doc(params={'id': 'An Alert id number'})
+class SlackAlertBeta(Resource):
+    def get(self, id):
+        """
+        Get a specific alert with the given alert id and send it to Slack
+        """
+        text = read_alert_beta(id)
+        text = text.get_json()  # return a dictionary
+        return push_to_slack(text)
+
+
 @api.route('/slack_alerts')
 class SlackAlerts(Resource):
     def get(self):
