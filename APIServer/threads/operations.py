@@ -3,6 +3,19 @@ import sqlite3
 
 from APIServer.database.sqlite import get_db
 
+def add_comment_beta(comment, thread_id):
+    fetched_thread = Thread.query.get(thread_id)
+    if fetched_thread is None:
+        return {'message' : 'Thread ' + str(thread_id) + ' does not exist'}, 404
+    first_comment_id = fetched_thread.first_comment_id
+    last_comment_id = fetched_thread.last_comment_id
+    comment_text = comment['text']
+
+
+def get_comments(thread_id):
+    fetched_thread = Thread.query.get(thread_id)
+
+
 def add_comment(path, comment, thread_id):
     conn = get_db(path)
     cur = conn.cursor()
