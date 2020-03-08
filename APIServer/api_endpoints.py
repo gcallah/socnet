@@ -25,6 +25,7 @@ from APIServer.threads.operations import get_comments
 from APIServer.threads.operations import add_comment
 
 from APIServer.slack.push import push_to_slack
+from APIServer.slack.format import slack_format_alert
 
 from APIServer.mattermost.push import push_to_mattermost
 
@@ -257,15 +258,21 @@ class SlackAlerts(Resource):
         return write_alert(config['database_path'], alert_json)
 
 
-@api.route('/slack_alert/<int:id>')
-@api.doc(params={'id': 'An Alert id number'})
+@api.route('/slack_get_alert')
 class SlackAlert(Resource):
-    def get(self, id):
+    def post(self):
         """
         Get a specific alert with the given alert id and send it to Slack
         """
-        text = read_alert(config['database_path'], id)
-        return push_to_slack(text)
+        alert_id = json.loads(request.form['text'])
+        try:
+            id = int(alert_id)
+            text = read_alert(config['database_path'], id)
+            formated_alert = slack_format_alert(text)
+            return push_to_slack(formated_alert)
+        except ValueError:
+            ERROR_MESSAGE = 'Please input a valid alert id.'
+            return push_to_slack(ERROR_MESSAGE)
 
 
 @api.route('/slack_echo')
