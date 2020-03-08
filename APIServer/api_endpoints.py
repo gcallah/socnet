@@ -264,7 +264,7 @@ class SlackAlert(Resource):
         """
         Get a specific alert with the given alert id and send it to Slack
         """
-        alert_id = json.loads(request.form['text'])
+        alert_id = request.form['text']
         try:
             id = int(alert_id)
             text = read_alert(config['database_path'], id)
