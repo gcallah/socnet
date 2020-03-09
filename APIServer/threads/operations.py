@@ -2,6 +2,8 @@ import os
 import sqlite3
 
 from APIServer.database.sqlite import get_db
+from APIServer import db
+from APIServer.database.models import Thread,Comment
 
 def add_comment_beta(comment, thread_id):
     fetched_thread = Thread.query.get(thread_id)
@@ -10,9 +12,21 @@ def add_comment_beta(comment, thread_id):
     first_comment_id = fetched_thread.first_comment_id
     last_comment_id = fetched_thread.last_comment_id
     comment_text = comment['text']
+    new_comment = Comment(content=comment_text)
+    db.session.add(new_comment)
+    db.session.commit()
 
+    new_id = new_comment.id
+    fetched_thread.last_comment_id = new_id
+    if first_comment_id == -1:
+        fetched_thread.first_comment_id = new_id
+    if last_comment_id != -1:
+        fetched_comment = Comment.query.get(last_comment_id)
+        fetched_comment.next_comment_id = new_comment_id
+    db.session.commit()
+    return 'Comment %d inserted to thread %d' % (new_comment_id, thread_id)
 
-def get_comments(thread_id):
+def get_comments_beta(thread_id):
     fetched_thread = Thread.query.get(thread_id)
 
 

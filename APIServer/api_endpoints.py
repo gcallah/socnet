@@ -23,6 +23,7 @@ from APIServer.alerts.operations import read_alert_country_beta
 
 from APIServer.threads.operations import get_comments
 from APIServer.threads.operations import add_comment
+from APIServer.threads.operations import add_comment_beta
 
 from APIServer.slack.push import push_to_slack
 from APIServer.slack.format import slack_format_alert
@@ -160,6 +161,23 @@ class Threads(Resource):
         Post a new comment under a thread(thread id is given)
         """
         return add_comment(config['database_path'], request.json, id)
+
+
+@api.route('/threads_beta/<int:id>')
+@api.doc(params={'id': 'An Alert id number'})
+class ThreadsBeta(Resource):
+    # def get(self, id):
+    #     """
+    #     List all comments under a thread(thread id is given)
+    #     """
+    #     return get_comments_beta(id)
+
+    @api.expect(comment)
+    def put(self, id):
+        """
+        Post a new comment under a thread(thread id is given)
+        """
+        return add_comment_beta(request.json, id)
 
 
 @api.route('/alerts_beta')

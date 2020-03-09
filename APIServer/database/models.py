@@ -18,12 +18,12 @@ class Thread(db.Model):
     __tablename__ = "threads"
  
     id = db.Column(db.Integer, primary_key=True)
-    first_comment_id = db.Column(db.Integer)
-    last_comment_id = db.Column(db.Integer)
+    first_comment_id = db.Column(db.Integer,default=-1)
+    last_comment_id = db.Column(db.Integer,default=-1)
 
 class Comment(db.Model):
     __tablename__ = "comments"
  
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     content = db.Column(db.Text)
-    next_comment_id = db.Column(db.Integer)
+    next_comment_id = db.Column(db.Integer,default=-1)
