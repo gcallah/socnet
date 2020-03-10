@@ -1,12 +1,55 @@
 import json
 
-from APIServer.commons.api_utils import read_json
-
 def slack_format_alert(raw_alert):
-	MESSAGE_TEMPLATE = 'message.json'
-	message = read_json(MESSAGE_TEMPLATE)
-	if message.get('Error:', None):
-		message = read_json('APIServer/slack' + MESSAGE_TEMPLATE)
+	MESSAGE_TEMPLATE = '''
+	{
+		"blocks": [
+			{
+				"type": "divider"
+			},
+			{
+				"type": "section",
+				"text": {
+					"type": "mrkdwn",
+					"text": "*Event*\nDescription"
+				}
+			},
+			{
+				"type": "context",
+				"elements": [
+					{
+						"type": "mrkdwn",
+						"text": "Location\nDatetime\nSev\nby *wm1065*"
+					}
+				]
+			},
+	        
+			{
+				"type": "divider"
+			},
+			{
+				"type": "section",
+				"text": {
+					"type": "mrkdwn",
+					"text": "Go to Socnet to view this alert and its thread"
+				},
+				"accessory": {
+						"type": "button",
+						"text": {
+							"type": "plain_text",
+							"text": "Go to Socnet"
+						},
+						"style": "primary",
+						"url": "https://gcallah.github.io/socnet/webapp.html#/thread/40"
+					}
+			},
+			{
+				"type": "divider"
+			}
+		]
+	}
+	'''
+	message = json.loads(MESSAGE_TEMPLATE)
 
 	alert_id = raw_alert[0][0]
 	datetime = raw_alert[0][1]
