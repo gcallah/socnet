@@ -15,7 +15,7 @@ def slack_format_alert(raw_alert):
 	sender = raw_alert[0][9]
 	url = 'https://gcallah.github.io/socnet/webapp.html#/thread/' + str(alert_id)
 
-	message['blocks'][1]['text']['text'] = '*' + event + '*\n' + description
-	message['blocks'][2]['elements']['text'] = location + '\n' + datetime + '\n' + severity + '\nby *' + sender + '*'
-	message['blocks'][4]['accessory']['url'] = url
+	#message['blocks'][1]['text']['text'] = '*' + event + '*\n' + description
+	#message['blocks'][2]['elements']['text'] = location + '\n' + datetime + '\n' + severity + '\nby *' + sender + '*'
+	#message['blocks'][4]['accessory']['url'] = url
 	return message
