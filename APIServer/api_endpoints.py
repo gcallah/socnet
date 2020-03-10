@@ -293,23 +293,6 @@ class SlackAlert(Resource):
             return push_to_slack(ERROR_MESSAGE)
 
 
-@api.route('/slack_get_test')
-class SlackAlertTest(Resource):
-    def post(self):
-        """
-        Get a specific alert with the given alert id and send it to Slack
-        """
-        alert_id = 40
-        try:
-            id = int(alert_id)
-            text = read_alert(config['database_path'], id)
-            formated_alert = slack_format_alert(text)
-            return push_to_slack(formated_alert)
-        except ValueError:
-            ERROR_MESSAGE = 'Please input a valid alert id.'
-            return push_to_slack(ERROR_MESSAGE)
-
-
 @api.route('/slack_echo')
 class SlackEcho(Resource):
     def post(self):
