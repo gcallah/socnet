@@ -7,7 +7,8 @@ def slack_format_alert(raw_alert):
 	message = read_json(MESSAGE_TEMPLATE)
 	if message.get('Error:', None):
 		message = read_json('APIServer/slack/' + MESSAGE_TEMPLATE)
-	print (message['blocks'][1]['text']['text'])
+	if raw_alert == []:
+		return {'text':'This alert has been deleted.'}
 
 	alert_id = raw_alert[0][0]
 	datetime = raw_alert[0][1]
