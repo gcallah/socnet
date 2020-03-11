@@ -1,6 +1,6 @@
 from APIServer.commons.form_api import create_alerts
 from APIServer.database.sqlite import get_db
-from APIServer.database.models import Alert
+from APIServer.database.models import Alert,Thread,Comment
 from APIServer.database.schema import AlertSchema
 from APIServer import db
 from flask import jsonify
@@ -57,7 +57,10 @@ def write_alert_beta(alert):
     event_severity = alert['event_severity'])
     db.session.add(new_alert)
     db.session.commit()
-
+    new_thread = Thread(id=new_alert.id,first_comment_id=-1,last_comment_id=-1)
+    db.session.add(new_thread)
+    db.session.commit()
+    return 'Alert ' + str(new_alert.id) + ' inserted'
 
 def update_alert(path, alert, id):
     event_zipcode = alert['event_zipcode']
@@ -94,6 +97,7 @@ def update_alert_beta(alert, id):
     fetched_alert.event_datetime = alert['event_datetime']
     fetched_alert.event_severity = alert['event_severity']
     db.session.commit()
+    return
 
 
 def read_alert(path, id):
@@ -120,6 +124,7 @@ def delete_alert(path, id):
     return 
 
 def delete_alert_beta(id):
+    # when an alert is deleted, so does its thread and all comments?
     alert = Alert.query.get(id)
     db.session.delete(alert)
     db.session.commit()

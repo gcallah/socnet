@@ -22,9 +22,9 @@ def add_comment_beta(comment, thread_id):
         fetched_thread.first_comment_id = new_id
     if last_comment_id != -1:
         fetched_comment = Comment.query.get(last_comment_id)
-        fetched_comment.next_comment_id = new_comment_id
+        fetched_comment.next_comment_id = new_id
     db.session.commit()
-    return 'Comment %d inserted to thread %d' % (new_comment_id, thread_id)
+    return 'Comment %d inserted to thread %d' % (new_id, thread_id)
 
 
 def get_comments_beta(thread_id):
