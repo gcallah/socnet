@@ -11,6 +11,4 @@ source /home/$project_name/.virtualenvs/$project_name/bin/activate
 # install all of our packages:
 pip install -r requirements/requirements.txt
 echo "Going to reboot the webserver"
-API_TOKEN=849b1677af163ab7d893576b3f01aca7a13ccd22 pa_reload_webapp.py $project_name.pythonanywhere.com
-# the next line gives us evidence as to whether script ran on PA:
-touch reboot
+touch  /var/www/socnet_pythonanywhere_com_wsgi.py
