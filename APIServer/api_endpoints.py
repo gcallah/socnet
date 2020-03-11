@@ -261,13 +261,6 @@ class SlackAlertBeta(Resource):
 
 @api.route('/slack_alerts')
 class SlackAlerts(Resource):
-    def get(self):
-        """
-        Get all alerts and send it to Slack
-        """
-        text = read_all_alerts(config['database_path'])
-        return push_to_slack(text)
-
     def post(self):
         """
         Put a new alert into the system through a Slack message
