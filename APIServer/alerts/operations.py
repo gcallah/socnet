@@ -87,6 +87,8 @@ def update_alert(path, alert, id):
 
 def update_alert_beta(alert, id):
     fetched_alert = Alert.query.get(id)
+    if fetched_alert is None:
+        return 'Alert ' + str(id) + ' not exist'
     fetched_alert.event_zipcode = alert['event_zipcode']
     fetched_alert.event_city = alert['event_city']
     fetched_alert.event_state = alert['event_state']
@@ -126,6 +128,8 @@ def delete_alert(path, id):
 def delete_alert_beta(id):
     # when an alert is deleted, so does its thread and all comments?
     alert = Alert.query.get(id)
+    if alert == None:
+        return 'Alert ' + str(id) + ' not exist'
     db.session.delete(alert)
     db.session.commit()
 
