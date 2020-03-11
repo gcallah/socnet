@@ -55,15 +55,6 @@ class HelloWorld(Resource):
         return {'hello': 'socnet'}
 
 
-@api.route('/test_pipeline')
-class testPipeline(Resource):
-    def get(self):
-        """
-        Test of pipeline
-        """
-        return {'test': 'reboot'}
-
-
 @api.route('/endpoints')
 class Endpoints(Resource):
     def get(self):

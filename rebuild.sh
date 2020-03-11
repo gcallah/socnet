@@ -11,4 +11,4 @@ source /home/$project_name/.virtualenvs/$project_name/bin/activate
 # install all of our packages:
 pip install -r requirements/requirements.txt
 echo "Going to reboot the webserver"
-touch  /var/www/socnet_pythonanywhere_com_wsgi.py
+touch /var/www/socnet_pythonanywhere_com_wsgi.py
