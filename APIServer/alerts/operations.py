@@ -11,13 +11,23 @@ def read_all_alerts(path):
     cur.execute("SELECT * FROM alert")
     return create_alerts(cur.fetchall())
 
+def dic_lst_to_tuple_lst(dic_lst):
+    final_lst = []
+    for dic in dic_lst:
+        tup = (dic["id"],dic["event_datetime"],dic["event_zipcode"],dic["event_city"],dic["event_state"],dic["event_country"],dic["event_type"],dic["event_description"],dic["event_severity"],dic["msg_sender"])
+        final_lst.append(tup)
+    return final_lst
+
 
 def read_all_alerts_beta():
     alerts = Alert.query.all()
     alert_schema = AlertSchema(many=True)
     alerts_json = alert_schema.dump(alerts)
-    print('alerts_json: ', alerts_json)
-    return jsonify({'alerts:' : alerts_json})
+    return dic_lst_to_tuple_lst(alerts_json)
+    # print(type(alerts_json))
+    # print(alerts_json[0])
+    # # print('alerts_json: ', alerts_json)
+    # return jsonify({'alerts:' : alerts_json})
 
 
 def write_alert(path, alert):
