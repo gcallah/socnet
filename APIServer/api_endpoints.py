@@ -102,6 +102,22 @@ class AlertsLists(Resource):
         return write_alert(config['database_path'], request.json)
 
 
+@api.route('/alerts_beta')
+class AlertsListsBeta(Resource):
+    def get(self):
+        """
+        Get all alerts
+        """
+        return read_all_alerts_beta()
+
+    @api.expect(alert)
+    def post(self):
+        """
+        Put a new alert into the system
+        """
+        return write_alert_beta(request.json)
+
+
 @api.route('/alerts/<int:id>')
 @api.doc(params={'id': 'An Alert id number'})
 class Alerts(Resource):
@@ -125,6 +141,29 @@ class Alerts(Resource):
         return delete_alert(config['database_path'], id)
 
 
+@api.route('/alerts_beta/<int:id>')
+@api.doc(params={'id': 'An Alert id number'})
+class AlertsBeta(Resource):
+    def get(self, id):
+        """
+        Get a specific alert with the given alert id
+        """
+        return read_alert_beta(id)
+
+    @api.expect(alert)
+    def put(self, id):
+        """
+        Update an alert in the system with the given alert id
+        """
+        return update_alert_beta(request.json, id)
+
+    def delete(self, id):
+        """
+        Delete an alert in the system with the given alert id
+        """
+        return delete_alert_beta(id)
+
+
 @api.route('/alerts/<string:country>')
 @api.doc(params={'country': 'A country to retrieve all alerts from'})
 class AlertByCountry(Resource):
@@ -133,6 +172,16 @@ class AlertByCountry(Resource):
         Get all alerts for the given country
         """
         return read_alert_country(config['database_path'], country)
+
+
+@api.route('/alerts_beta/<string:country>')
+@api.doc(params={'country': 'A country to retrieve all alerts from'})
+class AlertByCountryBeta(Resource):
+    def get(self, country):
+        """
+        Get all alerts for the given country
+        """
+        return read_alert_country_beta(country)
 
 
 comment = api.model('Comment', {'text': fields.String})
@@ -170,55 +219,6 @@ class ThreadsBeta(Resource):
         Post a new comment under a thread(thread id is given)
         """
         return add_comment_beta(request.json, id)
-
-
-@api.route('/alerts_beta')
-class AlertsListsBeta(Resource):
-    def get(self):
-        """
-        Get all alerts
-        """
-        return read_all_alerts_beta()
-
-    @api.expect(alert)
-    def post(self):
-        """
-        Put a new alert into the system
-        """
-        return write_alert_beta(request.json)
-
-
-@api.route('/alerts_beta/<int:id>')
-@api.doc(params={'id': 'An Alert id number'})
-class AlertsBeta(Resource):
-    def get(self, id):
-        """
-        Get a specific alert with the given alert id
-        """
-        return read_alert_beta(id)
-
-    @api.expect(alert)
-    def put(self, id):
-        """
-        Update an alert in the system with the given alert id
-        """
-        return update_alert_beta(request.json, id)
-
-    def delete(self, id):
-        """
-        Delete an alert in the system with the given alert id
-        """
-        return delete_alert_beta(id)
-
-
-@api.route('/alerts_beta/<string:country>')
-@api.doc(params={'country': 'A country to retrieve all alerts from'})
-class AlertByCountryBeta(Resource):
-    def get(self, country):
-        """
-        Get all alerts for the given country
-        """
-        return read_alert_country_beta(country)
 
 
 @api.route('/slack_alerts_beta')
