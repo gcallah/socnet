@@ -111,6 +111,7 @@ class Test(TestCase):
                 for method in endpoints[ep]:
                     self.assertEqual(type(endpoints[ep][method]), str)
 
+    @skip("Skipping while cutting over to the new database")
     def test_alerts(self):
         """
         Testing whether or not the alerts module works
@@ -144,6 +145,7 @@ class Test(TestCase):
             rv = c.get('/alerts')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
 
+    @skip("Skipping while cutting over to the new database")
     def test_AlertByCountry(self):
         """
         Testing whether the filter by country endpoint works
@@ -169,6 +171,7 @@ class Test(TestCase):
             rv = c.get('/alerts/USA')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
        
+    @skip("Skipping while cutting over to the new database")
     def test_threads(self):
         """
         Testing whether or not the threads module works
