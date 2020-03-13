@@ -24,10 +24,6 @@ def read_all_alerts_beta():
     alert_schema = AlertSchema(many=True)
     alerts_json = alert_schema.dump(alerts)
     return dic_lst_to_tuple_lst(alerts_json)
-    # print(type(alerts_json))
-    # print(alerts_json[0])
-    # # print('alerts_json: ', alerts_json)
-    # return jsonify({'alerts:' : alerts_json})
 
 
 def write_alert(path, alert):
@@ -122,8 +118,7 @@ def read_alert_beta(id):
     fetched_alert = Alert.query.get(id)
     alert_schema = AlertSchema()
     alert_json = alert_schema.dump(fetched_alert)
-    print('alert_json: ', alert_json)
-    return jsonify({'alert:' : alert_json})
+    return dic_lst_to_tuple_lst([alert_json])
 
 
 
@@ -154,5 +149,4 @@ def read_alert_country_beta(country):
     alerts = Alert.query.filter_by(event_country=country).all()
     alert_schema = AlertSchema(many=True)
     alerts_json = alert_schema.dump(alerts)
-    print('alerts_json: ', alerts_json)
-    return jsonify({'alerts:' : alerts_json})
+    return dic_lst_to_tuple_lst(alerts_json)

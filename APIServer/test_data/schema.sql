@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS thread (
     last_comment_id INTEGER
 );
 CREATE TABLE IF NOT EXISTS comment (
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     content TEXT,
     next_comment_id INTEGER
 );
