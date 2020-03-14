@@ -8,9 +8,9 @@ function FormInputField(props) {
   if (typeof values !== "undefined") {
     return (
       <InputGroup className="mb-3">
-        <InputGroup.Prepend>
+        {/* <InputGroup.Prepend>
           <InputGroup.Text id="basic-addon1">{label}</InputGroup.Text>
-        </InputGroup.Prepend>
+        </InputGroup.Prepend> */}
         <FormControl
           placeholder={placeholder}
           as={type}
@@ -28,9 +28,9 @@ function FormInputField(props) {
   } else {
     return (
       <InputGroup className="mb-3">
-        <InputGroup.Prepend>
+        {/* <InputGroup.Prepend>
           <InputGroup.Text id="basic-addon1">{label}</InputGroup.Text>
-        </InputGroup.Prepend>
+        </InputGroup.Prepend> */}
         <FormControl
           placeholder={placeholder}
           type={type}

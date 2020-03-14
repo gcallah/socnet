@@ -53,6 +53,7 @@ class Home extends Component {
     const { payload } = this.state;
     const { history } = this.props;
 
+    console.log(this.state);
     Object.keys(payload).map((payloadKey) => {
       if (payloadKey === "event_severity" && payload[payloadKey].value === undefined) {
         payload[payloadKey] = 'Low';

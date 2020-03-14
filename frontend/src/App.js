@@ -4,9 +4,10 @@ import 'semantic-ui-css/semantic.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import Home from './components/Home';
-import CreateAlert from './components/CreateAlert';
+// import CreateAlert from './components/CreateAlert_ Deprecated';
 import ThreadView from './components/ThreadView';
 import FilterForm from './components/FilterForm';
+import CreartAlert from './components/NewCreateAlerts'
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <Switch>
             <Route exact path="/" component={FilterForm} />
             <Route exact path="/alerts" component={Home} />
-            <Route exact path="/createAlert" component={CreateAlert} />
+            <Route exact path="/createAlert" component={CreartAlert} />
             <Route exact path="/thread/:id" component={ThreadView} />  
         </Switch>
       </BrowserRouter>

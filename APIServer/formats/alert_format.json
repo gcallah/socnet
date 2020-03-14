@@ -10,22 +10,22 @@
         "zipcode": {
             "required": true,
             "type": "string",
-            "example": "10001"
+            "example": "E.g. 10001"
         },
         "city": {
             "required": true,
             "type": "string",
-            "example": "New York City"
+            "example": "E.g. New York City"
         },
         "state": {
             "required": true,
             "type": "string",
-            "example": "New York"
+            "example": "E.g. New York"
         },
         "country": {
             "required": true,
             "type": "string",
-            "example": "USA"
+            "example": "E.g. USA"
         },
         "type": {
             "required": true,
