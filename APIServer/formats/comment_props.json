@@ -1,0 +1,17 @@
+{
+  "cmt_text": {
+    "question ID": 0,
+    "question": "When did even occur?",
+    "atype": "string"
+  },
+  "cmt_sender": {
+    "question ID": 1,
+    "question": "What is the event zipcode?",
+    "atype": "string"
+  },
+  "cmt_datetime": {
+    "question ID": 2,
+    "question": "What is the event city?",
+    "atype": "datetime"
+  }
+}
