@@ -147,8 +147,8 @@ class Threads(Resource):
         return add_comment(request.json, id)
 
 
-@api.route('/slack_alerts')
-class SlackAlerts(Resource):
+@api.route('/slack_post_alert')
+class SlackPostAlert(Resource):
     def post(self):
         """
         Put a new alert into the system through a Slack message
@@ -158,7 +158,7 @@ class SlackAlerts(Resource):
 
 
 @api.route('/slack_get_alert')
-class SlackAlert(Resource):
+class SlackGetAlert(Resource):
     def post(self):
         """
         Get a specific alert with the given alert id and send it to Slack
@@ -166,12 +166,23 @@ class SlackAlert(Resource):
         alert_id = request.form['text']
         try:
             id = int(alert_id)
-            text = read_alert(id)
-            formated_alert = slack_format_alert(text)
-            return push_to_slack(formated_alert)
         except ValueError:
             ERROR_MESSAGE = 'Please input a valid alert id.'
             return push_to_slack(ERROR_MESSAGE)
+        text = read_alert(id)
+        formated_alert = slack_format_alert(text)
+        return push_to_slack(formated_alert)
+
+
+@api.route('/slack_update_alert')
+class SlackUpdateAlert(Resource):
+    def post(self):
+        """
+        Put a new alert into the system through a Slack message
+        """
+        alert_id = request.form['text']['alert_id']
+        alert_json = json.loads(request.form['text']['alert_json'])
+        return update_alert(alert_json, alert_id)
 
 
 @api.route('/slack_echo')
