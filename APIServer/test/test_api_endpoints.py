@@ -53,7 +53,7 @@ class Test(TestCase):
         db_init(test_db_dir, test_db_schema)
 
         test_json = read_json('test_data/test_json.json')
-
+        
         with app.test_client() as c:
             rv = c.get('/alerts')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), {})
@@ -170,7 +170,7 @@ class Test(TestCase):
 
             rv = c.get('/alerts/USA')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
-
+       
     @skip("Skipping while cutting over to the new database")
     def test_threads(self):
         """
