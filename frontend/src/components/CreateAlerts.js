@@ -133,7 +133,7 @@ class NewCreateAlerts extends Component {
                     <Header icon>
                         Please help us stay safe by entering the information about the incident you wish to report.
                     </Header>
-                    </Segment>
+                </Segment>
                 <Segment padded='very' raised color='teal'>
                     <Grid centered>
                         <Form loading={loadingData} onSubmit={this.handleSubmit.bind(this)} size="large" style={{ width: "60%" }}>
