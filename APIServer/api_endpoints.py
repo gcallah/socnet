@@ -180,9 +180,10 @@ class SlackUpdateAlert(Resource):
         """
         Put a new alert into the system through a Slack message
         """
-        alert_id = request.form['text']['alert_id']
-        alert_json = json.loads(request.form['text']['alert_json'])
-        return update_alert(alert_json, alert_id)
+        message_text = json.loads(request.form['text'])
+        alert_id = message_text.get('alert_id')
+        alert_json = message_text.get('alert_json')
+        return update_alert(alert_json, int(alert_id))
 
 
 @api.route('/slack_echo')
