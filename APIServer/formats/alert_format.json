@@ -50,7 +50,7 @@
             "required": true,
             "type": "string",
             "description": "Who is sending the alert?",
-            "example": "Socnet API Server"
+            "example": "Socnet Front-end App"
         }
     }
 }
