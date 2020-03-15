@@ -53,7 +53,7 @@ def update_alert(alert, id):
     fetched_alert.event_datetime = alert['event_datetime']
     fetched_alert.event_severity = alert['event_severity']
     db.session.commit()
-    return
+    return 'Alert ' + str(id) + ' updated'
 
 
 def read_alert(id):
@@ -71,6 +71,7 @@ def delete_alert(id):
         return 'Alert ' + str(id) + ' not exist'
     db.session.delete(alert)
     db.session.commit()
+    return 'Alert ' + str(id) + ' deleted'
 
 
 def read_alert_country(country):
