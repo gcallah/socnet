@@ -18,7 +18,7 @@ from APIServer.alerts.operations import read_alert_country
 from APIServer.threads.operations import get_comments
 from APIServer.threads.operations import add_comment
 
-from APIServer.slack.push import push_to_slack
+from APIServer.slack.push import push_to_slack, push_to_channel
 from APIServer.slack.format import slack_format_alert
 
 from APIServer.mattermost.push import push_to_mattermost
@@ -192,9 +192,9 @@ class SlackEcho(Resource):
         """
         A test API for echoing back Slack messages
         """
-        user = request.form['user_name']
-        text = request.form['text']
-        return push_to_slack(user + ' : ' + text)
+        trigger_id = request.form['trigger_id']
+        channel_id = request.form['channel_id']
+        return push_to_channel(channel_id, trigger_id)
 
 
 @api.route('/mattermost_hello')
