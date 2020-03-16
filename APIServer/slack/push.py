@@ -1,4 +1,5 @@
 import requests
+import json
 
 
 def push_to_slack(text):
@@ -10,8 +11,8 @@ def push_to_slack(text):
 
 def push_to_channel(channel, trigger_id):
 	URL = 'https://slack.com/api/views.open'
-	with open('dialog.json', 'r') as json_file:
-		data=myfile.read()
+	with open('APIServer/slack/dialog.json', 'r') as json_file:
+		data=json_file.read()
 	dialog = json.loads(data)
 	textToSend = {'channel': channel, 'view': dialog}
 	headers = {"Authorization": "Bearer xoxp-765850805047-790629649378-989309639635-00bf54bba4048c8414ad0983f630c586"}
