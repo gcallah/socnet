@@ -164,11 +164,7 @@ class SlackGetAlert(Resource):
         Get a specific alert with the given alert id and send it to Slack
         """
         alert_id = request.form['text']
-        try:
-            id = int(alert_id)
-        except ValueError:
-            ERROR_MESSAGE = 'Please input a valid alert id.'
-            return push_to_slack(ERROR_MESSAGE)
+        id = int(alert_id)
         text = read_alert(id)
         formated_alert = slack_format_alert(text)
         return push_to_slack(formated_alert)
@@ -194,6 +190,21 @@ class SlackDeleteAlert(Resource):
         """
         alert_id = json.loads(request.form['text'])
         return delete_alert(int(alert_id))
+
+
+@api.route('/slack_get_alerts')
+class SlackGetAlerts(Resource):
+    def post(self):
+        """
+        Get multiple alerts and send it to Slack
+        """
+        alert_id_list = json.loads(request.form['text'])
+        for alert_id in alert_id_list:
+            id = int(alert_id)
+            text = read_alert(id)
+            formated_alert = slack_format_alert(text)
+            push_to_slack(formated_alert)
+        return
 
 
 @api.route('/slack_echo')
