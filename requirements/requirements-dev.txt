@@ -1,7 +1,0 @@
--r requirements.txt
-setuptools
-coverage
-nose
-selenium
-urllib3
-flake8

@@ -1,9 +1,0 @@
-flask
-werkzeug==0.16.1
-flask_restplus
-flask-cors
-flask-sqlalchemy
-flask-marshmallow
-marshmallow-sqlalchemy
-requests
-responses
