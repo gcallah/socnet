@@ -151,7 +151,7 @@ class Threads(Resource):
 class SlackPostAlert(Resource):
     def post(self):
         """
-        Put a new alert into the system through a Slack message
+        Post a new alert into the system through a Slack message
         """
         alert_json = json.loads(request.form['text'])
         return write_alert(alert_json)
@@ -178,12 +178,22 @@ class SlackGetAlert(Resource):
 class SlackUpdateAlert(Resource):
     def post(self):
         """
-        Put a new alert into the system through a Slack message
+        Update an alert in the system through a Slack message
         """
         message_text = json.loads(request.form['text'])
         alert_id = message_text.get('alert_id')
         alert_json = message_text.get('alert_json')
         return update_alert(alert_json, int(alert_id))
+
+
+@api.route('/slack_delete_alert')
+class SlackDeleteAlert(Resource):
+    def post(self):
+        """
+        Delete an alert in the system through a Slack message
+        """
+        alert_id = json.loads(request.form['text'])
+        return delete_alert(int(alert_id))
 
 
 @api.route('/slack_echo')
