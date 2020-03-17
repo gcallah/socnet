@@ -114,6 +114,7 @@ class Home extends Component {
           <Header as="h1"> Create Alerts </Header>
           <Header> Please help us stay safe by entering the information about the incident you wish to report.</Header>
         </Segment>
+
       {/* <div className="container mt-5">
       <Segment placeholder>
         <Header icon>
@@ -122,6 +123,7 @@ class Home extends Component {
         </Header>
         </Segment>
       </div> */}
+
         <Segment padded='very' raised color='teal'>
           <Form className="container-fluid mt-4" onSubmit={e => this.handleSubmit(e)}>
             <table align="center" cellPadding="5px"> 
@@ -153,7 +155,7 @@ class Home extends Component {
             </table>
             <Button type="submit"> Submit Alert  </Button>
           </Form>
-          </Segment>
+        </Segment>
       </div>
     );
   }
