@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Loader, Dimmer } from 'semantic-ui-react';
-import { Form , Button } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import FormInputField from './FormInputField';
 import moment from 'moment';
-import { Header, Segment } from 'semantic-ui-react';
+import { Header, Icon, Segment } from 'semantic-ui-react';
 
 class Home extends Component {
   constructor(props) {
@@ -92,10 +92,6 @@ class Home extends Component {
     }
   };
 
-  firstLetterUpperCase = (item) => {
-    return item[0].toUpperCase() + item.slice(1) + ": "
-  }
-
   render() {
     const { loadingData, properties, errorMessage } = this.state
 
@@ -110,52 +106,32 @@ class Home extends Component {
     return (
 
       <div className="container">
-        <Segment basic padded>
-          <Header as="h1"> Create Alerts </Header>
-          <Header> Please help us stay safe by entering the information about the incident you wish to report.</Header>
-        </Segment>
-
-      {/* <div className="container mt-5">
+      <div className="container mt-5">
       <Segment placeholder>
         <Header icon>
           <Icon name='shield alternate' circular/>
           Please help us stay safe by entering the information about the incident you wish to report.
         </Header>
         </Segment>
-      </div> */}
-
-        <Segment padded='very' raised color='teal'>
+      </div>
           <Form className="container-fluid mt-4" onSubmit={e => this.handleSubmit(e)}>
-            <table align="center" cellPadding="5px"> 
-              <tbody>
-                {Object.keys(properties).map((item) => {
-                  if (item !== 'event_datetime') {
-                    return (
-                      <tr> 
-                        <td>
-                          <label> {this.firstLetterUpperCase(this.formatItem(item))} </label>
-                        </td>
-                        <td> 
-                          <FormInputField
-                            label={this.formatItem(item)}
-                            type={this.formatType(properties[item].type, properties[item].values)}
-                            placeholder={properties[item].example}
-                            propChanged={e => this.propChanged(e, item)}
-                            values={properties[item].values}
-                            key={this.formatItem(item)}
-                            errorMessage={errorMessage}
-                          ></FormInputField>
-                        </td>
-                      </tr>
-                    );
-                  }
-                })}
-
-              </tbody>
-            </table>
-            <Button type="submit"> Submit Alert  </Button>
+            {Object.keys(properties).map((item) => {
+              if (item !== 'event_datetime') {
+                return (
+                  <FormInputField
+                    label={this.formatItem(item)}
+                    type={this.formatType(properties[item].type, properties[item].values)}
+                    placeholder={properties[item].example}
+                    propChanged={e => this.propChanged(e, item)}
+                    values={properties[item].values}
+                    key={this.formatItem(item)}
+                    errorMessage={errorMessage}
+                  ></FormInputField>
+                );
+              }
+            })}
+            <Button variant="dark" type="submit">Submit Alert</Button>
           </Form>
-        </Segment>
       </div>
     );
   }
