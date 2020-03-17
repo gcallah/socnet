@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+<!--include head.txt -->
+        <title>
+            SOCNET:
+            Review of Various Messaging System's Interoperability Characteristics
+        </title>
+    </head>
+
+    <body>
+<!--include logo.txt -->
+<!--include menu.txt -->
+        <h1>
+            SOCNET:
+            Review of Various Messaging System's Interoperability Characteristics
+        </h1>
+
+        <ul>
+            <li>
+                <a href="msteams.html">
+                    Microsoft Teams
+                </a>
+            </li>
+
+            <li>
+                <a href="service_now.html">
+                    Service Now
+                </a>
+            </li>
+
+            <li>
+                <a href="symfony.html">
+                    Symfony
+                </a>
+            </li>
+
+            <li>
+                <a href="telegram.html">
+                    Telegram
+                </a>
+            </li>
+
+            <li>
+                <a href="mattermost.html">
+                    Mattermost
+                </a>
+            </li>
+            
+            
+        </ul>
+
+    </body>
+</html>

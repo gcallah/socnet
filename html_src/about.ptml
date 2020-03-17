@@ -1,0 +1,53 @@
+<html>
+    <head>
+<!--include head.txt -->
+        <title>
+            SOCNET Information Exchange Project
+        </title>
+    </head>
+
+    <body>
+<!--include logo.txt -->
+<!--include menu.txt -->
+        <h1>
+            SOCNET Information Exchange Project
+        </h1>
+
+        <p>
+            Project for
+            <a href="http://www.intercep.nyu.edu">NYU Intercep</a>.
+            Participants include:
+        </p>
+
+        <ul>
+            <li>
+                Rohit Saraf
+            </li>
+
+            <li>
+                Channi Greenwall
+            </li>
+
+            <li>
+                Karan Katliwala
+            </li>
+
+            <li>
+                Carroll Shen
+            </li>
+
+            <li>
+                Dennis Fenchenko
+            </li>
+
+            <li>
+                Fabian Hough
+            </li>
+
+            <li>
+                Wen Ma
+            </li>
+        </ul>
+
+    </body>
+</html>
