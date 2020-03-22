@@ -11,7 +11,7 @@ import FilterForm from './components/FilterForm';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <BrowserRouter  basename={window.location.pathname || ''}>
         <Switch>
             <Route exact path="/" component={FilterForm} />
             <Route exact path="/alerts" component={Home} />
