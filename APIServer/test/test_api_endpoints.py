@@ -46,12 +46,6 @@ class Test(TestCase):
         """
         See if alerts can be added, and called.
         """
-
-        test_db_dir = APIServer.api_endpoints.config['database_path']
-        test_db_schema = APIServer.api_endpoints.config['table_schema_path']
-        os.remove(test_db_dir)
-        db_init(test_db_dir, test_db_schema)
-
         test_json = read_json('test_data/test_json.json')
         
         with app.test_client() as c:
@@ -116,12 +110,6 @@ class Test(TestCase):
         """
         Testing whether or not the alerts module works
         """
-        test_db_dir = APIServer.api_endpoints.config['database_path']
-        test_db_schema = APIServer.api_endpoints.config['table_schema_path']
-        sqlite_db_dir = test_db_dir+".db"
-        if os.path.exists(sqlite_db_dir):
-            os.remove(sqlite_db_dir)
-        sqlite_init(test_db_dir, test_db_schema)
         test_json = read_json('test_data/test_json.json')
         test_response = read_json('test_data/test_response.json')
         
@@ -150,14 +138,6 @@ class Test(TestCase):
         """
         Testing whether the filter by country endpoint works
         """
-
-        test_db_dir = APIServer.api_endpoints.config['database_path']
-        test_db_schema = APIServer.api_endpoints.config['table_schema_path']
-        sqlite_db_dir = test_db_dir+".db"
-        if os.path.exists(sqlite_db_dir):
-            os.remove(sqlite_db_dir)
-        sqlite_init(test_db_dir, test_db_schema)
-
         test_json = read_json('test_data/test_json.json')
         test_response = read_json('test_data/test_response.json')
 
@@ -176,13 +156,6 @@ class Test(TestCase):
         """
         Testing whether or not the threads module works
         """
-        test_db_dir = APIServer.api_endpoints.config['database_path']
-        test_db_schema = APIServer.api_endpoints.config['table_schema_path']
-        sqlite_db_dir = test_db_dir+".db"
-        if os.path.exists(sqlite_db_dir):
-            os.remove(sqlite_db_dir)
-        sqlite_init(test_db_dir, test_db_schema)
-
         test_json = read_json('test_data/test_json.json')
         test_threads_json = read_json('test_data/test_threads_json.json')
 
@@ -219,13 +192,6 @@ class Test(TestCase):
         """
         Testing whether or not the threads module returns 404 code when a thread does not exist
         """
-        test_db_dir = APIServer.api_endpoints.config['database_path']
-        test_db_schema = APIServer.api_endpoints.config['table_schema_path']
-        sqlite_db_dir = test_db_dir+".db"
-        if os.path.exists(sqlite_db_dir):
-            os.remove(sqlite_db_dir)
-        sqlite_init(test_db_dir, test_db_schema)
-
         with app.test_client() as c:
 
             rv = c.put('/threads/1', json={ 'text' : 'some comment'})
