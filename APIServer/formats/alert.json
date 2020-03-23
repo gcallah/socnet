@@ -5,7 +5,7 @@
 	    "required": true,
             "type": "datetime",
             "description": "When did event occur?",
-            "example": "2020/03/04 12:45:32" 
+            "example": "2020-03-04 12:45:32" 
         },
         "event_zipcode": {
 	    "required": true,

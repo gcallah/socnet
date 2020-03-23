@@ -60,8 +60,8 @@ class Home extends Component {
         payload[payloadKey] = payload[payloadKey].value;
     });
 
-    payload["event_datetime"] = moment().format("YYYY/MM/DD h:mm:ss");
-    console.log("after payload", moment().format("YYYY/MM/DD h:mm:ss"));
+    payload["event_datetime"] = moment().format("YYYY-MM-DD hh:mm:ss");
+    console.log("after payload", moment().format("YYYY-MM-DD hh:mm:ss"));
     
     try {
       await axios.post(`${this.apiServer}alerts`, payload);
