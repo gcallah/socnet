@@ -213,6 +213,8 @@ class SlackEcho(Resource):
         """
         A test API for echoing back Slack messages
         """
+        if request.get('trigger_id') == None:
+            return 'No trigger id'
         trigger_id = request.form['trigger_id']
         channel_id = request.form['channel_id']
         return push_to_channel(channel_id, trigger_id)

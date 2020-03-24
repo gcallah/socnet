@@ -107,8 +107,12 @@ venv.bak/
 # vim files
 *~
 
-# mac OS
+# Mac OS files
 .DS_Store
 
-# Database files
+# database files
 *.db
+
+# IDE/code editor files
+.vscode/
+.idea/
