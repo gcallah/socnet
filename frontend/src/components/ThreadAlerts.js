@@ -18,21 +18,24 @@ class ThreadAlerts extends Component {
     async componentDidMount() {
         // In case we reached this page from the filters first page.
         try {
-            const alerts = this.props.location.state.alerts
-            this.setState({alerts: alerts})
-            console.log("Prop value: ", this.props.location.state.alerts)
-            console.log("Alerts State: ", this.state.alerts);
+            this.setState({loadingData: true})
+            console.log("ThreadAlerts.js/ComponentDidMount Props: ", this.props.location.state)
+            this.setState({ 
+                loadingData: false,
+                alerts: this.props.location.state.alerts 
+            });
         } catch (e) {  // In case we navigate straight to the main page
-            try {
-                this.setState({ loadingData: true });
-                const payload = await axios.get(`${this.apiServer}alerts`)
-                this.setState({
-                    loadingData: false,
-                    alerts: payload.data,
-                });
-            } catch (e) {
-                console.log('Error while fetching alterts')
-            }
+            // try {
+            //     this.setState({ loadingData: true });
+            //     const payload = await axios.get(`${this.apiServer}alerts`)
+            //     this.setState({
+            //         loadingData: false,
+            //         alerts: payload.data,
+            //     });
+            // } catch (e) {
+            //     console.log('Error while fetching alterts')
+            // }
+            console.log("Error! " , e , " Alerts State: ", this.state.alerts)
         }
     }
 
@@ -74,7 +77,8 @@ class ThreadAlerts extends Component {
     render() {
 
         const { loadingData, alerts } = this.state;
-        
+        console.log(alerts);
+
         if (loadingData) {
             return (
                 <Dimmer active inverted>

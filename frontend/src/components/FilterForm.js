@@ -66,6 +66,7 @@ class FilterForm extends Component {
 
     handleValidation = (fields) => {
         if (fields["date"] || fields["severity"].length > 0 || fields["type"].length > 0 || fields["region"].length > 0) {
+            console.log("User chose a filter!")
             return true
         } else {
             return false
@@ -86,7 +87,7 @@ class FilterForm extends Component {
         };
         
         if (this.handleValidation(fields)) {
-            console.log("Form had entries.")
+            console.log("Form had entries: ", JSON.stringify(fields), typeof(fields))
             try {
                 // axios.post({ apiServer }, { fields })
                 //     .then(payload => {
@@ -94,12 +95,10 @@ class FilterForm extends Component {
                 //         console.log(payload.data)
                 
                 // this.setState({ loading: true });
-
                 
                 axios.get(`${this.apiServer}alerts`)
                 .then( payload => { 
                     this.setState({ loading: false });
-
                     this.props.history.push('/alerts', { alerts: payload.data } ); 
                 });
 
