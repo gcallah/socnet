@@ -24,6 +24,7 @@ from APIServer.slack.format import slack_format_alert
 from APIServer.mattermost.push import push_to_mattermost
 
 import json
+import time
 
 CONFIG_PATH = 'api_config.json'
 # config is a dictionary of configuration params:
@@ -214,7 +215,7 @@ class SlackEcho(Resource):
         A test API for echoing back Slack messages
         """
         if request.form.get('trigger_id') is None:
-            return 'No trigger id'
+            return push_to_slack(request.form)
         trigger_id = request.form['trigger_id']
         channel_id = request.form['channel_id']
         return push_to_channel(channel_id, trigger_id)

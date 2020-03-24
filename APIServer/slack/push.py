@@ -11,7 +11,7 @@ def push_to_slack(text):
 
 def push_to_channel(channel, trigger_id):
 	URL = 'https://slack.com/api/views.open'
-	with open('APIServer/slack/dialog.json', 'r') as json_file:
+	with open('APIServer/slack/template_post_alert.json', 'r') as json_file:
 		data=json_file.read()
 	dialog = json.loads(data)
 	textToSend = {'channel': channel, 'trigger_id': trigger_id, 'view': dialog}
