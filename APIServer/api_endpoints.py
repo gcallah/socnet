@@ -219,7 +219,7 @@ class SlackEcho(Resource):
         payload = request.form.to_dict()
         push_to_slack({'text': str(payload)})
         push_to_slack({'text': 'slack_echo is called'})
-        if request.form.get('view') is None:
+        if request.form.get('payload') is None:
             trigger_id = request.form['trigger_id']
             channel_id = request.form['channel_id']
             return push_to_channel(channel_id, trigger_id)
