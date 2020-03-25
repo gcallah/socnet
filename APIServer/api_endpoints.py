@@ -224,7 +224,8 @@ class SlackEcho(Resource):
             channel_id = request.form['channel_id']
             return publish_results(channel_id, trigger_id, request.form)
         else:
-            return "Input type is not allowed: " + str(request.form['view']['type'])
+            return "Input type is not allowed: " \
+                + str(request.form['view']['type'])
 
 
 @api.route('/mattermost_hello')
