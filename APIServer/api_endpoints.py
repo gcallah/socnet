@@ -19,8 +19,6 @@ from APIServer.threads.operations import get_comments
 from APIServer.threads.operations import add_comment
 
 from APIServer.slack.push import push_to_slack
-from APIServer.slack.push import push_to_channel
-from APIServer.slack.push import publish_results
 from APIServer.slack.format import slack_format_alert
 
 from APIServer.mattermost.push import push_to_mattermost
@@ -217,15 +215,8 @@ class SlackEcho(Resource):
         """
         payload = request.json
         push_to_slack(payload)
-        if request.form['command'] == '/testecho' and \
-                request.form['text'] == '':
-            trigger_id = request.form['trigger_id']
-            channel_id = request.form['channel_id']
-            return publish_results(channel_id, trigger_id, request.form)
-        else:
-            trigger_id = request.form['trigger_id']
-            channel_id = request.form['channel_id']
-            return push_to_channel(channel_id, trigger_id)
+        payload = request.form
+        push_to_slack(payload)
 
 
 @api.route('/mattermost_hello')
