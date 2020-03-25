@@ -215,11 +215,13 @@ class SlackEcho(Resource):
         """
         A test API for echoing back Slack messages
         """
-        if request.form['view']['type'] == 'modal':
+        payload = request.json
+        push_to_slack()
+        if payload['view']['type'] == 'modal':
             trigger_id = request.form['trigger_id']
             channel_id = request.form['channel_id']
             return push_to_channel(channel_id, trigger_id)
-        elif request.form['view']['type'] == 'view_submission':
+        elif payload['view']['type'] == 'view_submission':
             trigger_id = request.form['trigger_id']
             channel_id = request.form['channel_id']
             return publish_results(channel_id, trigger_id, request.form)
