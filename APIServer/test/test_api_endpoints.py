@@ -1,11 +1,13 @@
 """
 """
-from unittest import TestCase, main, skip
+from unittest import TestCase, main
 import json
 import random
 import os
 import datetime
 from flask_restplus import Resource, Api, fields
+
+from APIServer import db
 
 import APIServer.api_endpoints
 from APIServer.api_endpoints import app, HelloWorld, MessageFormat, AlertByCountry, AlertsLists
@@ -18,6 +20,11 @@ from APIServer.database.sqlite import sqlite_init
 
 test_config_path = 'test_data/test_config.json'
 APIServer.api_endpoints.config = read_json(test_config_path)
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
+
+with app.app_context():
+    db.session.remove()
+    db.drop_all()
 
 class Test(TestCase):
     def setUp(self):
@@ -26,7 +33,12 @@ class Test(TestCase):
         self.HelloWorld = HelloWorld(Resource)
         self.AlertByCountry = AlertByCountry(Resource)
         self.alerts = AlertsLists(Resource)
-
+        with app.app_context():
+            db.create_all()
+    def tearDown(self):
+        with app.app_context():
+            db.session.remove()
+            db.drop_all()
     def test_hello_world(self):
         """
         See if HelloWorld works.
@@ -105,7 +117,6 @@ class Test(TestCase):
                 for method in endpoints[ep]:
                     self.assertEqual(type(endpoints[ep][method]), str)
 
-    @skip("Skipping while cutting over to the new database")
     def test_alerts(self):
         """
         Testing whether or not the alerts module works
@@ -120,7 +131,6 @@ class Test(TestCase):
             rv = c.post('/alerts', json=test_json)
             self.assertEqual(rv.status_code, 200)
 
-
             rv = c.put('/alerts/1', json=test_json)
             self.assertEqual(rv.status_code, 200)
 
@@ -133,7 +143,6 @@ class Test(TestCase):
             rv = c.get('/alerts')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
 
-    @skip("Skipping while cutting over to the new database")
     def test_AlertByCountry(self):
         """
         Testing whether the filter by country endpoint works
@@ -151,7 +160,6 @@ class Test(TestCase):
             rv = c.get('/alerts/USA')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
        
-    @skip("Skipping while cutting over to the new database")
     def test_threads(self):
         """
         Testing whether or not the threads module works
