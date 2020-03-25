@@ -19,7 +19,7 @@ from APIServer.threads.operations import get_comments
 from APIServer.threads.operations import add_comment
 
 from APIServer.slack.push import push_to_slack, push_to_channel
-from APIServer.slack.push import send_json_to_slack, publish_results
+from APIServer.slack.push import send_json_to_slack
 from APIServer.slack.format import slack_format_alert
 
 from APIServer.mattermost.push import push_to_mattermost
@@ -211,6 +211,7 @@ class SlackGetAlerts(Resource):
 
 @api.route('/slack_echo')
 class SlackEcho(Resource):
+    @api.doc(responses={200: 'OK'})
     def post(self):
         """
         A test API for echoing back Slack messages
@@ -224,7 +225,8 @@ class SlackEcho(Resource):
             return push_to_channel(channel_id, trigger_id)
         else:
             trigger_id = request.form['payload']['trigger_id']
-            return publish_results(trigger_id)
+            push_to_slack({'text': 'slack_echo branch 2 is called'})
+            return {'response_action': 'clear'}
 
 
 @api.route('/mattermost_hello')
