@@ -5,8 +5,19 @@ from APIServer.database.schema import AlertSchema
 from APIServer import db
 from flask import jsonify
 
-
-def dic_lst_to_tuple_lst(dic_lst):
+# return a list of dict
+def convert_to_dic_list(obj):
+    if type(obj) is list:
+        # if list contain MarshalResut object
+        if (len(obj)>0) and (type(obj[0]) is not dict):
+            return [obj.data]
+        else:
+            return obj
+    # if obj is a MarshalResult
+    else:
+        return obj.data
+def dic_lst_to_tuple_lst(obj):
+    dic_lst = convert_to_dic_list(obj)
     final_lst = []
     for dic in dic_lst:
         tup = (dic["id"],dic["event_datetime"],dic["event_zipcode"],dic["event_city"],dic["event_state"],dic["event_country"],dic["event_type"],dic["event_description"],dic["event_severity"],dic["msg_sender"])
