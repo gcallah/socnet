@@ -10,7 +10,7 @@ def convert_to_dic_list(obj):
     if type(obj) is list:
         # if list contain MarshalResut object
         if (len(obj)>0) and (type(obj[0]) is not dict):
-            return [obj.data]
+            return [obj[0].data]
         else:
             return obj
     # if obj is a MarshalResult
