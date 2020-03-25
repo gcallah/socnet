@@ -214,10 +214,10 @@ class SlackEcho(Resource):
         A test API for echoing back Slack messages
         """
         payload = request.json
-        push_to_slack(payload)
+        push_to_slack({'text': payload})
         payload = request.form
-        push_to_slack(payload)
-        push_to_slack('test')
+        push_to_slack({'text': payload})
+        push_to_slack({'text': 'slack_echo is called'})
         trigger_id = request.form['trigger_id']
         channel_id = request.form['channel_id']
         return push_to_channel(channel_id, trigger_id)
