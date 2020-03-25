@@ -224,7 +224,6 @@ class SlackEcho(Resource):
             channel_id = request.form['channel_id']
             return push_to_channel(channel_id, trigger_id)
         else:
-            trigger_id = request.form['payload']['trigger_id']
             push_to_slack({'text': 'slack_echo branch 2 is called'})
             return {'response_action': 'clear'}
 
