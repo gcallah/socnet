@@ -19,6 +19,7 @@ from APIServer.threads.operations import get_comments
 from APIServer.threads.operations import add_comment
 
 from APIServer.slack.push import push_to_slack, push_to_channel
+from APIServer.slack.push import send_json_to_slack
 from APIServer.slack.format import slack_format_alert
 
 from APIServer.mattermost.push import push_to_mattermost
@@ -199,12 +200,13 @@ class SlackGetAlerts(Resource):
         Get multiple alerts and send it to Slack
         """
         alert_id_list = json.loads(request.form['text'])
+        response_url = request.form['response_url']
         for alert_id in alert_id_list:
             id = int(alert_id)
             text = read_alert(id)
             formated_alert = slack_format_alert(text)
-            push_to_slack(formated_alert)
-        return
+            send_json_to_slack(formated_alert, response_url)
+        return {"ok": "All alerts fetched"}
 
 
 @api.route('/slack_echo')
@@ -216,9 +218,12 @@ class SlackEcho(Resource):
         payload = request.form.to_dict()
         push_to_slack({'text': str(payload)})
         push_to_slack({'text': 'slack_echo is called'})
-        trigger_id = request.form['trigger_id']
-        channel_id = request.form['channel_id']
-        return push_to_channel(channel_id, trigger_id)
+        if request.form.get('view') is None:
+            trigger_id = request.form['trigger_id']
+            channel_id = request.form['channel_id']
+            return push_to_channel(channel_id, trigger_id)
+        else:
+            return {"response_action": "clear"}
 
 
 @api.route('/mattermost_hello')

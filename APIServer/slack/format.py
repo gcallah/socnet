@@ -31,3 +31,7 @@ def slack_format_alert(raw_alert):
 												+ sender + '*'
 	message['blocks'][4]['accessory']['url'] = url
 	return message
+
+
+def parse_view_submission_payload(payload):
+	return payload['view']['state']
