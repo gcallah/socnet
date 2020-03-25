@@ -215,15 +215,16 @@ class SlackEcho(Resource):
         """
         A test API for echoing back Slack messages
         """
-        if request.form['type'] == 'modal':
+        if request.form['view']['type'] == 'modal':
             trigger_id = request.form['trigger_id']
             channel_id = request.form['channel_id']
             return push_to_channel(channel_id, trigger_id)
-        else:
+        elif request.form['view']['type'] == 'view_submission':
             trigger_id = request.form['trigger_id']
             channel_id = request.form['channel_id']
-            return publish_results(channel_id, trigger_id)
-        return "Input is not understandable"
+            return publish_results(channel_id, trigger_id, request.form)
+        else:
+            return "Input type is not allowed: " + str(request.form['view']['type'])
 
 
 @api.route('/mattermost_hello')
