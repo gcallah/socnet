@@ -1,6 +1,8 @@
 from APIServer.commons.api_utils import read_json
 
-
+"""
+Convert a raw alert (json) to a formatted message in Slack
+"""
 def slack_format_alert(raw_alert):
 	MESSAGE_TEMPLATE = 'message.json'
 	message = read_json(MESSAGE_TEMPLATE)
