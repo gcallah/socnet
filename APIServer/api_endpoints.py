@@ -24,7 +24,6 @@ from APIServer.slack.format import slack_format_alert
 from APIServer.mattermost.push import push_to_mattermost
 
 import json
-import time
 
 CONFIG_PATH = 'api_config.json'
 # config is a dictionary of configuration params:
