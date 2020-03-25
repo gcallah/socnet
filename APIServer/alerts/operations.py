@@ -8,9 +8,16 @@ from flask import jsonify
 
 def dic_lst_to_tuple_lst(dic_lst):
     final_lst = []
-    for dic in dic_lst:
+    for dic in dic_lst[0]:
         tup = (dic["id"],dic["event_datetime"],dic["event_zipcode"],dic["event_city"],dic["event_state"],dic["event_country"],dic["event_type"],dic["event_description"],dic["event_severity"],dic["msg_sender"])
         final_lst.append(tup)
+    return final_lst
+
+
+def alert_json_to_tuple_lst(dic):
+    final_lst = []
+    tup = (dic["id"],dic["event_datetime"],dic["event_zipcode"],dic["event_city"],dic["event_state"],dic["event_country"],dic["event_type"],dic["event_description"],dic["event_severity"],dic["msg_sender"])
+    final_lst.append(tup)
     return final_lst
 
 
@@ -60,8 +67,7 @@ def read_alert(id):
     fetched_alert = Alert.query.get(id)
     alert_schema = AlertSchema()
     alert_json = alert_schema.dump(fetched_alert)
-    return dic_lst_to_tuple_lst([alert_json])
-
+    return alert_json_to_tuple_lst(alert_json[0])
 
 
 def delete_alert(id):
