@@ -252,8 +252,8 @@ class SlackTest(Resource):
         """
         A test API
         """
-        push_to_slack({'text': 'entered else branch in slack_test'})
-        return
+        push_to_slack({'text': 'entered slack_test'})
+        return request.form['challenge']
 
 
 @api.route('/mattermost_hello')
