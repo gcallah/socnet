@@ -158,18 +158,9 @@ class SlackPostAlert(Resource):
         Post a new alert into the system through a Slack message
         """
         push_to_slack({'text': str(request.form)})
-        if request.form.get('payload') is None:
-            trigger_id = request.form['trigger_id']
-            channel_id = request.form['channel_id']
-            return push_to_channel(channel_id, trigger_id)
-        else:
-            push_to_slack({'text': 'entered else branch in slack_post'})
-            payload_json = json.loads(request.form['payload'])
-            time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            alert_json = create_alert_from_slack_message(payload_json, time)
-            push_to_slack({'text': alert_json})
-            write_alert(alert_json)
-            return {'response_action': 'clear'}
+        trigger_id = request.form['trigger_id']
+        channel_id = request.form['channel_id']
+        return push_to_channel(channel_id, trigger_id)
 
 
 @api.route('/slack_get_alert')
@@ -224,26 +215,28 @@ class SlackGetAlerts(Resource):
         return {"ok": "All alerts fetched"}
 
 
-@api.route('/slack_echo')
+@api.route('/slack_submit')
 class SlackEcho(Resource):
     @api.doc(responses={200: 'OK'})
     def post(self):
         """
-        A test API for echoing back Slack messages
+        An API that handles all Slack interactions
         """
+        push_to_slack({'text': 'entered slack_submit'})
         push_to_slack({'text': str(request.form)})
         if request.form.get('payload') is None:
-            trigger_id = request.form['trigger_id']
-            channel_id = request.form['channel_id']
-            return push_to_channel(channel_id, trigger_id)
+            return 'Invalid request: no payload'
         else:
-            push_to_slack({'text': 'entered else branch in slack_echo'})
-            payload_json = json.loads(request.form['payload'])
-            time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            alert_json = create_alert_from_slack_message(payload_json, time)
-            push_to_slack({'text': alert_json})
-            write_alert(alert_json)
-            return {'response_action': 'clear'}
+            if request.form['payload']['type'] == 'view_submission':
+                payload_json = json.loads(request.form['payload'])
+                time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                alert_json = create_alert_from_slack_message(payload_json,
+                                                             time)
+                push_to_slack({'text': alert_json})
+                write_alert(alert_json)
+                return {'response_action': 'clear'}
+            else:
+                return 'No action needed for this interaction'
 
 
 @api.route('/slack_test')
