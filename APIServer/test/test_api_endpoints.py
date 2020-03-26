@@ -35,10 +35,12 @@ class Test(TestCase):
         self.alerts = AlertsLists(Resource)
         with app.app_context():
             db.create_all()
+   
     def tearDown(self):
         with app.app_context():
             db.session.remove()
             db.drop_all()
+    
     def test_hello_world(self):
         """
         See if HelloWorld works.
@@ -128,6 +130,13 @@ class Test(TestCase):
             rv = c.get('/alerts')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
 
+            # Should not be able to update or delete alert before inserting
+            rv = c.put('/alerts/1', json=test_json)
+            self.assertEqual(rv.status_code, 404)
+
+            rv = c.delete('/alerts/1')
+            self.assertEqual(rv.status_code, 404)
+
             rv = c.post('/alerts', json=test_json)
             self.assertEqual(rv.status_code, 200)
 
@@ -193,8 +202,19 @@ class Test(TestCase):
             rv = c.get('/threads/1')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [{"1": "some comment"}, {"3": "new comment"}, {"4": "3rd comment"}])
 
+            rv = c.delete('/alerts/1')
+            # The thread associated with the alert should be deleted after the alert is deleted
+            rv = c.get('/threads/1')
+            self.assertEqual(rv.status_code, 404)
+
             rv = c.get('/threads/2')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [{"2": "comment x"}, {"5": "comment yy"}, {"6": "comment zzz"}])
+
+            rv = c.delete('/alerts/2')
+            # The thread associated with the alert should be deleted after the alert is deleted
+            rv = c.get('/threads/2')
+            self.assertEqual(rv.status_code, 404)
+
        
     def test_threads_err(self):
         """
@@ -207,7 +227,6 @@ class Test(TestCase):
 
             rv = c.get('/threads/1')
             self.assertEqual(rv.status_code, 404)
-
        
 if __name__ == "__main__":
     main()

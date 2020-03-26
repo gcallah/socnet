@@ -1,6 +1,7 @@
 from APIServer.database.models import Alert, Thread
 from APIServer.database.schema import AlertSchema
 from APIServer import db
+from APIServer.threads.operations import delete_thread
 
 
 # return a list of dict
@@ -44,6 +45,9 @@ def read_all_alerts():
 
 
 def write_alert(alert):
+    """
+    Add a new alert to database
+    """
     new_alert = Alert(event_zipcode=alert['event_zipcode'],
                       event_city=alert['event_city'],
                       event_state=alert['event_state'],
@@ -55,6 +59,7 @@ def write_alert(alert):
                       event_severity=alert['event_severity'])
     db.session.add(new_alert)
     db.session.commit()
+    # add a new thread for the alert
     new_thread = Thread(id=new_alert.id,
                         first_comment_id=-1,
                         last_comment_id=-1)
@@ -66,7 +71,7 @@ def write_alert(alert):
 def update_alert(alert, id):
     fetched_alert = Alert.query.get(id)
     if fetched_alert is None:
-        return 'Alert ' + str(id) + ' not exist'
+        return {'message' : 'Alert ' + str(id) + ' does not exist'}, 404
     fetched_alert.event_zipcode = alert['event_zipcode']
     fetched_alert.event_city = alert['event_city']
     fetched_alert.event_state = alert['event_state']
@@ -88,10 +93,15 @@ def read_alert(id):
 
 
 def delete_alert(id):
-    # when an alert is deleted, so does its thread and all comments?
+    """
+    delete an alert and associated thread from the database
+    """
     alert = Alert.query.get(id)
     if alert is None:
-        return 'Alert ' + str(id) + ' does not exist'
+        return {'message' : 'Alert ' + str(id) + ' does not exist'}, 404
+    # delete associated thread
+    delete_thread(id)
+    # delete alert
     db.session.delete(alert)
     db.session.commit()
     return 'Alert ' + str(id) + ' deleted'
