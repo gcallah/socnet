@@ -157,6 +157,7 @@ class SlackPostAlert(Resource):
         """
         Post a new alert into the system through a Slack message
         """
+        push_to_slack({'text': str(request.form)})
         if request.form.get('payload') is None:
             trigger_id = request.form['trigger_id']
             channel_id = request.form['channel_id']
@@ -230,12 +231,18 @@ class SlackEcho(Resource):
         """
         A test API for echoing back Slack messages
         """
+        push_to_slack({'text': str(request.form)})
         if request.form.get('payload') is None:
             trigger_id = request.form['trigger_id']
             channel_id = request.form['channel_id']
             return push_to_channel(channel_id, trigger_id)
         else:
             push_to_slack({'text': 'entered else branch in slack_echo'})
+            payload_json = json.loads(request.form['payload'])
+            time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            alert_json = create_alert_from_slack_message(payload_json, time)
+            send_json_to_slack({'text': alert_json})
+            write_alert(alert_json)
             return {'response_action': 'clear'}
 
 
