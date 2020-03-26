@@ -19,9 +19,9 @@ def convert_to_dic_list(obj):
 def dic_lst_to_tuple_lst(obj):
     dic_lst = convert_to_dic_list(obj)
     final_lst = []
-    if dic_lst == []:
-        return final_lst
     for dic in dic_lst:
+        if dic == {}:
+            continue
         tup = (dic["id"],
                dic["event_datetime"],
                dic["event_zipcode"],
