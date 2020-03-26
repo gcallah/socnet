@@ -21,10 +21,12 @@ from APIServer.threads.operations import add_comment
 from APIServer.slack.push import push_to_slack, push_to_channel
 from APIServer.slack.push import send_json_to_slack
 from APIServer.slack.format import slack_format_alert
+from APIServer.slack.format import create_alert_from_slack_message
 
 from APIServer.mattermost.push import push_to_mattermost
 
 import json
+import datetime
 
 CONFIG_PATH = 'api_config.json'
 # config is a dictionary of configuration params:
@@ -154,8 +156,16 @@ class SlackPostAlert(Resource):
         """
         Post a new alert into the system through a Slack message
         """
-        alert_json = json.loads(request.form['text'])
-        return write_alert(alert_json)
+        if request.form.get('payload') is None:
+            trigger_id = request.form['trigger_id']
+            channel_id = request.form['channel_id']
+            return push_to_channel(channel_id, trigger_id)
+        else:
+            payload_json = json.loads(request.form['payload'])
+            time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            alert_json = create_alert_from_slack_message(payload_json, time)
+            send_json_to_slack({'text': alert_json})
+            return write_alert(alert_json)
 
 
 @api.route('/slack_get_alert')
@@ -165,10 +175,11 @@ class SlackGetAlert(Resource):
         Get a specific alert with the given alert id and send it to Slack
         """
         alert_id = request.form['text']
+        response_url = request.form['response_url']
         id = int(alert_id)
         text = read_alert(id)
         formated_alert = slack_format_alert(text)
-        return push_to_slack(formated_alert)
+        return send_json_to_slack(formated_alert, response_url)
 
 
 @api.route('/slack_update_alert')
@@ -216,16 +227,13 @@ class SlackEcho(Resource):
         """
         A test API for echoing back Slack messages
         """
-        payload = request.form.to_dict()
-        push_to_slack({'text': str(payload)})
-        push_to_slack({'text': 'slack_echo is called'})
         if request.form.get('payload') is None:
             trigger_id = request.form['trigger_id']
             channel_id = request.form['channel_id']
             return push_to_channel(channel_id, trigger_id)
         else:
             push_to_slack({'text': 'slack_echo branch 2 is called'})
-            return {'response_action': 'clear'}
+            return
 
 
 @api.route('/mattermost_hello')

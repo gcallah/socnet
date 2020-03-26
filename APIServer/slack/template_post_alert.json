@@ -146,7 +146,7 @@
 			"type": "input",
 			"element": {
 				"type": "plain_text_input",
-				"action_id": "event_sender",
+				"action_id": "msg_sender",
 				"placeholder": {
 					"type": "plain_text",
 					"text": "e.g. NYU"

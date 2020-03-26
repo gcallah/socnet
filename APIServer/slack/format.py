@@ -1,28 +1,30 @@
 from APIServer.commons.api_utils import read_json
 
+import json
+
 """
 Convert a raw alert (json) to a formatted message in Slack
 """
-def slack_format_alert(raw_alert):
+def slack_format_alert(alert_json):
 	MESSAGE_TEMPLATE = 'message.json'
 	message = read_json(MESSAGE_TEMPLATE)
 	if message.get('Error:', None):
 		message = read_json('APIServer/slack/' + MESSAGE_TEMPLATE)
-	if raw_alert == []:
+	if alert_json == []:
 		return {'text': 'This alert does not exist or has been deleted.'}
 
-	alert_id = raw_alert[0][0]
-	datetime = raw_alert[0][1]
-	location = raw_alert[0][3] + ', ' \
-			 + raw_alert[0][4] + ', ' \
-			 + raw_alert[0][2] + ', ' \
-			 + raw_alert[0][5]
-	event = raw_alert[0][6]
-	description = raw_alert[0][7]
-	severity = raw_alert[0][8]
-	sender = raw_alert[0][9]
-	url = 'https://gcallah.github.io/socnet/webapp.html#/thread/' \
-		+ str(alert_id)
+	alert_id = alert_json[0][0]
+	datetime = alert_json[0][1]
+	location = alert_json[0][3] + ', ' \
+			 + alert_json[0][4] + ', ' \
+			 + alert_json[0][2] + ', ' \
+			 + alert_json[0][5]
+	event = alert_json[0][6]
+	description = alert_json[0][7]
+	severity = alert_json[0][8]
+	sender = alert_json[0][9]
+	THREAD_URL = 'https://gcallah.github.io/socnet/webapp.html#/thread/'
+	url = THREAD_URL + str(alert_id)
 
 	message['blocks'][1]['text']['text'] = '*' + event + '*\n' + description
 	message['blocks'][2]['elements'][0]['text'] = location + '\n' \
@@ -33,5 +35,14 @@ def slack_format_alert(raw_alert):
 	return message
 
 
-def parse_view_submission_payload(payload):
-	return payload['view']['state']
+def create_alert_from_slack_message(payload, time):
+	alert_json = {}
+	values = payload['view']['state']['values']
+	for value in values:
+		for key in values[value]:
+				if key == 'event_severity':
+					alert_json[key] = values[value][key]['selected_option']['text']['text']
+				else:
+					alert_json[key] = values[value][key]['value']
+	alert_json['event_datetime'] = time
+	return alert_json
