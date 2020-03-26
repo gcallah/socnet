@@ -227,8 +227,8 @@ class SlackEcho(Resource):
         if request.form.get('payload') is None:
             return 'Invalid request: no payload'
         else:
-            if request.form['payload']['type'] == 'view_submission':
-                payload_json = json.loads(request.form['payload'])
+            payload_json = json.loads(request.form['payload'])
+            if payload_json['type'] == 'view_submission':
                 time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 alert_json = create_alert_from_slack_message(payload_json,
                                                              time)
