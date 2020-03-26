@@ -19,6 +19,8 @@ def convert_to_dic_list(obj):
 def dic_lst_to_tuple_lst(obj):
     dic_lst = convert_to_dic_list(obj)
     final_lst = []
+    if dic_lst == []:
+        return final_lst
     for dic in dic_lst:
         tup = (dic["id"],
                dic["event_datetime"],
@@ -89,7 +91,7 @@ def delete_alert(id):
     # when an alert is deleted, so does its thread and all comments?
     alert = Alert.query.get(id)
     if alert is None:
-        return 'Alert ' + str(id) + ' not exist'
+        return 'Alert ' + str(id) + ' does not exist'
     db.session.delete(alert)
     db.session.commit()
     return 'Alert ' + str(id) + ' deleted'

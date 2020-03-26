@@ -212,7 +212,7 @@ class SlackDeleteAlert(Resource):
 class SlackGetAlerts(Resource):
     def post(self):
         """
-        Get multiple alerts and send it to Slack
+        Get multiple alerts and send them to Slack
         """
         send_slack_log('Entered /slack_get_alerts ; Request info:')
         send_slack_log(str(request.form))
@@ -231,7 +231,7 @@ class SlackSubmit(Resource):
     @api.doc(responses={200: 'OK'})
     def post(self):
         """
-        An API that handles all Slack interactions
+        An API that handles all Slack submit events(interactions)
         """
         send_slack_log('Entered /slack_submit ; Request info:')
         send_slack_log(str(request.form))
@@ -240,6 +240,9 @@ class SlackSubmit(Resource):
             return
         else:
             payload_json = json.loads(request.form['payload'])
+            if payload_json['type'] is None:
+                send_slack_log('Invalid request: no "type" in payload')
+                return
             if payload_json['type'] == 'view_submission':
                 time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 alert_json = create_alert_from_slack_message(payload_json,
