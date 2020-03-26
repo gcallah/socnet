@@ -246,6 +246,17 @@ class SlackEcho(Resource):
             return {'response_action': 'clear'}
 
 
+@api.route('/slack_test')
+class SlackEcho(Resource):
+    @api.doc(responses={200: 'OK'})
+    def post(self):
+        """
+        A test API
+        """
+        push_to_slack({'text': 'entered else branch in slack_test'})
+        return
+
+
 @api.route('/mattermost_hello')
 class MattermostHello(Resource):
     def post(self):
