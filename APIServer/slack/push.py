@@ -2,10 +2,10 @@ import requests
 import json
 
 
-def push_to_slack(text):
-	textToSend = text
+def send_slack_log(text):
+	jsonToSend = {'text': str(text)}
 	URL = 'https://hooks.slack.com/services/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'
-	response = requests.post(URL, json=textToSend)
+	response = requests.post(URL, json=jsonToSend)
 	return { response.status_code : response.text }
 
 
@@ -14,7 +14,7 @@ def send_json_to_slack(jsonToSend, url):
 	return { response.status_code : response.text }
 
 
-def push_to_channel(channel, trigger_id):
+def open_post_alert_form(channel, trigger_id):
 	URL = 'https://slack.com/api/views.open'
 	with open('APIServer/slack/template_post_alert.json', 'r') as json_file:
 		data=json_file.read()

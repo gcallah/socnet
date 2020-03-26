@@ -18,9 +18,9 @@ from APIServer.alerts.operations import read_alert_country
 from APIServer.threads.operations import get_comments
 from APIServer.threads.operations import add_comment
 
-from APIServer.slack.push import push_to_channel
-from APIServer.slack.push import push_to_slack
+from APIServer.slack.push import send_slack_log
 from APIServer.slack.push import send_json_to_slack
+from APIServer.slack.push import open_post_alert_form
 from APIServer.slack.format import slack_format_alert
 from APIServer.slack.format import create_alert_from_slack_message
 
@@ -157,10 +157,13 @@ class SlackPostAlert(Resource):
         """
         Post a new alert into the system through a Slack message
         """
-        push_to_slack({'text': str(request.form)})
+        send_slack_log('Entered /slack_post_alert ; Request info:')
+        send_slack_log(str(request.form))
         trigger_id = request.form['trigger_id']
         channel_id = request.form['channel_id']
-        return push_to_channel(channel_id, trigger_id)
+        response = open_post_alert_form(channel_id, trigger_id)
+        send_slack_log(str(response))
+        return 'Please enter the alert information in the form'
 
 
 @api.route('/slack_get_alert')
@@ -169,6 +172,8 @@ class SlackGetAlert(Resource):
         """
         Get a specific alert with the given alert id and send it to Slack
         """
+        send_slack_log('Entered /slack_get_alert ; Request info:')
+        send_slack_log(str(request.form))
         alert_id = request.form['text']
         response_url = request.form['response_url']
         id = int(alert_id)
@@ -183,6 +188,8 @@ class SlackUpdateAlert(Resource):
         """
         Update an alert in the system through a Slack message
         """
+        send_slack_log('Entered /slack_update_alert ; Request info:')
+        send_slack_log(str(request.form))
         message_text = json.loads(request.form['text'])
         alert_id = message_text.get('alert_id')
         alert_json = message_text.get('alert_json')
@@ -195,6 +202,8 @@ class SlackDeleteAlert(Resource):
         """
         Delete an alert in the system through a Slack message
         """
+        send_slack_log('Entered /slack_delete_alert ; Request info:')
+        send_slack_log(str(request.form))
         alert_id = json.loads(request.form['text'])
         return delete_alert(int(alert_id))
 
@@ -205,6 +214,8 @@ class SlackGetAlerts(Resource):
         """
         Get multiple alerts and send it to Slack
         """
+        send_slack_log('Entered /slack_get_alerts ; Request info:')
+        send_slack_log(str(request.form))
         alert_id_list = json.loads(request.form['text'])
         response_url = request.form['response_url']
         for alert_id in alert_id_list:
@@ -216,37 +227,29 @@ class SlackGetAlerts(Resource):
 
 
 @api.route('/slack_submit')
-class SlackEcho(Resource):
+class SlackSubmit(Resource):
     @api.doc(responses={200: 'OK'})
     def post(self):
         """
         An API that handles all Slack interactions
         """
-        push_to_slack({'text': 'entered slack_submit'})
-        push_to_slack({'text': str(request.form)})
+        send_slack_log('Entered /slack_submit ; Request info:')
+        send_slack_log(str(request.form))
         if request.form.get('payload') is None:
-            return 'Invalid request: no payload'
+            send_slack_log('Invalid request: no payload')
+            return
         else:
             payload_json = json.loads(request.form['payload'])
             if payload_json['type'] == 'view_submission':
                 time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 alert_json = create_alert_from_slack_message(payload_json,
                                                              time)
-                push_to_slack({'text': alert_json})
+                send_slack_log(str(alert_json))
                 write_alert(alert_json)
                 return {'response_action': 'clear'}
             else:
-                return 'No action needed for this interaction'
-
-
-@api.route('/slack_test')
-class SlackTest(Resource):
-    def post(self):
-        """
-        A test API
-        """
-        push_to_slack({'text': 'entered slack_test'})
-        return request.form['challenge']
+                send_slack_log('No action needed for this interaction')
+                return
 
 
 @api.route('/mattermost_hello')
