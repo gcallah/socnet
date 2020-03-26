@@ -1,0 +1,186 @@
+{
+	"type": "modal",
+	"callback_id": "update_alert",
+	"title": {
+		"type": "plain_text",
+		"text": "SOC-NET: Update an Alert"
+	},
+	"submit": {
+		"type": "plain_text",
+		"text": "Submit"
+	},
+	"close": {
+		"type": "plain_text",
+		"text": "Cancel"
+	},
+	"blocks": [
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "alert_id",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "What is the alert id?"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Event Type"
+			},
+            "optional": false
+		},
+        {
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "event_type",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Leave this field blank if you do not want to change it"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Event Type"
+			},
+            "optional": true
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "event_description",
+				"multiline": true,
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Leave this field blank if you do not want to change it"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Description"
+			},
+            "optional": true
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "static_select",
+				"action_id": "event_severity",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Leave this field blank if you do not want to change it"
+				},
+				"options": [
+					{
+						"value": "low",
+						"text": {
+							"type": "plain_text",
+							"text": "Low"
+						}
+					},
+					{
+						"value": "medium",
+						"text": {
+							"type": "plain_text",
+							"text": "Medium"
+						}
+					},
+					{
+						"value": "high",
+						"text": {
+							"type": "plain_text",
+							"text": "High"
+						}
+					}
+				]
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Severity"
+			},
+            "optional": true
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "event_city",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Leave this field blank if you do not want to change it"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "City"
+			},
+            "optional": true
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "event_state",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Leave this field blank if you do not want to change it"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "State/Province/Region"
+			},
+            "optional": true
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "event_country",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Leave this field blank if you do not want to change it"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Country"
+			},
+            "optional": true
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "event_zipcode",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Leave this field blank if you do not want to change it"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Zipcode/Postal Code"
+			},
+            "optional": true
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "msg_sender",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Please leave your name and/or organization (e.g. NYU)"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Sender's Name and/or Organization"
+			},
+            "optional": false
+		}
+	]
+}

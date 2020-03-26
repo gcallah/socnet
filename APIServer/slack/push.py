@@ -14,13 +14,14 @@ def send_json_to_slack(jsonToSend, url):
 	return { response.status_code : response.text }
 
 
-def open_post_alert_form(channel, trigger_id):
+def open_form(channel, trigger_id, form_location):
 	URL = 'https://slack.com/api/views.open'
-	with open('APIServer/slack/template_post_alert.json', 'r') as json_file:
+	with open(form_location, 'r') as json_file:
 		data=json_file.read()
-	dialog = json.loads(data)
-	textToSend = {'channel': channel, 'trigger_id': trigger_id, 'view': dialog}
+	form = json.loads(data)
+	textToSend = {'channel': channel, 'trigger_id': trigger_id, 'view': form}
 	headers = {"Authorization": "Bearer xoxp-765850805047-790629649378-989309639635-00bf54bba4048c8414ad0983f630c586",
 				"Content-Type": "application/json; charset=utf-8"}
 	response = requests.post(URL, json=textToSend, headers=headers)
 	return { response.status_code : response.text }
+

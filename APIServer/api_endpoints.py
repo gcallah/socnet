@@ -20,7 +20,7 @@ from APIServer.threads.operations import add_comment
 
 from APIServer.slack.push import send_slack_log
 from APIServer.slack.push import send_json_to_slack
-from APIServer.slack.push import open_post_alert_form
+from APIServer.slack.push import open_form
 from APIServer.slack.format import slack_format_alert
 from APIServer.slack.format import create_alert_from_slack_message
 
@@ -161,7 +161,9 @@ class SlackPostAlert(Resource):
         send_slack_log(str(request.form))
         trigger_id = request.form['trigger_id']
         channel_id = request.form['channel_id']
-        response = open_post_alert_form(channel_id, trigger_id)
+        response = open_form(channel_id,
+                             trigger_id,
+                             config['slack_post_form_path'])
         send_slack_log(str(response))
         return 'Please enter the alert information in the form'
 
@@ -190,10 +192,13 @@ class SlackUpdateAlert(Resource):
         """
         send_slack_log('Entered /slack_update_alert ; Request info:')
         send_slack_log(str(request.form))
-        message_text = json.loads(request.form['text'])
-        alert_id = message_text.get('alert_id')
-        alert_json = message_text.get('alert_json')
-        return update_alert(alert_json, int(alert_id))
+        trigger_id = request.form['trigger_id']
+        channel_id = request.form['channel_id']
+        response = open_form(channel_id,
+                             trigger_id,
+                             config['slack_update_form_path'])
+        send_slack_log(str(response))
+        return 'Please enter new alert information in the form'
 
 
 @api.route('/slack_delete_alert')
@@ -244,12 +249,17 @@ class SlackSubmit(Resource):
                 send_slack_log('Invalid request: no "type" in payload')
                 return
             if payload_json['type'] == 'view_submission':
-                time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                alert_json = create_alert_from_slack_message(payload_json,
-                                                             time)
-                send_slack_log(str(alert_json))
-                write_alert(alert_json)
-                return {'response_action': 'clear'}
+                if payload_json['view']['callback_id'] == 'post_alert':
+                    time = datetime.datetime.now() \
+                                   .strftime('%Y-%m-%d %H:%M:%S')
+                    alert_json = create_alert_from_slack_message(payload_json,
+                                                                 time)
+                    send_slack_log(str(alert_json))
+                    write_alert(alert_json)
+                    return {'response_action': 'clear'}
+                else:
+                    send_slack_log('Ready to update')
+                    return {'response_action': 'clear'}
             else:
                 send_slack_log('No action needed for this interaction')
                 return
