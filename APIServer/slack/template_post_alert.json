@@ -1,5 +1,6 @@
 {
 	"type": "modal",
+	"callback_id": "post_alert",
 	"title": {
 		"type": "plain_text",
 		"text": "SOC-NET: Post an Alert"
