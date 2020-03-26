@@ -167,7 +167,7 @@ class SlackPostAlert(Resource):
             payload_json = json.loads(request.form['payload'])
             time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             alert_json = create_alert_from_slack_message(payload_json, time)
-            send_json_to_slack({'text': alert_json})
+            push_to_slack({'text': alert_json})
             write_alert(alert_json)
             return {'response_action': 'clear'}
 
@@ -241,7 +241,7 @@ class SlackEcho(Resource):
             payload_json = json.loads(request.form['payload'])
             time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             alert_json = create_alert_from_slack_message(payload_json, time)
-            send_json_to_slack({'text': alert_json})
+            push_to_slack({'text': alert_json})
             write_alert(alert_json)
             return {'response_action': 'clear'}
 
