@@ -19,6 +19,7 @@ from APIServer.threads.operations import get_comments
 from APIServer.threads.operations import add_comment
 
 from APIServer.slack.push import push_to_channel
+from APIServer.slack.push import push_to_slack
 from APIServer.slack.push import send_json_to_slack
 from APIServer.slack.format import slack_format_alert
 from APIServer.slack.format import create_alert_from_slack_message
@@ -161,7 +162,7 @@ class SlackPostAlert(Resource):
             channel_id = request.form['channel_id']
             return push_to_channel(channel_id, trigger_id)
         else:
-            send_json_to_slack({'text': 'entered else branch in slack_post'})
+            push_to_slack({'text': 'entered else branch in slack_post'})
             payload_json = json.loads(request.form['payload'])
             time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             alert_json = create_alert_from_slack_message(payload_json, time)
@@ -234,7 +235,7 @@ class SlackEcho(Resource):
             channel_id = request.form['channel_id']
             return push_to_channel(channel_id, trigger_id)
         else:
-            send_json_to_slack({'text': 'entered else branch in slack_echo'})
+            push_to_slack({'text': 'entered else branch in slack_echo'})
             return {'response_action': 'clear'}
 
 
