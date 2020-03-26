@@ -247,8 +247,7 @@ class SlackEcho(Resource):
 
 
 @api.route('/slack_test')
-class SlackEcho(Resource):
-    @api.doc(responses={200: 'OK'})
+class SlackTest(Resource):
     def post(self):
         """
         A test API
