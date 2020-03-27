@@ -1,7 +1,6 @@
 import os
 import sqlite3
 
-from APIServer.database.sqlite import get_db
 from APIServer import db
 from APIServer.database.models import Thread,Comment
 

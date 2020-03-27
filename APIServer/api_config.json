@@ -7,7 +7,6 @@
 	"format_dict": "APIServer/formats/alert_type_dict.json",
 	"database_path": "APIServer/db_temp",
 	"sqlalchemy_database_uri" : "sqlite:///socnet.db",
-	"table_schema_path": "APIServer/database/schema.sql",
 	"slack_post_form_path": "APIServer/slack/template_post_alert.json",
 	"slack_update_form_path": "APIServer/slack/template_update_alert.json"
 }

@@ -16,8 +16,6 @@ from APIServer.alerts.operations import read_alert, update_alert, delete_alert
 from APIServer.alerts.operations import read_all_alerts, write_alert, read_alert_country
 from APIServer.commons.form_api import validate_alert
 
-from APIServer.database.sqlite import sqlite_init
-
 test_config_path = 'test_data/test_config.json'
 APIServer.api_endpoints.config = read_json(test_config_path)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"

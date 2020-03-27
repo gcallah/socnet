@@ -7,8 +7,6 @@ from APIServer.commons.form_api import create_alert_json
 from APIServer.commons.api_utils import read_json
 from APIServer.commons.endpoint_api import get_endpoints
 
-from APIServer.database.sqlite import sqlite_init
-
 from APIServer.alerts.operations import read_all_alerts
 from APIServer.alerts.operations import write_alert
 from APIServer.alerts.operations import read_alert
@@ -335,5 +333,4 @@ class MattermostAlerts(Resource):
 
 
 if __name__ == '__main__':
-    sqlite_init(config['database_path'], config['table_schema_path'])
     app.run(host=config['host'], port=config['port'], debug=config['debug'])
