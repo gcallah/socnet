@@ -56,10 +56,10 @@ def create_updated_alert_from_slack_message(payload, time, alert_json):
 				if key == 'alert_id':
 					continue
 				if key == 'event_severity':
-					if values[value][key]['selected_option']['text']['text'] != '':
+					if values[value][key].get('selected_option'):
 						alert_json[key] = values[value][key]['selected_option']['text']['text']
 				else:
-					if values[value][key]['value'] != '':
+					if values[value][key].get('value'):
 						alert_json[key] = values[value][key]['value']
 	alert_json['event_datetime'] = time
 	return alert_json
