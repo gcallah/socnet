@@ -3,6 +3,7 @@ from flask import request
 from APIServer import create_app
 from flask_restplus import Resource, Api, fields
 from APIServer.commons.form_api import get_alert_form
+from APIServer.commons.form_api import create_alert_json
 from APIServer.commons.api_utils import read_json
 from APIServer.commons.endpoint_api import get_endpoints
 
@@ -263,7 +264,7 @@ class SlackSubmit(Resource):
                 elif payload_json['view']['callback_id'] == 'update_alert':
                     alert_id = get_id_from_payload(payload_json)
                     send_slack_log('Alert id:' + str(alert_id))
-                    alert_json = read_alert(alert_id)[0]
+                    alert_json = create_alert_json(read_alert(alert_id)[0])
                     send_slack_log('Old alert json:' + str(alert_json))
                     alert_json = create_updated_alert_from_slack_message(
                         payload_json,
