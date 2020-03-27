@@ -231,7 +231,7 @@ class SlackGetAlerts(Resource):
         for alert_id in alert_id_list:
             id = int(alert_id)
             text = read_alert(id)
-            send_slack_log('Alert ' + str(id) + ' response: ' + text)
+            send_slack_log('Alert ' + str(id) + ' response: ' + str(text))
             formated_alert = slack_format_alert(text)
             send_json_to_slack_channel(formated_alert, channel_id)
         return "Alerts fetched"
