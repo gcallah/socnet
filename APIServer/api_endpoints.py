@@ -14,7 +14,6 @@ from APIServer.alerts.operations import read_alert
 from APIServer.alerts.operations import update_alert
 from APIServer.alerts.operations import delete_alert
 from APIServer.alerts.operations import read_alert_country
-from APIServer.alerts.operations import convert_to_dic_list
 
 from APIServer.threads.operations import get_comments
 from APIServer.threads.operations import add_comment
@@ -25,7 +24,7 @@ from APIServer.slack.push import send_json_to_slack_channel
 from APIServer.slack.push import open_form
 from APIServer.slack.format import slack_format_alert
 from APIServer.slack.format import create_alert_from_slack_message
-from APIServer.slack.format import update_alert_from_slack_message
+from APIServer.slack.format import create_updated_alert_from_slack_message
 from APIServer.slack.format import get_id_from_payload
 
 from APIServer.mattermost.push import push_to_mattermost
@@ -264,11 +263,12 @@ class SlackSubmit(Resource):
                 elif payload_json['view']['callback_id'] == 'update_alert':
                     alert_id = get_id_from_payload(payload_json)
                     send_slack_log('Alert id:' + str(alert_id))
-                    alert_json = convert_to_dic_list(read_alert(alert_id))[0]
+                    alert_json = read_alert(alert_id)[0]
                     send_slack_log('Old alert json:' + str(alert_json))
-                    alert_json = update_alert_from_slack_message(payload_json,
-                                                                 time,
-                                                                 alert_json)
+                    alert_json = create_updated_alert_from_slack_message(
+                        payload_json,
+                        time,
+                        alert_json)
                     send_slack_log('New alert json:' + str(alert_json))
                     response = update_alert(alert_json, alert_id)
                     return {'text': response, 'response_action': 'clear'}

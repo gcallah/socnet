@@ -49,7 +49,7 @@ def create_alert_from_slack_message(payload, time):
 	return alert_json
 
 
-def update_alert_from_slack_message(payload, time, alert_json):
+def create_updated_alert_from_slack_message(payload, time, alert_json):
 	values = payload['view']['state']['values']
 	for value in values:
 		for key in values[value]:
