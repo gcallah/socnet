@@ -228,13 +228,13 @@ class SlackGetAlerts(Resource):
         send_slack_log('Entered /slack_get_alerts ; Request info:')
         send_slack_log(str(request.form))
         alert_id_list = json.loads(request.form['text'])
-        response_url = request.form['response_url']
+        channel_id = request.form['channel_id']
         for alert_id in alert_id_list:
             id = int(alert_id)
             text = read_alert(id)
             send_slack_log('Alert ' + str(id) + ' response: ' + text)
             formated_alert = slack_format_alert(text)
-            send_json_to_slack(formated_alert, response_url)
+            send_json_to_slack_channel(formated_alert, channel_id)
         return "Alerts fetched"
 
 
@@ -261,9 +261,10 @@ class SlackSubmit(Resource):
                 if payload_json['view']['callback_id'] == 'post_alert':
                     alert_json = create_alert_from_slack_message(payload_json,
                                                                  time)
-                    send_slack_log(str(alert_json))
+                    send_slack_log('New alert json:' + str(alert_json))
                     response = write_alert(alert_json)
-                    return response
+                    send_json_to_slack(response)
+                    return {'response_action': 'clear'}
                 elif payload_json['view']['callback_id'] == 'update_alert':
                     alert_id = get_id_from_payload(payload_json)
                     send_slack_log('Alert id:' + str(alert_id))
