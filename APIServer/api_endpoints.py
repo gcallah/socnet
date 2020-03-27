@@ -20,7 +20,6 @@ from APIServer.threads.operations import get_comments
 from APIServer.threads.operations import add_comment
 
 from APIServer.slack.push import send_slack_log
-from APIServer.slack.push import send_json_to_slack
 from APIServer.slack.push import send_json_to_slack_channel
 from APIServer.slack.push import open_form
 from APIServer.slack.format import slack_format_alert
