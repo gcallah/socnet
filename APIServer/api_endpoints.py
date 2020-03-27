@@ -263,7 +263,7 @@ class SlackSubmit(Resource):
                                                                  time)
                     send_slack_log(str(alert_json))
                     response = write_alert(alert_json)
-                    return {'text': response, 'response_action': 'clear'}
+                    return response
                 elif payload_json['view']['callback_id'] == 'update_alert':
                     alert_id = get_id_from_payload(payload_json)
                     send_slack_log('Alert id:' + str(alert_id))
@@ -275,7 +275,8 @@ class SlackSubmit(Resource):
                         alert_json)
                     send_slack_log('New alert json:' + str(alert_json))
                     response = update_alert(alert_json, alert_id)
-                    return {'text': response, 'response_action': 'clear'}
+                    send_slack_log(response)
+                    return {'response_action': 'clear'}
                 else:
                     send_slack_log('Unknown callback_id in view_submission')
                     return
