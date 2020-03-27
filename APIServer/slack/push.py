@@ -14,6 +14,13 @@ def send_json_to_slack(jsonToSend, url):
 	return { response.status_code : response.text }
 
 
+def send_json_to_slack_channel(jsonToSend, channel):
+	URL = 'https://slack.com/api/chat.postMessage'
+	jsonToSend['channel'] = channel
+	response = requests.post(url, json=jsonToSend)
+	return { response.status_code : response.text }
+
+
 def open_form(channel, trigger_id, form_location):
 	URL = 'https://slack.com/api/views.open'
 	with open(form_location, 'r') as json_file:

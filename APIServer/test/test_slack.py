@@ -18,7 +18,7 @@ class TestCase(unittest.TestCase):
     @responses.activate
     def testPush(self):
         """
-        Testing whether send_slack_log and send_json_to_slack work
+        Testing if send_slack_log and send_json_to_slack work
         """
         responses.add(**{
             'method'         : responses.POST,

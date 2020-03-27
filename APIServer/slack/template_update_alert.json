@@ -173,7 +173,7 @@
 				"action_id": "msg_sender",
 				"placeholder": {
 					"type": "plain_text",
-					"text": "Please leave your name and/or organization (e.g. NYU)"
+					"text": "Please provide your name and/or organization (e.g. NYU)"
 				}
 			},
 			"label": {

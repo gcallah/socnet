@@ -6,12 +6,13 @@ import json
 Convert a raw alert (json) to a formatted message in Slack
 """
 def slack_format_alert(alert_json):
+	if alert_json == []:
+		return {'text': 'This alert does not exist or has been deleted.'}
+
 	MESSAGE_TEMPLATE = 'message.json'
 	message = read_json(MESSAGE_TEMPLATE)
 	if message.get('Error:', None):
 		message = read_json('APIServer/slack/' + MESSAGE_TEMPLATE)
-	if alert_json == []:
-		return {'text': 'This alert does not exist or has been deleted.'}
 
 	alert_id = alert_json[0][0]
 	datetime = alert_json[0][1]
@@ -46,3 +47,28 @@ def create_alert_from_slack_message(payload, time):
 					alert_json[key] = values[value][key]['value']
 	alert_json['event_datetime'] = time
 	return alert_json
+
+
+def update_alert_from_slack_message(payload, time, alert_json):
+	values = payload['view']['state']['values']
+	for value in values:
+		for key in values[value]:
+				if key == 'alert_id':
+					continue
+				if key == 'event_severity':
+					if values[value][key]['selected_option']['text']['text'] != '':
+						alert_json[key] = values[value][key]['selected_option']['text']['text']
+				else:
+					if values[value][key]['value'] != '':
+						alert_json[key] = values[value][key]['value']
+	alert_json['event_datetime'] = time
+	return alert_json
+
+
+def get_id_from_payload(payload):
+	values = payload['view']['state']['values']
+	for value in values:
+		for key in values[value]:
+				if key == 'alert_id':
+					alert_id = values[value][key]['value']
+					return alert_id
