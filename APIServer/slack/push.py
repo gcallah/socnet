@@ -17,7 +17,9 @@ def send_json_to_slack(jsonToSend, url):
 def send_json_to_slack_channel(jsonToSend, channel):
 	URL = 'https://slack.com/api/chat.postMessage'
 	jsonToSend['channel'] = channel
-	response = requests.post(url, json=jsonToSend)
+	headers = {"Authorization": "Bearer xoxp-765850805047-790629649378-989309639635-00bf54bba4048c8414ad0983f630c586",
+				"Content-Type": "application/json; charset=utf-8"}
+	response = requests.post(URL, json=jsonToSend, headers=headers)
 	return { response.status_code : response.text }
 
 
