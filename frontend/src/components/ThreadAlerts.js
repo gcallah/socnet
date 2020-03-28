@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import { Loader, Dimmer, Table } from 'semantic-ui-react' 
+import { Loader, Dimmer, Table, Icon, Tab } from 'semantic-ui-react' 
 import createHistory from "history/createBrowserHistory"
 import { withRouter } from 'react-router-dom';
 
@@ -65,6 +65,8 @@ class ThreadAlerts extends Component {
                         this.props.history.push(`/thread/${id}`)
                     }
                 }>
+                    {/* <Table.Cell > <Icon name="check" /> </Table.Cell> */}
+                    <Table.Cell> Active </Table.Cell>
                     <Table.Cell style={{ color: bgcolor[alertData[8]] }}> {title} </Table.Cell>
                     <Table.Cell> {description} </Table.Cell>
                     <Table.Cell> {region} </Table.Cell>
@@ -91,6 +93,7 @@ class ThreadAlerts extends Component {
             <div style={{padding: "2%"}}>
                 <Table fixed singleLine padded selectable color="teal">
                     <Table.Header>
+                        <Table.HeaderCell> Status </Table.HeaderCell>
                         <Table.HeaderCell> Type </Table.HeaderCell>
                         <Table.HeaderCell width={6}> Description </Table.HeaderCell>
                         <Table.HeaderCell> Region </Table.HeaderCell>

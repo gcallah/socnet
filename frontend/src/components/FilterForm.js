@@ -18,22 +18,23 @@ class FilterForm extends Component {
     };
     
     apiServer = 'https://socnet.pythonanywhere.com/';
+    // devApiServer = "http://127.0.0.1:8000/";
 
     // Sample Input: Development time only
     severityList = {
         name: "severity",
         type: "dropdown",
-        optionList: [{key: "H", text: "High", value: "high"}, 
-                    {key: "L", text: "Low", value: "low"}, 
-                    {key: "M", text: "Medium", value: "medium"}]
+        optionList: [{key: "H", text: "High", value: "High"}, 
+                    {key: "L", text: "Low", value: "Low"}, 
+                    {key: "M", text: "Medium", value: "Medium"}]
     };
 
     regionList = {
         name: "region", 
         type: "dropdown", 
-        optionList: [{key: "NY", text: "NY - New York", value: "NY"}, 
-                    { key: "NJ", text: "NJ - New Jersey", value: "NJ" },
-                    { key: "CT", text: "CT - Conneticut", value: "CT" }]
+        optionList: [{key: "NY", text: "NY - New York", value: "New York"}, 
+                    { key: "NJ", text: "NJ - New Jersey", value: "New Jersey" },
+                    { key: "CT", text: "CT - Conneticut", value: "Conneticut" }]
     };
 
     typeList = {
@@ -41,7 +42,8 @@ class FilterForm extends Component {
         type: "dropdown",
         optionList: [{ key: "Fire", text: "Fire", value: "Fire" },
         { key: "Earthquake", text: "Earthquake", value: "Earthquake" },
-        { key: "Ransomware", text: "Ransomware", value: "Ransomware" }]
+        { key: "Ransomware", text: "Ransomware", value: "Ransomware" },
+        { key: "Malware", text: "Malware", value: "Malware"}]
     }
 
     handleDropdown = (name, value) => {
@@ -55,16 +57,21 @@ class FilterForm extends Component {
     // Excecuted when the back button is clicked
     handleBack = () => {
         // Soon to be depreciated
-        this.props.history.push('/main')
+        this.props.history.push('/alerts')
     }
 
-    /// TODO: Merge handleChange with handelSubmit
-    // Debugging: Maintaining constant state 
     handleChange = (e, {name, value}) => { 
         this.setState({[name]:value})
     }
 
-    handleValidation = (fields) => {
+    handleValidation = () => {
+        let fields = {
+            date: this.state.date,
+            severity: this.state.severity,
+            type: this.state.type,
+            region: this.state.region
+        };
+
         if (fields["date"] || fields["severity"].length > 0 || fields["type"].length > 0 || fields["region"].length > 0) {
             console.log("User chose a filter!")
             return true
@@ -73,35 +80,42 @@ class FilterForm extends Component {
         }
     }
 
-    handleSubmit = (e) => {
-        e.preventDefault()
+    generateQueryString = () => {
+        const { loading, date, severity, type, region } = this.state;
+        var queryString = []
 
-        const { loading, date, severity, type, region } = this.state
-        const apiServer = this.apiServer
-
-        let fields = {
-            date: date, 
-            severity: severity, 
-            type: type, 
-            region: region
-        };
+        if (region.length > 0) {
+            queryString.push("region="+region.toString());
+        }
         
-        if (this.handleValidation(fields)) {
-            console.log("Form had entries: ", JSON.stringify(fields), typeof(fields))
-            try {
-                // axios.post({ apiServer }, { fields })
-                //     .then(payload => {
-                //         console.log("Result form callback: ", payload)
-                //         console.log(payload.data)
-                
-                // this.setState({ loading: true });
-                
-                axios.get(`${this.apiServer}alerts`)
-                .then( payload => { 
-                    this.setState({ loading: false });
-                    this.props.history.push('/alerts', { alerts: payload.data } ); 
-                });
+        if (type.length > 0) {
+            queryString.push("type="+type.toString());
+        }
 
+        if (severity.length > 0) {
+            queryString.push("severity=" + severity.toString());
+        }
+
+        if (date.length > 0) {
+            queryString.push("date="+date)
+        }
+
+        queryString = queryString.join("&")
+        return queryString
+    }
+
+    handleSubmit = async e => {
+        e.preventDefault()
+        if (this.handleValidation()) {
+            try {
+                const queryParams = this.generateQueryString()
+                console.log("Query Parameters: ", queryParams)
+
+                await axios.get(`${this.apiServer}alerts?${queryParams}`)
+                    .then(payload => {
+                        this.setState({ loading: false });
+                        this.props.history.push('/alerts', { alerts: payload.data });
+                    });
             } catch (e) {
                 console.log("ERROR: UNABLE TO FETCH FILTERED RESULTS")
             }
@@ -110,7 +124,7 @@ class FilterForm extends Component {
             console.log("The form had no entries. Attempting to load all alerts.")
             try {
                 // this.setState({ loading: true });
-                axios.get(`${this.apiServer}alerts`)
+                await axios.get(`${this.apiServer}alerts`)
                 .then (
                     payload => { this.setState({ loading: false, });
                     console.log("Alerts loaded. Payload looks like: ", payload.data)
@@ -139,7 +153,7 @@ class FilterForm extends Component {
                 <Segment basic padded> <Header as="h1"> Filter Alerts </Header> </Segment>
                     <Segment padded='very' raised color='teal'>
                         <Grid centered>
-                        <Form loading={loading} onSubmit={this.handleSubmit.bind(this)} size="large" style={{ width: "60%" }}>
+                        <Form loading={loading} onSubmit={this.handleSubmit.bind(this)} size="large" style={{ width: "60%" }} autoComplete="on">
                             <table align="center" className="filters" cellPadding="5px">
                                 <tbody>
                                     {/* Date */}

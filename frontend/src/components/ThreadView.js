@@ -82,10 +82,10 @@ class ThreadView extends Component {
       <div className="container">
         <div class="col-auto">
         <Header title="Socnet" />
-        <div class="form-check form-check-inline">
+        {/* <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"></input>
         <label class="form-check-label" for="inlineRadio1">1</label>
-        </div>
+        </div> */}
         </div>
         <Alert data={alert} id={alert[0]} />
         

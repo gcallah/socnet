@@ -3,6 +3,8 @@ from APIServer.database.schema import AlertSchema
 from APIServer import db
 from APIServer.threads.operations import delete_thread
 
+from dateutil.parser import parse
+
 
 # return a list of dict
 def convert_to_dic_list(obj):
@@ -36,6 +38,10 @@ def dic_lst_to_tuple_lst(obj):
         final_lst.append(tup)
     return final_lst
 
+def query_params_to_list(query_string):
+    # query_string = query_string[1:-1]
+    query_list = [ elem.strip() for elem in query_string.split(",")]
+    return query_list
 
 def read_all_alerts():
     alerts = Alert.query.all()
@@ -111,4 +117,60 @@ def read_alert_country(country):
     alerts = Alert.query.filter_by(event_country=country).all()
     alert_schema = AlertSchema(many=True)
     alerts_json = alert_schema.dump(alerts)
+    return dic_lst_to_tuple_lst(alerts_json)
+
+
+def read_filtered_alerts(query_params):
+    print(query_params)
+    severity_value = query_params.get('severity')
+    date_value = query_params.get('date')
+    type_value = query_params.get('type')
+    region_value = query_params.get('region')
+    alerts = None
+
+    if region_value:
+        required_regions = query_params_to_list(region_value)
+        # print(required_regions)
+        if alerts:
+            alerts = Alert.query.filter(
+                Alert.event_state.in_(required_regions))
+        else:
+            alerts = Alert.query.filter(
+                Alert.event_state.in_(required_regions))
+    
+    if severity_value: 
+        required_severity = query_params_to_list(severity_value)
+        # print(required_severity)
+        if alerts:
+            alerts = alerts.filter(Alert.event_severity.in_(required_severity))
+        else:
+            alerts = Alert.query.filter(
+                Alert.event_severity.in_(required_severity))
+
+    if date_value:
+        # parse date input in any format (MM-DD-YYY, DD-MM-YYYY, MM/DD/YYYY...)
+        required_datetime = parse(date_value, fuzzy=True)
+        # print(required_datetime)
+        if alerts:
+            alerts = alerts.filter(
+                Alert.event_datetime >= required_datetime)
+        else:
+            alerts = Alert.query.filter(
+                Alert.event_datetime >= required_datetime)
+    
+    if type_value:
+        required_type = query_params_to_list(type_value)
+        # print(required_type)
+        if alerts:
+            alerts = alerts.filter(
+                Alert.event_type.in_(required_type))
+        else:
+            alerts = Alert.query.filter(
+                Alert.event_type.in_(required_type))
+
+    # alerts = alerts.all()
+    # print(alerts)
+    alert_schema = AlertSchema(many=True)
+    alerts_json = alert_schema.dump(alerts)
+    # print(dic_lst_to_tuple_lst(alerts_json))
     return dic_lst_to_tuple_lst(alerts_json)
