@@ -8,6 +8,7 @@ from APIServer.commons.api_utils import read_json
 from APIServer.commons.endpoint_api import get_endpoints
 
 from APIServer.alerts.operations import read_all_alerts
+from APIServer.alerts.operations import read_filtered_alerts
 from APIServer.alerts.operations import write_alert
 from APIServer.alerts.operations import read_alert
 from APIServer.alerts.operations import update_alert
@@ -86,10 +87,17 @@ alert = api.schema_model('Alert',
 @api.route('/alerts')
 class AlertsLists(Resource):
     def get(self):
-        """
-        Get all alerts
-        """
-        return read_all_alerts()
+        if request.args:
+            """
+            Get filtered alerts based on the query parameters
+            """
+            return read_filtered_alerts(request.args)
+
+        else: 
+            """
+            Get all alerts
+            """
+            return read_all_alerts()
 
     @api.expect(alert)
     def post(self):
@@ -330,6 +338,8 @@ class MattermostAlerts(Resource):
         """
         alert_json = json.loads(request.form['text'])
         return write_alert(alert_json)
+
+        
 
 
 if __name__ == '__main__':
