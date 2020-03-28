@@ -86,17 +86,17 @@ alert = api.schema_model('Alert',
 
 @api.route('/alerts')
 class AlertsLists(Resource):
+    @api.doc(params={'severity': 'Event severity'})
+    @api.doc(params={'date': 'Event date'})
+    @api.doc(params={'type': 'Event type'})
+    @api.doc(params={'region': 'Event region'})
     def get(self):
+        """
+        Get all alerts or filtered alerts based on the query parameters
+        """
         if request.args:
-            """
-            Get filtered alerts based on the query parameters
-            """
             return read_filtered_alerts(request.args)
-
-        else: 
-            """
-            Get all alerts
-            """
+        else:
             return read_all_alerts()
 
     @api.expect(alert)
@@ -338,8 +338,6 @@ class MattermostAlerts(Resource):
         """
         alert_json = json.loads(request.form['text'])
         return write_alert(alert_json)
-
-        
 
 
 if __name__ == '__main__':
