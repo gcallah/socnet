@@ -1,0 +1,46 @@
+{
+	"blocks": [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Fire*\nFire in the building"
+			}
+		},
+		{
+			"type": "context",
+			"elements": [
+				{
+					"type": "mrkdwn",
+					"text": "New York City, New York, 10001, USA\n2020-03-04 17:54:20\nHigh\nby *Socnet Tester*"
+				}
+			]
+		},
+        
+		{
+			"type": "divider"
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Go to Socnet to view this alert and its thread"
+			},
+			"accessory": {
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": "Go to Socnet"
+					},
+					"style": "primary",
+					"url": "https://gcallah.github.io/socnet/webapp.html#/thread/1"
+				}
+		},
+		{
+			"type": "divider"
+		}
+	]
+}

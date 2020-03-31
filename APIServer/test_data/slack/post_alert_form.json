@@ -1,0 +1,162 @@
+{
+	"type": "modal",
+	"callback_id": "post_alert",
+	"title": {
+		"type": "plain_text",
+		"text": "SOC-NET: Post an Alert"
+	},
+	"submit": {
+		"type": "plain_text",
+		"text": "Submit"
+	},
+	"close": {
+		"type": "plain_text",
+		"text": "Cancel"
+	},
+	"blocks": [
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "event_type",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "What is the type of emergecy? (e.g. Fire)"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Event Type"
+			}
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "event_description",
+				"multiline": true,
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Please briefly describe the event"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Description"
+			}
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "static_select",
+				"action_id": "event_severity",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Please select event severity"
+				},
+				"options": [
+					{
+						"value": "low",
+						"text": {
+							"type": "plain_text",
+							"text": "Low"
+						}
+					},
+					{
+						"value": "medium",
+						"text": {
+							"type": "plain_text",
+							"text": "Medium"
+						}
+					},
+					{
+						"value": "high",
+						"text": {
+							"type": "plain_text",
+							"text": "High"
+						}
+					}
+				]
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Severity"
+			}
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "event_city",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "e.g. New York City"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "City"
+			}
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "event_state",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "e.g. New York"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "State/Province/Region"
+			}
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "event_country",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "e.g. USA"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Country"
+			}
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "event_zipcode",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "e.g. 10001"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Zipcode/Postal Code"
+			}
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "msg_sender",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "e.g. NYU"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Sender's Name and/or Organization"
+			}
+		}
+	]
+}

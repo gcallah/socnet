@@ -9,11 +9,6 @@ def send_slack_log(text):
 	return { response.status_code : response.text }
 
 
-def send_json_to_slack(jsonToSend, url):
-	response = requests.post(url, json=jsonToSend)
-	return { response.status_code : response.text }
-
-
 def send_json_to_slack_channel(jsonToSend, channel):
 	URL = 'https://slack.com/api/chat.postMessage'
 	jsonToSend['channel'] = channel
@@ -33,4 +28,3 @@ def open_form(channel, trigger_id, form_location):
 				"Content-Type": "application/json; charset=utf-8"}
 	response = requests.post(URL, json=textToSend, headers=headers)
 	return { response.status_code : response.text }
-

@@ -13,6 +13,8 @@ def slack_format_alert(alert_json):
 	message = read_json(MESSAGE_TEMPLATE)
 	if message.get('Error:', None):
 		message = read_json('APIServer/slack/' + MESSAGE_TEMPLATE)
+		if message.get('Error:', None):
+			message = read_json('slack/' + MESSAGE_TEMPLATE)
 
 	alert_id = alert_json[0][0]
 	datetime = alert_json[0][1]
