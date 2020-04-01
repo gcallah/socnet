@@ -10,10 +10,10 @@ from flask_restplus import Resource, Api, fields
 from APIServer import db
 
 import APIServer.api_endpoints
-from APIServer.api_endpoints import app, HelloWorld, MessageFormat, AlertByCountry, AlertsLists
+from APIServer.api_endpoints import app, HelloWorld, MessageFormat, AlertsLists
 from APIServer.commons.api_utils import err_return, read_json
 from APIServer.alerts.operations import read_alert, update_alert, delete_alert
-from APIServer.alerts.operations import read_all_alerts, write_alert, read_alert_country
+from APIServer.alerts.operations import read_all_alerts, write_alert
 from APIServer.commons.form_api import validate_alert
 
 test_config_path = 'test_data/test_config.json'
@@ -29,7 +29,6 @@ class Test(TestCase):
         # none of the object's members names should have caps!
         self.messageformat = MessageFormat(Resource)
         self.HelloWorld = HelloWorld(Resource)
-        self.AlertByCountry = AlertByCountry(Resource)
         self.alerts = AlertsLists(Resource)
         with app.app_context():
             db.create_all()
@@ -150,9 +149,9 @@ class Test(TestCase):
             rv = c.get('/alerts')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
 
-    def test_AlertByCountry(self):
+    def test_AlertFiltering(self):
         """
-        Testing whether the filter by country endpoint works
+        Testing whether alerts filtering works
         """
         test_json = read_json('test_data/test_json.json')
         test_response = read_json('test_data/test_response.json')
@@ -164,7 +163,25 @@ class Test(TestCase):
             rv = c.post('/alerts', json=test_json)
             self.assertEqual(rv.status_code, 200)
 
-            rv = c.get('/alerts/USA')
+            rv = c.get('/alerts?region=New York')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
+
+            rv = c.get('/alerts?severity=Low')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
+
+            rv = c.get('/alerts?type=Fire')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
+
+            rv = c.get('/alerts?date=2019-01-01')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
+
+            rv = c.get('/alerts?date=2022-01-01')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
+
+            rv = c.get('/alerts?country=USA')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
+
+            rv = c.get('/alerts?region=New York&severity=Low&type=Fire&country=USA&date=2019-01-01')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
        
     def test_threads(self):

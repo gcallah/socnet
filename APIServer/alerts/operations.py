@@ -113,19 +113,13 @@ def delete_alert(id):
     return 'Alert ' + str(id) + ' deleted'
 
 
-def read_alert_country(country):
-    alerts = Alert.query.filter_by(event_country=country).all()
-    alert_schema = AlertSchema(many=True)
-    alerts_json = alert_schema.dump(alerts)
-    return dic_lst_to_tuple_lst(alerts_json)
-
-
 def read_filtered_alerts(query_params):
     print(query_params)
     severity_value = query_params.get('severity')
     date_value = query_params.get('date')
     type_value = query_params.get('type')
     region_value = query_params.get('region')
+    country_value = query_params.get('country')
     alerts = None
 
     if region_value:
@@ -167,6 +161,16 @@ def read_filtered_alerts(query_params):
         else:
             alerts = Alert.query.filter(
                 Alert.event_type.in_(required_type))
+
+    if country_value:
+        required_country = query_params_to_list(country_value)
+        # print(required_country)
+        if alerts:
+            alerts = alerts.filter(
+                Alert.event_country.in_(required_country))
+        else:
+            alerts = Alert.query.filter(
+                Alert.event_country.in_(required_country))
 
     # alerts = alerts.all()
     # print(alerts)

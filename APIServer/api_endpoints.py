@@ -13,7 +13,6 @@ from APIServer.alerts.operations import write_alert
 from APIServer.alerts.operations import read_alert
 from APIServer.alerts.operations import update_alert
 from APIServer.alerts.operations import delete_alert
-from APIServer.alerts.operations import read_alert_country
 
 from APIServer.threads.operations import get_comments
 from APIServer.threads.operations import add_comment
@@ -86,13 +85,14 @@ alert = api.schema_model('Alert',
 
 @api.route('/alerts')
 class AlertsLists(Resource):
-    @api.doc(params={'severity': 'Event severity'})
-    @api.doc(params={'date': 'Event date'})
-    @api.doc(params={'type': 'Event type'})
-    @api.doc(params={'region': 'Event region'})
+    @api.doc(params={'severity': 'Filter alerts by severity'})
+    @api.doc(params={'date': 'Filter alerts by date'})
+    @api.doc(params={'type': 'Filter alerts by type'})
+    @api.doc(params={'region': 'Filter alerts by region'})
+    @api.doc(params={'country': 'Filter alerts by country'})
     def get(self):
         """
-        Get all alerts or filtered alerts based on the query parameters
+        Get multiple (filtered) alerts based on the query parameters
         """
         if request.args:
             return read_filtered_alerts(request.args)
@@ -130,16 +130,6 @@ class Alerts(Resource):
         return delete_alert(id)
 
 
-@api.route('/alerts/<string:country>')
-@api.doc(params={'country': 'A country to retrieve all alerts from'})
-class AlertByCountry(Resource):
-    def get(self, country):
-        """
-        Get all alerts for the given country
-        """
-        return read_alert_country(country)
-
-
 comment = api.model('Comment', {'text': fields.String})
 
 
@@ -166,15 +156,17 @@ class SlackPostAlert(Resource):
         """
         Post a new alert into the system through a Slack message
         """
-        send_slack_log('Entered /slack_post_alert ; Request info:')
+        send_slack_log('Entered /slack_post_alert')
+        send_slack_log('Request info:')
         send_slack_log(str(request.form))
         trigger_id = request.form['trigger_id']
         channel_id = request.form['channel_id']
         response = open_form(channel_id,
                              trigger_id,
                              config['slack_post_form_path'])
+        send_slack_log('Response info:')
         send_slack_log(str(response))
-        return 'Please enter the alert information in the form'
+        return
 
 
 @api.route('/slack_get_alert')
@@ -183,7 +175,8 @@ class SlackGetAlert(Resource):
         """
         Get a specific alert with the given alert id and send it to Slack
         """
-        send_slack_log('Entered /slack_get_alert ; Request info:')
+        send_slack_log('Entered /slack_get_alert')
+        send_slack_log('Request info:')
         send_slack_log(str(request.form))
         alert_id = request.form['text']
         channel_id = request.form['channel_id']
@@ -191,6 +184,7 @@ class SlackGetAlert(Resource):
         text = read_alert(id)
         formated_alert = slack_format_alert(text)
         response = send_json_to_slack_channel(formated_alert, channel_id)
+        send_slack_log('Response info:')
         send_slack_log(response)
         return "Alert " + str(id) + " fetched"
 
@@ -201,13 +195,15 @@ class SlackUpdateAlert(Resource):
         """
         Update an alert in the system through a Slack message
         """
-        send_slack_log('Entered /slack_update_alert ; Request info:')
+        send_slack_log('Entered /slack_update_alert')
+        send_slack_log('Request info:')
         send_slack_log(str(request.form))
         trigger_id = request.form['trigger_id']
         channel_id = request.form['channel_id']
         response = open_form(channel_id,
                              trigger_id,
                              config['slack_update_form_path'])
+        send_slack_log('Response info:')
         send_slack_log(str(response))
         return 'Please enter new alert information in the form'
 
@@ -218,7 +214,8 @@ class SlackDeleteAlert(Resource):
         """
         Delete an alert in the system through a Slack message
         """
-        send_slack_log('Entered /slack_delete_alert ; Request info:')
+        send_slack_log('Entered /slack_delete_alert')
+        send_slack_log('Request info:')
         send_slack_log(str(request.form))
         alert_id = json.loads(request.form['text'])
         return delete_alert(int(alert_id))
@@ -230,7 +227,8 @@ class SlackGetAlerts(Resource):
         """
         Get multiple alerts and send them to Slack
         """
-        send_slack_log('Entered /slack_get_alerts ; Request info:')
+        send_slack_log('Entered /slack_get_alerts')
+        send_slack_log('Request info:')
         send_slack_log(str(request.form))
         alert_id_list = json.loads(request.form['text'])
         channel_id = request.form['channel_id']
@@ -250,7 +248,8 @@ class SlackSubmit(Resource):
         """
         An API that handles all Slack submit events(interactions)
         """
-        send_slack_log('Entered /slack_submit ; Request info:')
+        send_slack_log('Entered /slack_submit')
+        send_slack_log('Request info:')
         send_slack_log(str(request.form))
         if request.form.get('payload') is None:
             send_slack_log('Invalid request: no payload')
@@ -261,26 +260,31 @@ class SlackSubmit(Resource):
                 send_slack_log('Invalid request: no "type" in payload')
                 return
             if payload_json['type'] == 'view_submission':
+                send_slack_log('Payload type: view_submission')
                 time = datetime.datetime.now() \
                                .strftime('%Y-%m-%d %H:%M:%S')
                 if payload_json['view']['callback_id'] == 'post_alert':
+                    send_slack_log('callback_id: ' + 'post_alert')
                     alert_json = create_alert_from_slack_message(payload_json,
                                                                  time)
-                    send_slack_log('New alert json:' + str(alert_json))
+                    send_slack_log('New alert json: ' + str(alert_json))
                     response = write_alert(alert_json)
+                    send_slack_log('Response info: ')
                     send_slack_log(response)
                     return {'response_action': 'clear'}
                 elif payload_json['view']['callback_id'] == 'update_alert':
+                    send_slack_log('callback_id: ' + 'update_alert')
                     alert_id = get_id_from_payload(payload_json)
-                    send_slack_log('Alert id:' + str(alert_id))
+                    send_slack_log('Alert id: ' + str(alert_id))
                     alert_json = create_alert_json(read_alert(alert_id)[0])
-                    send_slack_log('Old alert json:' + str(alert_json))
+                    send_slack_log('Old alert json: ' + str(alert_json))
                     alert_json = create_updated_alert_from_slack_message(
                         payload_json,
                         time,
                         alert_json)
-                    send_slack_log('New alert json:' + str(alert_json))
+                    send_slack_log('New alert json: ' + str(alert_json))
                     response = update_alert(alert_json, alert_id)
+                    send_slack_log('Response info: ')
                     send_slack_log(response)
                     return {'response_action': 'clear'}
                 else:
