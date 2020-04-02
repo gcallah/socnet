@@ -8,13 +8,20 @@ from APIServer.slack.format import create_alert_from_slack_message, get_id_from_
 from APIServer.slack.format import slack_format_alert, create_updated_alert_from_slack_message
 
 
-test_config_path = 'test_data/test_slack.json'
-sample_alert_json_path = 'test_data/test_json.json'
-slack_config = read_json(test_config_path)
-sample_alert_json = read_json(sample_alert_json_path)
+TEST_CONFIG_PATH = 'test_data/slack/test_slack.json'
+SAMPLE_ALERT_JSON_PATH = 'test_data/test_json.json'
+POST_ALERT_PAYLOAD_PATH = 'test_data/slack/post_alert_payload.json'
+UPDATE_ALERT_PAYLOAD_PATH = 'test_data/slack/update_alert_payload.json'
+SAMPLE_MESSAGE_PATH = 'test_data/slack/formatted_slack_message.json'
+slack_config = read_json(TEST_CONFIG_PATH)
+sample_alert_json = read_json(SAMPLE_ALERT_JSON_PATH)
+post_alert_payload = read_json(POST_ALERT_PAYLOAD_PATH)
+update_alert_payload = read_json(UPDATE_ALERT_PAYLOAD_PATH)
+sample_message = read_json(SAMPLE_MESSAGE_PATH)
+TIME = '2019-11-01 17:45:32'
 
 
-class TestCase(unittest.TestCase):
+class TestSlack(unittest.TestCase):
 
     @responses.activate
     def testLog(self):
@@ -68,9 +75,7 @@ class TestCase(unittest.TestCase):
         """
         Testing if create_alert_from_slack_message works
         """
-        payload = slack_config['modal_submission_payload']
-        time = '2019-11-01 17:45:32'
-        alert_json = create_alert_from_slack_message(payload, time)
+        alert_json = create_alert_from_slack_message(post_alert_payload, TIME)
         self.assertEqual(sample_alert_json, alert_json)
 
 
@@ -83,8 +88,27 @@ class TestCase(unittest.TestCase):
         ret = slack_format_alert([(1,'2020-03-04 17:54:20', '10001',
                                 'New York City', 'New York', 'USA', 'Fire', 'Fire in the building',
                                 'High', 'Socnet Tester')])
-        sample_message_path = 'test_data/slack/formatted_slack_message.json'
-        sample_message = read_json(sample_message_path)
         self.assertEqual(sample_message, ret)
 
 
+    def testUpdateAlert(self):
+        """
+        Testing if create_updated_alert_from_slack_message works
+        """
+        alert_json = create_updated_alert_from_slack_message(update_alert_payload, TIME, sample_alert_json)
+        # update sample alert json
+        sample_alert_json['event_zipcode'] = '10003'
+        sample_alert_json['msg_sender'] = 'Slack'
+        self.assertEqual(sample_alert_json, alert_json)
+        # revert previous update for future use
+        sample_alert_json['event_zipcode'] = '10001'
+        sample_alert_json['msg_sender'] = 'NYU'
+
+
+    def testGetAlertId(self):
+        """
+        Testing if get_id_from_payload works
+        """
+        payload = read_json('test_data/slack/update_alert_payload.json')
+        alert_id = get_id_from_payload(payload)
+        self.assertEqual('1', alert_id)

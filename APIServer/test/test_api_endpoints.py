@@ -166,11 +166,20 @@ class Test(TestCase):
             rv = c.get('/alerts?region=New York')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
 
+            rv = c.get('/alerts?region=New Jersey')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
+
             rv = c.get('/alerts?severity=Low')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
 
+            rv = c.get('/alerts?severity=High')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
+
             rv = c.get('/alerts?type=Fire')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
+
+            rv = c.get('/alerts?type=Smoke')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
 
             rv = c.get('/alerts?date=2019-01-01')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
@@ -181,9 +190,12 @@ class Test(TestCase):
             rv = c.get('/alerts?country=USA')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
 
+            rv = c.get('/alerts?country=Canada')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
+
             rv = c.get('/alerts?region=New York&severity=Low&type=Fire&country=USA&date=2019-01-01')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
-       
+
     def test_threads(self):
         """
         Testing whether or not the threads module works
@@ -242,6 +254,6 @@ class Test(TestCase):
 
             rv = c.get('/threads/1')
             self.assertEqual(rv.status_code, 404)
-       
+
 if __name__ == "__main__":
     main()

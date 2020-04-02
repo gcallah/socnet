@@ -38,6 +38,9 @@ def slack_format_alert(alert_json):
 	return message
 
 
+"""
+Create a new raw alert (json) from the new alert form in Slack
+"""
 def create_alert_from_slack_message(payload, time):
 	alert_json = {}
 	values = payload['view']['state']['values']
@@ -51,6 +54,9 @@ def create_alert_from_slack_message(payload, time):
 	return alert_json
 
 
+"""
+Create an updated raw alert (json) from an update request in Slack
+"""
 def create_updated_alert_from_slack_message(payload, time, alert_json):
 	values = payload['view']['state']['values']
 	for value in values:
@@ -67,6 +73,9 @@ def create_updated_alert_from_slack_message(payload, time, alert_json):
 	return alert_json
 
 
+"""
+Get the alert id from an update request in Slack
+"""
 def get_id_from_payload(payload):
 	values = payload['view']['state']['values']
 	for value in values:
