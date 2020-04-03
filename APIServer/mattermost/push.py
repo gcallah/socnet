@@ -3,6 +3,6 @@ import requests
 
 def push_to_mattermost(text):
 	textToSend = {'text' : str(text)}
-	URL = 'https://35727a1c.ngrok.io/hooks/oikmiyshk7na7j6xrq59eoze9w'
+	URL = 'http://18.235.204.147:8065/hooks/dse96wr583gwjesxbx48ykuy6r'
 	response = requests.post(URL, json=textToSend)
 	return { response.status_code : response.text }
