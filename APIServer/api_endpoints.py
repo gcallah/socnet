@@ -166,7 +166,7 @@ class SlackPostAlert(Resource):
                              config['slack_post_form_path'])
         send_slack_log('Response info:')
         send_slack_log(str(response))
-        return
+        return 'Please enter new alert information in the form'
 
 
 @api.route('/slack/get_alert')
@@ -205,7 +205,7 @@ class SlackUpdateAlert(Resource):
                              config['slack_update_form_path'])
         send_slack_log('Response info:')
         send_slack_log(str(response))
-        return 'Please enter new alert information in the form'
+        return 'Please enter updated alert information in the form'
 
 
 @api.route('/slack/delete_alert')
