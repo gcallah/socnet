@@ -20,6 +20,7 @@ from APIServer.threads.operations import add_comment
 from APIServer.slack.push import send_slack_log
 from APIServer.slack.push import send_json_to_slack_channel
 from APIServer.slack.push import open_form
+from APIServer.slack.push import get_confirmation_form
 from APIServer.slack.format import slack_format_alert
 from APIServer.slack.format import create_alert_from_slack_message
 from APIServer.slack.format import create_updated_alert_from_slack_message
@@ -270,7 +271,7 @@ class SlackSubmit(Resource):
                     response = write_alert(alert_json)
                     send_slack_log('Response info: ')
                     send_slack_log(response)
-                    return {'response_action': 'clear'}
+                    return get_confirmation_form('Success', response)
                 elif payload_json['view']['callback_id'] == 'update_alert':
                     send_slack_log('callback_id: ' + 'update_alert')
                     alert_id = get_id_from_payload(payload_json)
@@ -289,7 +290,7 @@ class SlackSubmit(Resource):
                     response = update_alert(alert_json, alert_id)
                     send_slack_log('Response info: ')
                     send_slack_log(response)
-                    return {'response_action': 'clear'}
+                    return get_confirmation_form('Success', response)
                 else:
                     send_slack_log('Unknown callback_id in view_submission')
                     return

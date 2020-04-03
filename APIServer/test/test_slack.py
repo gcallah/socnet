@@ -6,6 +6,7 @@ from APIServer.commons.api_utils import read_json
 from APIServer.slack.push import send_slack_log
 from APIServer.slack.push import send_json_to_slack_channel
 from APIServer.slack.push import open_form
+from APIServer.slack.push import get_confirmation_form
 from APIServer.slack.format import slack_format_alert
 from APIServer.slack.format import create_alert_from_slack_message
 from APIServer.slack.format import create_updated_alert_from_slack_message
@@ -118,3 +119,12 @@ class TestSlack(unittest.TestCase):
         payload = read_json('test_data/slack/update_alert_payload.json')
         alert_id = get_id_from_payload(payload)
         self.assertEqual('1', alert_id)
+
+
+    def testConfirmation(self):
+        """
+        Testing if get_confirmation_form works
+        """
+        sample_message = read_json('test_data/slack/confirmation_message.json')
+        response = get_confirmation_form('My Title', 'my message')
+        self.assertEqual(sample_message,response)

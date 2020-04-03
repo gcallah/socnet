@@ -30,3 +30,14 @@ def open_form(channel, trigger_id, form_location):
 				"Content-Type": "application/json; charset=utf-8"}
 	response = requests.post(URL, json=textToSend, headers=headers)
 	return { response.status_code : response.text }
+
+
+def get_confirmation_form(title, message):
+	response_json = {}
+	FORM_LOCATION = 'slack/confirmation.json'
+	form = read_json(FORM_LOCATION)
+	response_json['response_action'] = 'update'
+	form['title']['text'] = title
+	form['blocks'][0]['text']['text'] = message
+	response_json['view'] = form
+	return response_json
