@@ -2,9 +2,13 @@ import requests
 
 from APIServer.commons.api_utils import read_json
 
+SLACK_CONFIG_PATH = 'slack/slack_config.json'
+slack_config = read_json(SLACK_CONFIG_PATH)
+
+
 def send_slack_log(text):
 	jsonToSend = {'text': str(text)}
-	URL = 'https://hooks.slack.com/services/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'
+	URL = slack_config['Log_Channel_Webhook']
 	response = requests.post(URL, json=jsonToSend)
 	return { response.status_code : response.text }
 

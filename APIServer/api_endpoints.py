@@ -33,8 +33,6 @@ import datetime
 CONFIG_PATH = 'api_config.json'
 # config is a dictionary of configuration params:
 config = read_json(CONFIG_PATH)
-if config.get('Error:', None):
-    config = read_json('APIServer/' + CONFIG_PATH)
 
 app = create_app(config)
 

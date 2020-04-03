@@ -79,7 +79,12 @@ class Test(TestCase):
         Testing whether we are able to get the right error message
         """
         rv = err_return("error message")
-        self.assertEqual(rv, {"Error:": "error message"})
+        self.assertEqual(rv, {"Error": "error message"})
+        rv = read_json('makefile')
+        self.assertEqual(rv, {"Error": "Not a valid json file"})
+        rv = read_json('fake_file_location')
+        self.assertEqual(rv, {"Error": "Json file not found"})
+
 
     def test_validate_alert(self):
         """
@@ -288,20 +293,12 @@ class Test(TestCase):
             'content_type'   : 'application/json'
         })
         with app.test_client() as c:
-            # check if /slack/get_alert works
-            rv = c.post('/slack/get_alert', data=dict(text='1', channel_id='my_channel'))
-            self.assertEqual(rv.status_code, 200)
-            
-            # check if /slack/get_alerts works
-            rv = c.post('/slack/get_alerts', data=dict(text='[1,2]', channel_id='my_channel'))
-            self.assertEqual(rv.status_code, 200)
-
-            # check if /slack/post_alert works (it opens an form in Slack)
-            rv = c.post('/slack/post_alert', data=dict(trigger_id='my_trigger_id', channel_id='my_channel'))
-            self.assertEqual(rv.status_code, 200)
-
-            # check if /slack/submit can handle the situation with no payload 
+            # check if /slack/submit can handle the calls without payload 
             rv = c.post('/slack/submit')
+            self.assertEqual(rv.status_code, 200)
+
+            # check if /slack/post_alert works (it opens a form in Slack)
+            rv = c.post('/slack/post_alert', data=dict(trigger_id='my_trigger_id', channel_id='my_channel'))
             self.assertEqual(rv.status_code, 200)
 
             # check if we can post an alert through /slack/submit 
@@ -314,7 +311,15 @@ class Test(TestCase):
             rv = c.get('alerts/1')
             self.assertEqual(len(eval(rv.data.decode('utf-8')[:-1])), 1)
 
-            # check if /slack/update_alert works (it opens an form in Slack)
+            # check if /slack/get_alert works
+            rv = c.post('/slack/get_alert', data=dict(text='1', channel_id='my_channel'))
+            self.assertEqual(rv.status_code, 200)
+
+            # check if /slack/get_alerts works
+            rv = c.post('/slack/get_alerts', data=dict(text='[1,2]', channel_id='my_channel'))
+            self.assertEqual(rv.status_code, 200)
+
+            # check if /slack/update_alert works (it opens a form in Slack)
             rv = c.post('/slack/update_alert', data=dict(trigger_id='my_trigger_id', channel_id='my_channel'))
             self.assertEqual(rv.status_code, 200)
 
@@ -330,11 +335,11 @@ class Test(TestCase):
             rv = c.post('/slack/submit', data=dict(payload=json.dumps(update_alert_payload)))
             self.assertEqual(rv.status_code, 200)
 
-            # check if /slack/delete_alerts works
+            # check if /slack/delete_alert works
             rv = c.post('/slack/delete_alert', data=dict(text='1'))
             self.assertEqual(rv.status_code, 200)
 
-            # check if the alert was successfully deleted through previous commands
+            # check if the previous alert was successfully deleted
             rv = c.get('alerts/1')
             self.assertEqual(len(eval(rv.data.decode('utf-8')[:-1])), 0)
 
