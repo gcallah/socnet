@@ -305,7 +305,7 @@ class MattermostHello(Resource):
         """
         An API to send hello_world messages to Mattermost
         """
-        text = 'HELLO_WORLD from API Server!'
+        text = 'HELLO from socnet API Server!'
         return push_to_mattermost(text)
 
 
@@ -344,8 +344,13 @@ class MattermostAlerts(Resource):
         """
         Put a new alert into the system through a Mattermost message
         """
-        alert_json = json.loads(request.form['text'])
-        return write_alert(alert_json)
+        try:
+            alert_json = json.loads(request.form['text'])
+        except json.decoder.JSONDecodeError:
+            return push_to_mattermost('Failed to send alert.'
+                                      'Incorrect json format.')
+        write_alert(alert_json)
+        return push_to_mattermost('Alert sent successfully.')
 
 
 if __name__ == '__main__':
