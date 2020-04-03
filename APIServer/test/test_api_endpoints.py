@@ -6,6 +6,7 @@ import random
 import os
 import datetime
 from flask_restplus import Resource, Api, fields
+import responses
 
 from APIServer import db
 
@@ -19,6 +20,10 @@ from APIServer.commons.form_api import validate_alert
 test_config_path = 'test_data/test_config.json'
 APIServer.api_endpoints.config = read_json(test_config_path)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
+
+SLACK_CONFIG_PATH = 'test_data/slack/test_slack.json'
+slack_config = read_json(SLACK_CONFIG_PATH)
+
 
 with app.app_context():
     db.session.remove()
@@ -254,6 +259,85 @@ class Test(TestCase):
 
             rv = c.get('/threads/1')
             self.assertEqual(rv.status_code, 404)
+
+
+    @responses.activate
+    def test_slack(self):
+        """
+        Testing if Slack related endpoints work
+        """
+        responses.add(**{
+            'method'         : responses.POST,
+            'url'            : slack_config['Log_URL'],
+            'body'           : 'ok',
+            'status'         : 200,
+            'content_type'   : 'application/json'
+        })
+        responses.add(**{
+            'method'         : responses.POST,
+            'url'            : slack_config['Post_Chat_URL'],
+            'body'           : 'ok',
+            'status'         : 200,
+            'content_type'   : 'application/json'
+        })
+        responses.add(**{
+            'method'         : responses.POST,
+            'url'            : slack_config['Views_Open_URL'],
+            'body'           : 'ok',
+            'status'         : 200,
+            'content_type'   : 'application/json'
+        })
+        with app.test_client() as c:
+            # check if /slack/get_alert works
+            rv = c.post('/slack/get_alert', data=dict(text='1', channel_id='my_channel'))
+            self.assertEqual(rv.status_code, 200)
+            
+            # check if /slack/get_alerts works
+            rv = c.post('/slack/get_alerts', data=dict(text='[1,2]', channel_id='my_channel'))
+            self.assertEqual(rv.status_code, 200)
+
+            # check if /slack/post_alert works (it opens an form in Slack)
+            rv = c.post('/slack/post_alert', data=dict(trigger_id='my_trigger_id', channel_id='my_channel'))
+            self.assertEqual(rv.status_code, 200)
+
+            # check if /slack/submit can handle the situation with no payload 
+            rv = c.post('/slack/submit')
+            self.assertEqual(rv.status_code, 200)
+
+            # check if we can post an alert through /slack/submit 
+            POST_PAYLOAD_PATH = APIServer.api_endpoints.config['slack_post_payload']
+            post_alert_payload = read_json(POST_PAYLOAD_PATH)
+            rv = c.post('/slack/submit', data=dict(payload=json.dumps(post_alert_payload)))
+            self.assertEqual(rv.status_code, 200)
+
+            # check if the previous alert was successfully posted
+            rv = c.get('alerts/1')
+            self.assertEqual(len(eval(rv.data.decode('utf-8')[:-1])), 1)
+
+            # check if /slack/update_alert works (it opens an form in Slack)
+            rv = c.post('/slack/update_alert', data=dict(trigger_id='my_trigger_id', channel_id='my_channel'))
+            self.assertEqual(rv.status_code, 200)
+
+            # check if we can update an alert through /slack/submit 
+            UPDATE_PAYLOAD_PATH = APIServer.api_endpoints.config['slack_update_payload']
+            update_alert_payload = read_json(UPDATE_PAYLOAD_PATH)
+            rv = c.post('/slack/submit', data=dict(payload=json.dumps(update_alert_payload)))
+            self.assertEqual(rv.status_code, 200)
+
+            # try to use /slack/submit to update an alert that does not exist
+            UPDATE_PAYLOAD_PATH = APIServer.api_endpoints.config['slack_update_payload_invalid']
+            update_alert_payload = read_json(UPDATE_PAYLOAD_PATH)
+            rv = c.post('/slack/submit', data=dict(payload=json.dumps(update_alert_payload)))
+            self.assertEqual(rv.status_code, 200)
+
+            # check if /slack/delete_alerts works
+            rv = c.post('/slack/delete_alert', data=dict(text='1'))
+            self.assertEqual(rv.status_code, 200)
+
+            # check if the alert was successfully deleted through previous commands
+            rv = c.get('alerts/1')
+            self.assertEqual(len(eval(rv.data.decode('utf-8')[:-1])), 0)
+
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,6 @@
 import requests
-import json
 
+from APIServer.commons.api_utils import read_json
 
 def send_slack_log(text):
 	jsonToSend = {'text': str(text)}
@@ -20,9 +20,7 @@ def send_json_to_slack_channel(jsonToSend, channel):
 
 def open_form(channel, trigger_id, form_location):
 	URL = 'https://slack.com/api/views.open'
-	with open(form_location, 'r') as json_file:
-		data=json_file.read()
-	form = json.loads(data)
+	form = read_json(form_location)
 	textToSend = {'channel': channel, 'trigger_id': trigger_id, 'view': form}
 	headers = {"Authorization": "Bearer xoxp-765850805047-790629649378-989309639635-00bf54bba4048c8414ad0983f630c586",
 				"Content-Type": "application/json; charset=utf-8"}

@@ -4,5 +4,10 @@
   "debug": true,
   "format_path": "test_data/test_form.json",
   "format_dict": "test_data/test_type_dict.json",
-  "database_path": "test_data/test_db_temp"
+  "database_path": "test_data/test_db_temp",
+  "slack_post_form_path": "slack/template_post_alert.json",
+  "slack_update_form_path": "slack/template_update_alert.json",
+  "slack_post_payload": "test_data/slack/post_alert_payload.json",
+  "slack_update_payload": "test_data/slack/update_alert_payload.json",
+  "slack_update_payload_invalid": "test_data/slack/update_alert_payload_invalid_alert_id.json"
 }

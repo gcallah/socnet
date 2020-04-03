@@ -1,3 +1,5 @@
 {
-	"url" : "https://hooks.slack.com/services/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"
+	"Log_URL" : "https://hooks.slack.com/services/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",
+	"Post_Chat_URL" : "https://slack.com/api/chat.postMessage",
+	"Views_Open_URL" : "https://slack.com/api/views.open"
 }
