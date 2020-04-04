@@ -62,6 +62,8 @@ class Test(TestCase):
         self.assertEqual(rv, {"Error": "Not a valid json file"})
         rv = read_json('fake_file_location')
         self.assertEqual(rv, {"Error": "Json file not found"})
+        rv = read_json('test_data/test_json.json')
+        self.assertEqual(rv.get('Error'), None)
 
     def test_endpoints(self):
         """
