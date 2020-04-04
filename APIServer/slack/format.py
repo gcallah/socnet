@@ -41,11 +41,11 @@ def create_alert_from_slack_message(payload, time):
     values = payload['view']['state']['values']
     for value in values:
         for key in values[value]:
-                if key == 'event_severity':
-                    alert_json[key] = \
-                        values[value][key]['selected_option']['text']['text']
-                else:
-                    alert_json[key] = values[value][key]['value']
+            if key == 'event_severity':
+                alert_json[key] = \
+                    values[value][key]['selected_option']['text']['text']
+            else:
+                alert_json[key] = values[value][key]['value']
     alert_json['event_datetime'] = time
     return alert_json
 
@@ -57,16 +57,15 @@ def create_updated_alert_from_slack_message(payload, time, alert_json):
     values = payload['view']['state']['values']
     for value in values:
         for key in values[value]:
-                if key == 'alert_id':
-                    continue
-                if key == 'event_severity':
-                    if values[value][key].get('selected_option'):
-                        alert_json[key] = \
-                            values[value][key][
-                                'selected_option']['text']['text']
-                else:
-                    if values[value][key].get('value'):
-                        alert_json[key] = values[value][key]['value']
+            if key == 'alert_id':
+                continue
+            if key == 'event_severity':
+                if values[value][key].get('selected_option'):
+                    alert_json[key] = \
+                        values[value][key]['selected_option']['text']['text']
+            else:
+                if values[value][key].get('value'):
+                    alert_json[key] = values[value][key]['value']
     alert_json['event_datetime'] = time
     return alert_json
 
@@ -78,6 +77,6 @@ def get_id_from_payload(payload):
     values = payload['view']['state']['values']
     for value in values:
         for key in values[value]:
-                if key == 'alert_id':
-                    alert_id = values[value][key]['value']
-                    return alert_id
+            if key == 'alert_id':
+                alert_id = values[value][key]['value']
+                return alert_id
