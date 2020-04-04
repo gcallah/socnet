@@ -6,25 +6,6 @@ def get_alert_form(path):
     return read_json(path)
 
 
-def create_alert(db_record):
-    if db_record is None:
-        return None
-    else:
-        alert = db_record
-        return alert
-
-
-def create_alerts(db_records):
-    '''
-    Create alerts from db records
-    '''
-    alerts = []
-    for record in db_records:
-        alert = create_alert(record)
-        alerts.append(alert)
-    return alerts
-
-
 def create_alert_json(alert_tuple):
     '''
     Create alert_json from an alert tuple
