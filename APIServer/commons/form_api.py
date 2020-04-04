@@ -1,5 +1,4 @@
 from APIServer.commons.api_utils import read_json
-import datetime
 
 
 def get_alert_form(path):
@@ -21,52 +20,3 @@ def create_alert_json(alert_tuple):
     alert_json['event_severity'] = alert_tuple[8]
     alert_json['msg_sender'] = alert_tuple[9]
     return alert_json
-
-
-def validate_alert(alert_format, type_dict, alert):
-    """
-    Validate that the alert has the correct format
-    """
-
-    def test_prop(prop, submitted):
-        """
-        Tests a property against what was submitted.
-        """
-        req_type = prop.get('type', None)
-        if req_type is not None:
-            if submitted is not None:
-                convert_type = type_dict[req_type]
-                if isinstance(submitted, eval(convert_type)):
-                    return True, ''
-                else:
-                    return False, 'Not the appropriate type {}'.format(req_type)
-            else:
-                return False, 'Missing entry of type {}'.format(req_type)
-        else:
-            return True, 'Nothing required'
-
-    def test_all_prop(all_prop, given):
-        """
-        Tests all properties against the submitted data
-        """
-        for p in all_prop.keys():
-            check, mess = test_prop(all_prop[p], given.get(p, None))
-            if check is False:
-                return False, mess
-        return True, ''
-            
-    required = alert_format.get('required', None)
-    properties = alert_format.get('properties', None)
-    for r in required:
-        test = alert.get(r, None)
-        if test is None:
-            return False, 'Missing {}'.format(r)
-        else:
-            check, mess = test_prop(properties[r], test)
-            if check is False:
-                return False, mess
-    check, mess = test_all_prop(properties, alert)
-    if check is False:
-        return False, mess
-
-    return True, ''

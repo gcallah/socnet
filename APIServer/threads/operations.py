@@ -1,13 +1,11 @@
-import os
-import sqlite3
-
 from APIServer import db
-from APIServer.database.models import Thread,Comment
+from APIServer.database.models import Thread, Comment
+
 
 def add_comment(comment, thread_id):
     fetched_thread = Thread.query.get(thread_id)
     if fetched_thread is None:
-        return {'message' : 'Thread ' + str(thread_id) + ' does not exist'}, 404
+        return {'message': 'Thread ' + str(thread_id) + ' does not exist'}, 404
     first_comment_id = fetched_thread.first_comment_id
     last_comment_id = fetched_thread.last_comment_id
     # add the new comment to the commnet table
@@ -31,7 +29,7 @@ def add_comment(comment, thread_id):
 def get_comments(thread_id):
     fetched_thread = Thread.query.get(thread_id)
     if fetched_thread is None:
-        return {'message' : 'Thread ' + str(thread_id) + ' does not exist'}, 404
+        return {'message': 'Thread ' + str(thread_id) + ' does not exist'}, 404
     first_comment_id = fetched_thread.first_comment_id
     comment_id = first_comment_id
     comments = []
@@ -41,13 +39,14 @@ def get_comments(thread_id):
         comment_id = fetched_comment.next_comment_id
     return comments
 
+
 def delete_thread(thread_id):
     """
     delete all comments and thread for the given thread id
     """
     fetched_thread = Thread.query.get(thread_id)
     if fetched_thread is None:
-        return {'message' : 'Thread ' + str(thread_id) + ' does not exist'}, 404
+        return {'message': 'Thread ' + str(thread_id) + ' does not exist'}, 404
     first_comment_id = fetched_thread.first_comment_id
     # delete all associated comments
     comment_id = first_comment_id

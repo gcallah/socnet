@@ -38,10 +38,12 @@ def dic_lst_to_tuple_lst(obj):
         final_lst.append(tup)
     return final_lst
 
+
 def query_params_to_list(query_string):
     # query_string = query_string[1:-1]
-    query_list = [ elem.strip() for elem in query_string.split(",")]
+    query_list = [elem.strip() for elem in query_string.split(",")]
     return query_list
+
 
 def read_all_alerts():
     alerts = Alert.query.all()
@@ -77,7 +79,7 @@ def write_alert(alert):
 def update_alert(alert, id):
     fetched_alert = Alert.query.get(id)
     if fetched_alert is None:
-        return {'message' : 'Alert ' + str(id) + ' does not exist'}, 404
+        return {'message': 'Alert ' + str(id) + ' does not exist'}, 404
     fetched_alert.event_zipcode = alert['event_zipcode']
     fetched_alert.event_city = alert['event_city']
     fetched_alert.event_state = alert['event_state']
@@ -104,7 +106,7 @@ def delete_alert(id):
     """
     alert = Alert.query.get(id)
     if alert is None:
-        return {'message' : 'Alert ' + str(id) + ' does not exist'}, 404
+        return {'message': 'Alert ' + str(id) + ' does not exist'}, 404
     # delete associated thread
     delete_thread(id)
     # delete alert
@@ -131,8 +133,8 @@ def read_filtered_alerts(query_params):
         else:
             alerts = Alert.query.filter(
                 Alert.event_state.in_(required_regions))
-    
-    if severity_value: 
+
+    if severity_value:
         required_severity = query_params_to_list(severity_value)
         # print(required_severity)
         if alerts:
@@ -151,7 +153,7 @@ def read_filtered_alerts(query_params):
         else:
             alerts = Alert.query.filter(
                 Alert.event_datetime >= required_datetime)
-    
+
     if type_value:
         required_type = query_params_to_list(type_value)
         # print(required_type)

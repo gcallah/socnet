@@ -7,8 +7,9 @@ from APIServer.mattermost.push import push_to_mattermost
 
 MATTERMOST_CONFIG_PATH = 'test_data/mattermost/test_mattermost.json'
 MATTERMOST_TEST_CHANNEL = 'test'
-mattermost_config = read_json(MATTERMOST_CONFIG_PATH
-)
+mattermost_config = read_json(MATTERMOST_CONFIG_PATH)
+
+
 class TestMattermost(unittest.TestCase):
 
     @responses.activate
@@ -17,11 +18,12 @@ class TestMattermost(unittest.TestCase):
         Testing if push_to_mattermost works
         """
         responses.add(**{
-            'method'         : responses.POST,
-            'url'            : mattermost_config['Post_Chat_URL'],
-            'body'           : 'ok',
-            'status'         : 200,
-            'content_type'   : 'application/json'
+            'method': responses.POST,
+            'url': mattermost_config['Post_Chat_URL'],
+            'body': 'ok',
+            'status': 200,
+            'content_type': 'application/json'
         })
-        response = push_to_mattermost({'text': 'Hello, from Socnet'}, MATTERMOST_TEST_CHANNEL)
+        response = push_to_mattermost({'text': 'Hello, from Socnet'},
+                                      MATTERMOST_TEST_CHANNEL)
         self.assertEqual('ok', response[200])

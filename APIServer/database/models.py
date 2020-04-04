@@ -1,8 +1,9 @@
 from APIServer import db
- 
+
+
 class Alert(db.Model):
     __tablename__ = "alerts"
- 
+
     id = db.Column(db.Integer, primary_key=True)
     event_datetime = db.Column(db.Text)
     event_zipcode = db.Column(db.Text)
@@ -14,16 +15,18 @@ class Alert(db.Model):
     event_severity = db.Column(db.Text)
     msg_sender = db.Column(db.Text)
 
+
 class Thread(db.Model):
     __tablename__ = "threads"
- 
+
     id = db.Column(db.Integer, primary_key=True)
-    first_comment_id = db.Column(db.Integer,default=-1)
-    last_comment_id = db.Column(db.Integer,default=-1)
+    first_comment_id = db.Column(db.Integer, default=-1)
+    last_comment_id = db.Column(db.Integer, default=-1)
+
 
 class Comment(db.Model):
     __tablename__ = "comments"
- 
-    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     content = db.Column(db.Text)
-    next_comment_id = db.Column(db.Integer,default=-1)
+    next_comment_id = db.Column(db.Integer, default=-1)
