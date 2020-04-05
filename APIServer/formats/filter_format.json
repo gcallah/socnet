@@ -1,0 +1,24 @@
+{ 
+    "properties": {
+        "date": {
+            "type": "datetime",
+            "input": "dropdown",
+            "placeholder": "MM/DD/YYYY"
+        },
+        "severity": {
+            "type": "string",
+            "input": "dropdown",
+            "placeholder": "E.g. High"
+        },
+        "type": {
+            "type": "string",
+            "input": "dropdown",
+            "placeholder": "E.g. Fire"
+        },
+        "region": {
+            "type": "string",
+            "input": "dropdown",
+            "placeholder": "E.g. New York"
+        }
+    }
+}

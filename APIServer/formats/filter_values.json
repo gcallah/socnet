@@ -1,0 +1,65 @@
+{
+    "region": {
+        "name": "region",
+        "type": "dropdown",
+        "optionList": {
+            "1": {
+                "key": "NY",
+                "text": "NY - New York",
+                "value": "New York"
+            },
+            "2": {
+                "key": "NJ",
+                "text": "NJ - New Jersey",
+                "value": "New Jersey"
+            },
+            "3": {
+                "key": "CT",
+                "text": "CT - Conneticut",
+                "value": "Conneticut"
+            }
+        }
+    },
+    "severity": {
+        "name": "severity",
+        "type": "dropdown",
+        "optionList": {
+            "1": {
+                "key": "H",
+                "text": "High",
+                "value": "High"
+            },
+            "2": {
+                "key": "L",
+                "text": "Low",
+                "value": "Low"
+            },
+            "3": {
+                "key": "M",
+                "text": "Medium",
+                "value": "Medium"
+            }
+        }
+    },
+    "type": {
+        "name": "type",
+        "type": "dropdown",
+        "optionList": {
+            "1": {
+                "key": "Fire",
+                "text": "Fire",
+                "value": "Fire"
+            },
+            "2": {
+                "key": "Earthquake",
+                "text": "Earthquake",
+                "value": "Earthquake"
+            },
+            "3": {
+                "key": "Ransomware",
+                "text": "Ransomware",
+                "value": "Ransomware"
+            }
+        }
+    }
+}
