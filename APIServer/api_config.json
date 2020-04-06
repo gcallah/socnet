@@ -8,5 +8,7 @@
 	"database_path": "APIServer/db_temp",
 	"sqlalchemy_database_uri" : "sqlite:///socnet.db",
 	"slack_post_form_path": "APIServer/slack/template_post_alert.json",
-	"slack_update_form_path": "APIServer/slack/template_update_alert.json"
+	"slack_update_form_path": "APIServer/slack/template_update_alert.json",
+	"filter_form_format_path": "APIServer/formats/filter_format.json",
+	"filter_form_values_path": "APIServer/formats/filter_values.json"
 }
