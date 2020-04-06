@@ -1,0 +1,193 @@
+{
+	"type": "view_submission",
+	"trigger_id": "1052071079076.765850805047.bff5786f23f49f651e2a60a179e1c6e0",
+	"view": {
+		"type": "modal",
+		"blocks": [{
+			"type": "input",
+			"block_id": "6pu5j",
+			"label": {
+				"type": "plain_text",
+				"text": "Event Type",
+				"emoji": true
+			},
+			"optional": true,
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "event_type",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "e.g. Fire",
+					"emoji": true
+				}
+			}
+		}, {
+			"type": "input",
+			"block_id": "YS2BV",
+			"label": {
+				"type": "plain_text",
+				"text": "Severity",
+				"emoji": true
+			},
+			"optional": true,
+			"element": {
+				"type": "multi_static_select",
+				"action_id": "event_severity",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Pick one or more from the list",
+					"emoji": true
+				},
+				"options": [{
+					"text": {
+						"type": "plain_text",
+						"text": "Low",
+						"emoji": true
+					},
+					"value": "low"
+				}, {
+					"text": {
+						"type": "plain_text",
+						"text": "Medium",
+						"emoji": true
+					},
+					"value": "medium"
+				}, {
+					"text": {
+						"type": "plain_text",
+						"text": "High",
+						"emoji": true
+					},
+					"value": "high"
+				}]
+			}
+		}, {
+			"type": "input",
+			"block_id": "37pU",
+			"label": {
+				"type": "plain_text",
+				"text": "State\\/Province\\/Region",
+				"emoji": true
+			},
+			"optional": true,
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "event_state",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "e.g. New York",
+					"emoji": true
+				}
+			}
+		}, {
+			"type": "input",
+			"block_id": "qINbJ",
+			"label": {
+				"type": "plain_text",
+				"text": "Country",
+				"emoji": true
+			},
+			"optional": true,
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "event_country",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "e.g. USA",
+					"emoji": true
+				}
+			}
+		}, {
+			"type": "input",
+			"block_id": "gPW",
+			"label": {
+				"type": "plain_text",
+				"text": "Since Date",
+				"emoji": true
+			},
+			"optional": true,
+			"element": {
+				"type": "datepicker",
+				"action_id": "since_date",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Select a date",
+					"emoji": true
+				}
+			}
+		}],
+		"private_metadata": "",
+		"callback_id": "filter_alerts",
+		"state": {
+			"values": {
+				"6pu5j": {
+					"event_type": {
+						"type": "plain_text_input",
+						"value": "Fire"
+					}
+				},
+				"YS2BV": {
+					"event_severity": {
+						"type": "multi_static_select",
+						"selected_options": [{
+							"text": {
+								"type": "plain_text",
+								"text": "Medium"
+							},
+							"value": "medium"
+						}, {
+							"text": {
+								"type": "plain_text",
+								"text": "Low"
+							},
+							"value": "low"
+						}]
+					}
+				},
+				"37pU": {
+					"event_state": {
+						"type": "plain_text_input",
+						"value": "New York"
+					}
+				},
+				"qINbJ": {
+					"event_country": {
+						"type": "plain_text_input",
+						"value": "USA"
+					}
+				},
+				"gPW": {
+					"since_date": {
+						"type": "datepicker",
+						"selected_date": "2020-01-01"
+					}
+				}
+			}
+		},
+		"hash": "1586199086.45250e19",
+		"title": {
+			"type": "plain_text",
+			"text": "SOC-NET: Filter Alerts",
+			"emoji": true
+		},
+		"clear_on_close": false,
+		"notify_on_close": false,
+		"close": {
+			"type": "plain_text",
+			"text": "Cancel",
+			"emoji": true
+		},
+		"submit": {
+			"type": "plain_text",
+			"text": "Submit",
+			"emoji": true
+		},
+		"previous_view_id": null,
+		"root_view_id": "V0117LQJA58",
+		"app_id": "ATXU4AVT8",
+		"external_id": "",
+		"app_installed_team_id": "TNHR0PP1D",
+		"bot_id": "B0102JV61BR"
+	},
+	"response_urls": []
+}

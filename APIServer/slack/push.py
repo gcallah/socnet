@@ -26,7 +26,7 @@ def open_form(channel, trigger_id, form_location):
     URL = 'https://slack.com/api/views.open'
     form = read_json(form_location)
     textToSend = {'channel': channel, 'trigger_id': trigger_id, 'view': form}
-    headers = {"Authorization": slack_config['User_Access_Token'],
+    headers = {"Authorization": slack_config['Bot_Access_Token'],
                "Content-Type": "application/json; charset=utf-8"}
     response = requests.post(URL, json=textToSend, headers=headers)
     return {response.status_code: response.text}

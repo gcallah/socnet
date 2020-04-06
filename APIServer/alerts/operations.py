@@ -45,13 +45,6 @@ def query_params_to_list(query_string):
     return query_list
 
 
-def read_all_alerts():
-    alerts = Alert.query.all()
-    alert_schema = AlertSchema(many=True)
-    alerts_json = alert_schema.dump(alerts)
-    return dic_lst_to_tuple_lst(alerts_json)
-
-
 def write_alert(alert):
     """
     Add a new alert to database
@@ -122,6 +115,8 @@ def read_filtered_alerts(query_params):
     type_value = query_params.get('type')
     region_value = query_params.get('region')
     country_value = query_params.get('country')
+    limit = query_params.get('limit', 50)
+    offset = query_params.get('offset', 0)
     alerts = None
 
     if region_value:
@@ -173,6 +168,12 @@ def read_filtered_alerts(query_params):
         else:
             alerts = Alert.query.filter(
                 Alert.event_country.in_(required_country))
+    if alerts:
+        alerts = alerts.order_by(Alert.event_datetime.desc()) \
+                       .offset(offset).limit(limit)
+    else:
+        alerts = Alert.query.order_by(Alert.event_datetime.desc()) \
+                      .offset(offset).limit(limit)
 
     # alerts = alerts.all()
     # print(alerts)

@@ -7,7 +7,6 @@ from APIServer.commons.form_api import create_alert_json
 from APIServer.commons.api_utils import read_json
 from APIServer.commons.endpoint_api import get_endpoints
 
-from APIServer.alerts.operations import read_all_alerts
 from APIServer.alerts.operations import read_filtered_alerts
 from APIServer.alerts.operations import write_alert
 from APIServer.alerts.operations import read_alert
@@ -99,14 +98,17 @@ class AlertsLists(Resource):
     @api.doc(params={'type': 'Filter alerts by type'})
     @api.doc(params={'region': 'Filter alerts by region'})
     @api.doc(params={'country': 'Filter alerts by country'})
+    @api.doc(params={'limit': 'Pagination parameter. \
+        Indicate the max number of results returned. \
+        If not provided, the default value will be set to 0.'})
+    @api.doc(params={'offset': 'Pagination parameter. \
+        Indicate the offset of the first result. \
+        If not provided, the default value will be set to 50.'})
     def get(self):
         """
         Get multiple (filtered) alerts based on the query parameters
         """
-        if request.args:
-            return read_filtered_alerts(request.args)
-        else:
-            return read_all_alerts()
+        return read_filtered_alerts(request.args)
 
     @api.expect(alert)
     def post(self):
@@ -320,6 +322,9 @@ class SlackSubmit(Resource):
                     send_slack_log('Response info: ')
                     send_slack_log(response)
                     return get_confirmation_form('Success', response)
+                elif payload_json['view']['callback_id'] == 'filter_alerts':
+                    send_slack_log('callback_id: ' + 'filter_alerts')
+                    return {'response_action': 'clear'}
                 else:
                     send_slack_log('Unknown callback_id in view_submission')
                     return
@@ -366,7 +371,7 @@ class MattermostAlerts(Resource):
         """
         Get all alerts and send it to Mattermost
         """
-        text = read_all_alerts()
+        text = read_filtered_alerts(request.args)
         return push_to_mattermost(text)
 
     def post(self):
