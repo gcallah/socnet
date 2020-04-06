@@ -1,0 +1,126 @@
+{
+	"type": "modal",
+	"title": {
+		"type": "plain_text",
+		"text": "SOC-NET: Filter Alerts",
+		"emoji": true
+	},
+	"submit": {
+		"type": "plain_text",
+		"text": "Submit",
+		"emoji": true
+	},
+	"close": {
+		"type": "plain_text",
+		"text": "Cancel",
+		"emoji": true
+	},
+	"blocks": [
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "event_type",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "e.g. Fire"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Event Type"
+			},
+            "optional": true
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "multi_static_select",
+				"action_id": "event_severity",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Pick one or more from the list",
+					"emoji": true
+				},
+				"options": [
+					{
+						"value": "low",
+						"text": {
+							"type": "plain_text",
+							"text": "Low"
+						}
+					},
+					{
+						"value": "medium",
+						"text": {
+							"type": "plain_text",
+							"text": "Medium"
+						}
+					},
+					{
+						"value": "high",
+						"text": {
+							"type": "plain_text",
+							"text": "High"
+						}
+					}
+				]
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Severity"
+			},
+            "optional": true
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "event_state",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "e.g. New York"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "State/Province/Region"
+			},
+            "optional": true
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "event_country",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "e.g. USA"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Country"
+			},
+            "optional": true
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "datepicker",
+                "action_id": "since_date",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Select a date",
+					"emoji": true
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Since Date",
+				"emoji": true
+			},
+            "optional": true
+		}
+	]
+}
