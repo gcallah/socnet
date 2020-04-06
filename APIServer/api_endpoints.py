@@ -251,6 +251,25 @@ class SlackGetAlerts(Resource):
         return "Alerts fetched"
 
 
+@api.route('/slack/filter_alerts')
+class SlacFilterAlerts(Resource):
+    def post(self):
+        """
+        Filter alerts in the system through a Slack message
+        """
+        send_slack_log('Entered /slack/filter_alerts')
+        send_slack_log('Request info:')
+        send_slack_log(str(request.form))
+        trigger_id = request.form['trigger_id']
+        channel_id = request.form['channel_id']
+        response = open_form(channel_id,
+                             trigger_id,
+                             config['slack_filter_form_path'])
+        send_slack_log('Response info:')
+        send_slack_log(str(response))
+        return 'Please enter alerts filtering information in the form'
+
+
 @api.route('/slack/submit')
 class SlackSubmit(Resource):
     @api.doc(responses={200: 'OK'})

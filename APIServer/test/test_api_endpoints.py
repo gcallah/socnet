@@ -321,6 +321,12 @@ class Test(TestCase):
             rv = c.get('alerts/1')
             self.assertEqual(len(eval(rv.data.decode('utf-8')[:-1])), 0)
 
+            # check if /slack/filter_alerts works (it opens a form in Slack)
+            rv = c.post('/slack/filter_alerts',
+                        data=dict(trigger_id='my_trigger_id',
+                                  channel_id='my_channel'))
+            self.assertEqual(rv.status_code, 200)
+
 
 if __name__ == "__main__":
     main()
