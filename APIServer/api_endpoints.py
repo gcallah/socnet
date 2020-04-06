@@ -35,6 +35,7 @@ CONFIG_PATH = 'api_config.json'
 # config is a dictionary of configuration params:
 config = read_json(CONFIG_PATH)
 
+
 app = create_app(config)
 
 api = Api(app, title='SOCNET API')
@@ -67,6 +68,15 @@ class AlertFormat(Resource):
         Get the format of an alert
         """
         return get_alert_form(config['alert_format_path'])
+
+
+@api.route('/filter_format')
+class FilterFormat(Resource):
+    def get(self):
+        """
+        Get the format for the filter format
+        """
+        return get_alert_form(config['filter_form_format_path'])
 
 
 @api.route('/form')
