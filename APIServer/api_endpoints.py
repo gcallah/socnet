@@ -100,10 +100,10 @@ class AlertsLists(Resource):
     @api.doc(params={'country': 'Filter alerts by country'})
     @api.doc(params={'limit': 'Pagination parameter. \
         Indicate the max number of results returned. \
-        If not provided, the default value will be set to 0.'})
+        If not provided, the default value will be set to 50.'})
     @api.doc(params={'offset': 'Pagination parameter. \
         Indicate the offset of the first result. \
-        If not provided, the default value will be set to 50.'})
+        If not provided, the default value will be set to 0.'})
     def get(self):
         """
         Get multiple (filtered) alerts based on the query parameters
