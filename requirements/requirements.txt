@@ -4,6 +4,7 @@ flask_restplus
 flask-cors
 flask-sqlalchemy
 flask-marshmallow
+flask-migrate
 marshmallow-sqlalchemy
 requests
 responses
