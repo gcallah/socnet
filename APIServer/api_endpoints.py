@@ -195,7 +195,7 @@ class SlackGetAlert(Resource):
         try:
             id = int(alert_id)
         except ValueError:
-            return "Invalid Alert ID"
+            return "Invalid Alert ID: " + str(alert_id)
         text = read_alert(id)
         formated_alert = slack_format_alert(text)
         response = send_json_to_slack_channel(formated_alert, channel_id)
@@ -248,11 +248,15 @@ class SlackGetAlerts(Resource):
         alert_id_list = json.loads(request.form['text'])
         channel_id = request.form['channel_id']
         for alert_id in alert_id_list:
-            id = int(alert_id)
-            text = read_alert(id)
-            send_slack_log('Alert ' + str(id) + ' response: ' + str(text))
-            formated_alert = slack_format_alert(text)
-            send_json_to_slack_channel(formated_alert, channel_id)
+            try:
+                id = int(alert_id)
+                text = read_alert(id)
+                send_slack_log('Alert ' + str(id) + ' response: ' + str(text))
+                formated_alert = slack_format_alert(text)
+                send_json_to_slack_channel(formated_alert, channel_id)
+            except ValueError:
+                json_to_send = {'text': 'Invalid Alert ID: ' + str(alert_id)}
+                send_json_to_slack_channel(json_to_send)
         return "Alerts fetched"
 
 
