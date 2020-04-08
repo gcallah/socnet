@@ -178,7 +178,7 @@ class SlackPostAlert(Resource):
                              config['slack_post_form_path'])
         send_slack_log('Response info:')
         send_slack_log(str(response))
-        return 'Please enter new alert information in the form'
+        return 'Please enter the new alert information in the form'
 
 
 @api.route('/slack/get_alert')
@@ -192,7 +192,10 @@ class SlackGetAlert(Resource):
         send_slack_log(str(request.form))
         alert_id = request.form['text']
         channel_id = request.form['channel_id']
-        id = int(alert_id)
+        try:
+            id = int(alert_id)
+        except ValueError:
+            return "Invalid Alert ID"
         text = read_alert(id)
         formated_alert = slack_format_alert(text)
         response = send_json_to_slack_channel(formated_alert, channel_id)
@@ -217,7 +220,7 @@ class SlackUpdateAlert(Resource):
                              config['slack_update_form_path'])
         send_slack_log('Response info:')
         send_slack_log(str(response))
-        return 'Please enter updated alert information in the form'
+        return 'Please enter the updated alert information in the form'
 
 
 @api.route('/slack/delete_alert')
