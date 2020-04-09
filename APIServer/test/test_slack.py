@@ -6,11 +6,13 @@ from APIServer.commons.api_utils import read_json
 from APIServer.slack.push import send_slack_log
 from APIServer.slack.push import send_json_to_slack_channel
 from APIServer.slack.push import open_form
-from APIServer.slack.push import get_confirmation_form
+from APIServer.slack.format import get_confirmation_form
 from APIServer.slack.format import slack_format_alert
 from APIServer.slack.format import create_alert_from_slack_message
 from APIServer.slack.format import create_updated_alert_from_slack_message
 from APIServer.slack.format import get_id_from_payload
+from APIServer.slack.format import get_filter_params_from_slack
+
 
 SLACK_CONFIG_PATH = 'test_data/slack/test_slack.json'
 SAMPLE_ALERT_JSON_PATH = 'test_data/test_json.json'
@@ -133,3 +135,17 @@ class TestSlack(unittest.TestCase):
         sample_message = read_json('test_data/slack/confirmation_message.json')
         response = get_confirmation_form('My Title', 'my message')
         self.assertEqual(sample_message, response)
+
+    def testGetFilterParams(self):
+        """
+        Testing if get_filter_params_from_slack works
+        """
+        payload = read_json('test_data/slack/filter_alerts_payload.json')
+        response = get_filter_params_from_slack(payload)
+        sample_response = {}
+        sample_response['country'] = 'USA'
+        sample_response['state'] = 'New York'
+        sample_response['type'] = 'Fire'
+        sample_response['severity'] = 'Low'
+        sample_response['date'] = '2019-01-01'
+        self.assertEqual(sample_response, response)

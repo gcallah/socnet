@@ -29,7 +29,7 @@ def slack_format_alert(alert_json):
         + datetime + '\n' \
         + severity + '\nby *' \
         + sender + '*'
-    message['blocks'][4]['accessory']['url'] = url
+    message['blocks'][3]['accessory']['url'] = url
     return message
 
 
@@ -80,3 +80,36 @@ def get_id_from_payload(payload):
             if key == 'alert_id':
                 alert_id = values[value][key]['value']
                 return alert_id
+
+
+def get_confirmation_form(title, message):
+    """
+    Create a confirmation message in Slack
+    """
+    response_json = {}
+    FORM_LOCATION = 'slack/confirmation.json'
+    form = read_json(FORM_LOCATION)
+    response_json['response_action'] = 'update'
+    form['title']['text'] = title
+    form['blocks'][0]['text']['text'] = message
+    response_json['view'] = form
+    return response_json
+
+
+def get_filter_params_from_slack(payload):
+    params = {}
+    values = payload['view']['state']['values']
+    for value in values:
+        for key in values[value]:
+            if key == 'since_date':
+                params[key[6:]] = values[value][key]['selected_date']
+            else:
+                params[key[6:]] = values[value][key]['value']
+    return params
+
+
+def get_alerts_page_form(view_json):
+    ret = {}
+    ret['response_action'] = 'update'
+    ret['view'] = view_json
+    return ret

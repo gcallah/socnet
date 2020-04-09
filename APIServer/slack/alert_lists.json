@@ -1,0 +1,110 @@
+{
+	"type": "modal",
+	"title": {
+		"type": "plain_text",
+		"text": "SOC-NET: Filter Alerts"
+	},
+	"blocks": [
+		{
+			"type": "divider"
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Event*\nDescription"
+			}
+		},
+		{
+			"type": "context",
+			"elements": [
+				{
+					"type": "mrkdwn",
+					"text": "Location\nDatetime\nSeverity\nby *Sender*"
+				}
+			]
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Go to Socnet to view this alert and its thread"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Go to Socnet"
+				},
+				"style": "primary",
+				"url": "https://gcallah.github.io/socnet/webapp.html#/thread/id"
+			}
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Event*\nDescription"
+			}
+		},
+		{
+			"type": "context",
+			"elements": [
+				{
+					"type": "mrkdwn",
+					"text": "Location\nDatetime\nSeverity\nby *Sender*"
+				}
+			]
+        },
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Go to Socnet to view this alert and its thread"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Go to Socnet"
+				},
+				"style": "primary",
+				"url": "https://gcallah.github.io/socnet/webapp.html#/thread/id"
+			}
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*View more alerts*"
+			}
+		},
+		{
+			"type": "actions",
+			"elements": [
+				{
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": "Previous Page"
+					},
+					"value": "prev_page"
+				},
+				{
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": "Next Page"
+					},
+					"value": "next_page"
+				}
+			]
+		}
+	]
+}

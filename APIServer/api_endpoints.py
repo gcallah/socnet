@@ -3,7 +3,6 @@ from flask import request
 from APIServer import create_app
 from flask_restplus import Resource, Api, fields
 from APIServer.commons.form_api import get_alert_form
-from APIServer.commons.form_api import create_alert_json
 from APIServer.commons.api_utils import read_json
 from APIServer.commons.endpoint_api import get_endpoints
 
@@ -19,16 +18,12 @@ from APIServer.threads.operations import add_comment
 from APIServer.slack.push import send_slack_log
 from APIServer.slack.push import send_json_to_slack_channel
 from APIServer.slack.push import open_form
-from APIServer.slack.push import get_confirmation_form
 from APIServer.slack.format import slack_format_alert
-from APIServer.slack.format import create_alert_from_slack_message
-from APIServer.slack.format import create_updated_alert_from_slack_message
-from APIServer.slack.format import get_id_from_payload
+from APIServer.slack.operations import handle_interaction
 
 from APIServer.mattermost.push import push_to_mattermost
 
 import json
-import datetime
 
 CONFIG_PATH = 'api_config.json'
 # config is a dictionary of configuration params:
@@ -125,7 +120,6 @@ class Alerts(Resource):
         """
         Get a specific alert with the given alert id
         """
-        print(read_alert(id))
         return read_alert(id)
 
     @api.expect(alert)
@@ -293,51 +287,7 @@ class SlackSubmit(Resource):
             send_slack_log('Invalid request: no payload')
             return
         else:
-            payload_json = json.loads(request.form['payload'])
-            if payload_json['type'] is None:
-                send_slack_log('Invalid request: no "type" in payload')
-                return
-            if payload_json['type'] == 'view_submission':
-                send_slack_log('Payload type: view_submission')
-                time = datetime.datetime.now() \
-                               .strftime('%Y-%m-%d %H:%M:%S')
-                if payload_json['view']['callback_id'] == 'post_alert':
-                    send_slack_log('callback_id: ' + 'post_alert')
-                    alert_json = create_alert_from_slack_message(payload_json,
-                                                                 time)
-                    send_slack_log('New alert json: ' + str(alert_json))
-                    response = write_alert(alert_json)
-                    send_slack_log('Response info: ')
-                    send_slack_log(response)
-                    return get_confirmation_form('Success', response)
-                elif payload_json['view']['callback_id'] == 'update_alert':
-                    send_slack_log('callback_id: ' + 'update_alert')
-                    alert_id = get_id_from_payload(payload_json)
-                    send_slack_log('Alert id: ' + str(alert_id))
-                    ret = read_alert(alert_id)
-                    if len(ret) == 0:
-                        send_slack_log('Invalid Alert ID')
-                        return {'response_action': 'clear'}
-                    alert_json = create_alert_json(ret[0])
-                    send_slack_log('Old alert json: ' + str(alert_json))
-                    alert_json = create_updated_alert_from_slack_message(
-                        payload_json,
-                        time,
-                        alert_json)
-                    send_slack_log('New alert json: ' + str(alert_json))
-                    response = update_alert(alert_json, alert_id)
-                    send_slack_log('Response info: ')
-                    send_slack_log(response)
-                    return get_confirmation_form('Success', response)
-                elif payload_json['view']['callback_id'] == 'filter_alerts':
-                    send_slack_log('callback_id: ' + 'filter_alerts')
-                    return {'response_action': 'clear'}
-                else:
-                    send_slack_log('Unknown callback_id in view_submission')
-                    return
-            else:
-                send_slack_log('No action needed for this interaction')
-                return
+            return handle_interaction(json.loads(request.form['payload']))
 
 
 @api.route('/mattermost_hello')

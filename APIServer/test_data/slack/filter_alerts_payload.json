@@ -12,20 +12,8 @@
 				},
 				"YS2BV": {
 					"event_severity": {
-						"type": "multi_static_select",
-						"selected_options": [{
-							"text": {
-								"type": "plain_text",
-								"text": "Medium"
-							},
-							"value": "medium"
-						}, {
-							"text": {
-								"type": "plain_text",
-								"text": "Low"
-							},
-							"value": "low"
-						}]
+						"type": "plain_text_input",
+						"value": "Low"
 					}
 				},
 				"37pU": {
@@ -43,7 +31,7 @@
 				"gPW": {
 					"since_date": {
 						"type": "datepicker",
-						"selected_date": "2020-01-01"
+						"selected_date": "2019-01-01"
 					}
 				}
 			}

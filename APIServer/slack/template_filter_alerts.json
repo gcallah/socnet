@@ -33,39 +33,15 @@
 			},
             "optional": true
 		},
-		{
+        {
 			"type": "input",
 			"element": {
-				"type": "multi_static_select",
+				"type": "plain_text_input",
 				"action_id": "event_severity",
 				"placeholder": {
 					"type": "plain_text",
-					"text": "Pick one or more from the list",
-					"emoji": true
-				},
-				"options": [
-					{
-						"value": "low",
-						"text": {
-							"type": "plain_text",
-							"text": "Low"
-						}
-					},
-					{
-						"value": "medium",
-						"text": {
-							"type": "plain_text",
-							"text": "Medium"
-						}
-					},
-					{
-						"value": "high",
-						"text": {
-							"type": "plain_text",
-							"text": "High"
-						}
-					}
-				]
+					"text": "e.g. Low"
+				}
 			},
 			"label": {
 				"type": "plain_text",
