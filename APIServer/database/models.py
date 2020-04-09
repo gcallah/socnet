@@ -14,6 +14,7 @@ class Alert(db.Model):
     event_description = db.Column(db.Text)
     event_severity = db.Column(db.Text)
     msg_sender = db.Column(db.Text)
+    active = db.Column(db.Boolean, default=True)
 
 
 class Thread(db.Model):
