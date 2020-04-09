@@ -62,7 +62,7 @@ def handle_interaction(payload_json):
         else:
             send_slack_log('Unknown callback_id in view_submission')
             return
-    elif payload_json['type'] is 'block_actions':
+    elif payload_json['type'] == 'block_actions':
         send_slack_log('Payload type: block_actions')
         return {'response_action': 'clear'}
     else:
