@@ -2,16 +2,14 @@ import React from 'react';
 import { FormControl, InputGroup } from 'react-bootstrap';
 
 function FormInputField(props) {
-  const {
-    label, type, placeholder, propChanged, values, errorMessage
-  } = props;
+
+  const { label, type, placeholder, propChanged, values, errorMessage } = props;
+
   if (typeof values !== "undefined") {
     return (
       <InputGroup className="mb-3">
-        {/* <InputGroup.Prepend>
-          <InputGroup.Text id="basic-addon1">{label}</InputGroup.Text>
-        </InputGroup.Prepend> */}
-        <FormControl
+        
+        < FormControl
           placeholder={placeholder}
           as={type}
           onChange={propChanged}

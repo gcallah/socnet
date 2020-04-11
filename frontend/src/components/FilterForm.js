@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimmer, Loader, Grid, Button, Form, Header, Icon, Divider, Segment } from 'semantic-ui-react';
+import { Dimmer, Loader, Grid, Button, Form, Header, Icon, Segment } from 'semantic-ui-react';
 import DropdownList from "./DropdownList";
 import createHistory from "history/createBrowserHistory";
 import { withRouter } from 'react-router-dom';
@@ -82,8 +82,8 @@ class FilterForm extends Component {
 
     generateQueryString = () => {
         const { loading, date, severity, type, region } = this.state;
-        var queryString = []
-
+        var queryString = [];
+        
         if (region.length > 0) {
             queryString.push("region="+region.toString());
         }
@@ -100,7 +100,7 @@ class FilterForm extends Component {
             queryString.push("date="+date)
         }
 
-        queryString = queryString.join("&")
+        queryString = queryString.join("&");
         return queryString
     }
 
@@ -138,7 +138,8 @@ class FilterForm extends Component {
     }
 
     render() {
-        const { loading, severity, date, region, type } = this.state
+
+        const loading = this.state.loading;
 
         if (loading) {
             return (
@@ -218,16 +219,15 @@ class FilterForm extends Component {
                         </Form>
                     </Grid>
                 </Segment> 
-                    <br />
+                {/* Uncomment below to see state as it gets changed. */}
+                {/*  <br />
                     <strong> LEAVE BLANK FOR ALL </strong>
-                    <Divider />
                     <strong> For testing before backend integration </strong>
-                    <pre>{JSON.stringify({ severity, date, region, type })}</pre>
-
+                    <pre>{JSON.stringify({ severity, date, region, type })}</pre> 
+                */}
             </div>
         );
     }
 }
-
 
 export default withRouter(FilterForm);
