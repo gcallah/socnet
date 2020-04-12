@@ -64,13 +64,13 @@ class AlertFormat(Resource):
         return get_alert_form(config['alert_format_path'])
 
 
-@api.route('/filter_format')
-class FilterFormat(Resource):
+@api.route('/filters')
+class FilterValues(Resource):
     def get(self):
         """
-        Get the format for the filter format
+        Get the values to populate the filter form
         """
-        return get_alert_form(config['filter_form_format_path'])
+        return get_alert_form(config['filter_form_values_path'])
 
 
 @api.route('/form')

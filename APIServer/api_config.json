@@ -10,6 +10,5 @@
 	"slack_post_form_path": "APIServer/slack/template_post_alert.json",
 	"slack_update_form_path": "APIServer/slack/template_update_alert.json",
 	"slack_filter_form_path": "APIServer/slack/template_filter_alerts.json",
-	"filter_form_format_path": "APIServer/formats/filter_format.json",
 	"filter_form_values_path": "APIServer/formats/filter_values.json"
 }

@@ -15,11 +15,24 @@ class FilterForm extends Component {
         severity: [], 
         type: [],
         region: [], 
+        filters: ""
     };
     
     apiServer = 'https://socnet.pythonanywhere.com/';
     // devApiServer = "http://127.0.0.1:8000/";
 
+    async componentDidMount() {
+        try {
+            axios.get(`${this.apiServer}filters`)
+            .then( payload => {
+                this.setState({filters: payload})
+                .then(console.log("Filter fields: ", this.state.filters))
+            });
+        } catch (e) {
+            console.log("Unable to fetch values for the filter form.")
+        }
+
+    }
     // Sample Input: Development time only
     severityList = {
         name: "severity",
