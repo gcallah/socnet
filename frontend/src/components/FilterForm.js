@@ -25,8 +25,8 @@ class FilterForm extends Component {
         try {
             axios.get(`${this.apiServer}filters`)
             .then( payload => {
-                this.setState({filters: payload})
-                .then(console.log("Filter fields: ", this.state.filters))
+                this.setState({filters: payload.data})
+                console.log("Filter fields: ", this.state.filters);
             });
         } catch (e) {
             console.log("Unable to fetch values for the filter form.")
