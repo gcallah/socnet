@@ -26,13 +26,41 @@ class FilterForm extends Component {
             axios.get(`${this.apiServer}filters`)
             .then( payload => {
                 this.setState({filters: payload.data})
-                console.log("Filter fields: ", this.state.filters);
+                this.transformFilterData();
             });
         } catch (e) {
             console.log("Unable to fetch values for the filter form.")
         }
 
     }
+
+    transformFilterData = () => {
+        const payload = this.state.filters.properties;
+        // console.log("Before change: ", payload)
+        // for ( var field in payload ) {
+        //     console.log(typeof(field))
+        //     if (field.type === "dropdown") {
+        //         var optionList = this.optionListArray(field.optionList)
+        //         field.optionList = optionList;
+        //     }
+        // }
+        Object.keys(payload).map((fields) => {
+            Object.keys(fields).map((properties) => {
+                console.log(fields, properties)
+            })
+        })
+    }
+
+    optionListArray = (optionObject) => {
+        console.log("Option List: ", optionObject);
+        var options = [];
+        for ( var option in optionObject) {
+            options.push(option.value());
+        }
+        console.log("Options Array:" , options);
+        return options;
+    }
+
     // Sample Input: Development time only
     severityList = {
         name: "severity",
