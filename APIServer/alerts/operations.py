@@ -122,6 +122,7 @@ def read_filtered_alerts(query_params):
     country_value = query_params.get('country')
     limit = query_params.get('limit', 50)
     offset = query_params.get('offset', 0)
+    active = query_params.get('active')
     alerts = None
 
     if region_value:
@@ -133,6 +134,28 @@ def read_filtered_alerts(query_params):
         else:
             alerts = Alert.query.filter(
                 Alert.event_state.in_(required_regions))
+
+    if active:
+        active = active.strip()
+        active = active.lower()
+        active_bool = True
+        non_type = None
+        if active == 'n':
+            active_bool = False
+        if alerts:
+            if active_bool is True:
+                alerts = alerts.filter(Alert.active == active_bool)
+            else:
+                alerts = alerts.filter(
+                    (Alert.active == active_bool)
+                    or (Alert.active == non_type))
+        else:
+            if active_bool is True:
+                alerts = Alert.query.filter(Alert.active == active_bool)
+            else:
+                alerts = Alert.query.filter(
+                    (Alert.active == active_bool)
+                    or (Alert.active == non_type))
 
     if severity_value:
         required_severity = query_params_to_list(severity_value)

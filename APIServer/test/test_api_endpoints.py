@@ -160,6 +160,12 @@ class Test(TestCase):
             rv = c.get('/alerts?country=Canada')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
 
+            rv = c.get('/alerts?active=y')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
+
+            rv = c.get('/alerts?active=n')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
+
             rv = c.get('/alerts?region=\
                 New York&severity=Low&type=Fire&country=USA&date=2019-01-01')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)

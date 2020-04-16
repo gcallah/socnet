@@ -93,6 +93,8 @@ class AlertsLists(Resource):
     @api.doc(params={'type': 'Filter alerts by type'})
     @api.doc(params={'region': 'Filter alerts by region'})
     @api.doc(params={'country': 'Filter alerts by country'})
+    @api.doc(params={'active': 'Filter alerts by active status. \
+        Enter y or n'})
     @api.doc(params={'limit': 'Pagination parameter. \
         Indicate the max number of results returned. \
         If not provided, the default value will be set to 50.'})
