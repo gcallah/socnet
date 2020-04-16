@@ -34,6 +34,7 @@ class Home extends Component {
       console.log('error')
     }
   }
+
   propChanged = (e, item) => {
 
     const { properties } = this.state;
@@ -71,6 +72,7 @@ class Home extends Component {
     }
 
   }
+  
   formatItem = (item) => {
     if (item.includes("event")){
       item=item.substring(6,item.length);
@@ -114,6 +116,7 @@ class Home extends Component {
           <Header as="h1"> Create Alerts </Header>
           <Header> Please help us stay safe by entering the information about the incident you wish to report.</Header>
         </Segment>
+      {/* Commenting the code below. Deprecated in favor of the new UI. */}
       {/* <div className="container mt-5">
       <Segment placeholder>
         <Header icon>

@@ -25,6 +25,10 @@ def dic_lst_to_tuple_lst(obj):
     for dic in dic_lst:
         if dic == {}:
             continue
+        if dic["active"] is True:
+            active_repr = "Active"
+        else:
+            active_repr = "Not Active"
         tup = (dic["id"],
                dic["event_datetime"],
                dic["event_zipcode"],
@@ -34,7 +38,8 @@ def dic_lst_to_tuple_lst(obj):
                dic["event_type"],
                dic["event_description"],
                dic["event_severity"],
-               dic["msg_sender"])
+               dic["msg_sender"],
+               active_repr)
         final_lst.append(tup)
     return final_lst
 

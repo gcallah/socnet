@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import { Loader, Dimmer, Table, Icon, Tab } from 'semantic-ui-react' 
+import { Loader, Dimmer, Table } from 'semantic-ui-react' 
 import createHistory from "history/createBrowserHistory"
 import { withRouter } from 'react-router-dom';
 
-const history = createHistory()
+const history = createHistory();
 
 class ThreadAlerts extends Component {
     constructor(props) {
@@ -25,16 +25,16 @@ class ThreadAlerts extends Component {
                 alerts: this.props.location.state.alerts 
             });
         } catch (e) {  // In case we navigate straight to the main page
-            // try {
-            //     this.setState({ loadingData: true });
-            //     const payload = await axios.get(`${this.apiServer}alerts`)
-            //     this.setState({
-            //         loadingData: false,
-            //         alerts: payload.data,
-            //     });
-            // } catch (e) {
-            //     console.log('Error while fetching alterts')
-            // }
+            try {
+                this.setState({ loadingData: true });
+                const payload = await axios.get(`${this.apiServer}alerts`)
+                this.setState({
+                    loadingData: false,
+                    alerts: payload.data,
+                });
+            } catch (e) {
+                console.log('Error while fetching alterts')
+            }
             console.log("Error! " , e , " Alerts State: ", this.state.alerts)
         }
     }

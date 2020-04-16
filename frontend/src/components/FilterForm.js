@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimmer, Loader, Grid, Button, Form, Header, Icon, Divider, Segment } from 'semantic-ui-react';
+import { Dimmer, Loader, Grid, Button, Form, Header, Icon, Segment } from 'semantic-ui-react';
 import DropdownList from "./DropdownList";
 import createHistory from "history/createBrowserHistory";
 import { withRouter } from 'react-router-dom';
@@ -15,10 +15,51 @@ class FilterForm extends Component {
         severity: [], 
         type: [],
         region: [], 
+        filters: ""
     };
     
     apiServer = 'https://socnet.pythonanywhere.com/';
     // devApiServer = "http://127.0.0.1:8000/";
+
+    async componentDidMount() {
+        try {
+            axios.get(`${this.apiServer}filters`)
+            .then( payload => {
+                this.setState({filters: payload.data})
+                this.transformFilterData();
+            });
+        } catch (e) {
+            console.log("Unable to fetch values for the filter form.")
+        }
+
+    }
+
+    transformFilterData = () => {
+        const payload = this.state.filters.properties;
+        // console.log("Before change: ", payload)
+        // for ( var field in payload ) {
+        //     console.log(typeof(field))
+        //     if (field.type === "dropdown") {
+        //         var optionList = this.optionListArray(field.optionList)
+        //         field.optionList = optionList;
+        //     }
+        // }
+        Object.keys(payload).map((fields) => {
+            Object.keys(fields).map((properties) => {
+                console.log(fields, properties)
+            })
+        })
+    }
+
+    optionListArray = (optionObject) => {
+        console.log("Option List: ", optionObject);
+        var options = [];
+        for ( var option in optionObject) {
+            options.push(option.value());
+        }
+        console.log("Options Array:" , options);
+        return options;
+    }
 
     // Sample Input: Development time only
     severityList = {
@@ -82,8 +123,8 @@ class FilterForm extends Component {
 
     generateQueryString = () => {
         const { loading, date, severity, type, region } = this.state;
-        var queryString = []
-
+        var queryString = [];
+        
         if (region.length > 0) {
             queryString.push("region="+region.toString());
         }
@@ -100,7 +141,7 @@ class FilterForm extends Component {
             queryString.push("date="+date)
         }
 
-        queryString = queryString.join("&")
+        queryString = queryString.join("&");
         return queryString
     }
 
@@ -138,7 +179,8 @@ class FilterForm extends Component {
     }
 
     render() {
-        const { loading, severity, date, region, type } = this.state
+
+        const loading = this.state.loading;
 
         if (loading) {
             return (
@@ -218,16 +260,15 @@ class FilterForm extends Component {
                         </Form>
                     </Grid>
                 </Segment> 
-                    <br />
+                {/* Uncomment below to see state as it gets changed. */}
+                {/*  <br />
                     <strong> LEAVE BLANK FOR ALL </strong>
-                    <Divider />
                     <strong> For testing before backend integration </strong>
-                    <pre>{JSON.stringify({ severity, date, region, type })}</pre>
-
+                    <pre>{JSON.stringify({ severity, date, region, type })}</pre> 
+                */}
             </div>
         );
     }
 }
-
 
 export default withRouter(FilterForm);
