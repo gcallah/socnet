@@ -4,6 +4,10 @@
 		"type": "plain_text",
 		"text": "SOC-NET: Filter Alerts"
 	},
+	"close": {
+		"type": "plain_text",
+		"text": "Close"
+	},
 	"blocks": [
 		{
 			"type": "divider"
