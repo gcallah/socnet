@@ -98,6 +98,22 @@
 				"emoji": true
 			},
             "optional": true
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "page",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "e.g. 1"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Result Page"
+			},
+            "optional": true
 		}
 	]
 }
