@@ -2,18 +2,11 @@
 	"type": "modal",
 	"title": {
 		"type": "plain_text",
-		"text": "My App",
-		"emoji": true
-	},
-	"submit": {
-		"type": "plain_text",
-		"text": "Submit",
-		"emoji": true
+		"text": "SOC-NET: Filter Alerts"
 	},
 	"close": {
 		"type": "plain_text",
-		"text": "Cancel",
-		"emoji": true
+		"text": "Close"
 	},
 	"blocks": [
 		{
@@ -69,7 +62,7 @@
 					"text": "Location\nDatetime\nSeverity\nby *Sender*"
 				}
 			]
-		},
+        },
 		{
 			"type": "section",
 			"text": {
@@ -93,8 +86,29 @@
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": "*Showing 1st page (at most 50 alerts)*"
+				"text": "*View more alerts*"
 			}
+		},
+		{
+			"type": "actions",
+			"elements": [
+				{
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": "Previous Page"
+					},
+					"value": "prev_page"
+				},
+				{
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": "Next Page"
+					},
+					"value": "next_page"
+				}
+			]
 		}
 	]
 }

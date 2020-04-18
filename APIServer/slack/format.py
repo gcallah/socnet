@@ -106,11 +106,7 @@ def get_filter_params_from_slack(payload):
                     params[key[6:]] = values[value][key]['selected_date']
             else:
                 if values[value][key].get('value'):
-                    if key == 'page':
-                        page = int(values[value][key]['value'])
-                        params['offset'] = 0 * (page - 1)
-                    else:
-                        params[key[6:]] = values[value][key]['value']
+                    params[key[6:]] = values[value][key]['value']
     return params
 
 
