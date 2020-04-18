@@ -61,6 +61,7 @@ def handle_interaction(payload_json):
                 formated_alert = slack_format_alert([alert_json])
                 for section in formated_alert['blocks']:
                     view['blocks'].append(section)
+            send_slack_log('view: ' + str(view))
             return get_alerts_page_form(view)
         else:
             send_slack_log('Unknown callback_id in view_submission')
