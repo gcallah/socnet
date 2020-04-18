@@ -3,6 +3,9 @@ from APIServer.commons.api_utils import read_json
 import re
 
 
+PAGE_LIMIT = 5
+
+
 def slack_format_alert(alert_json):
     """
     Convert a raw alert (json) to a formatted message in Slack
@@ -109,7 +112,7 @@ def get_filter_params_from_slack(payload):
             else:
                 if values[value][key].get('value'):
                     params[key[6:]] = values[value][key]['value']
-    params['limit'] = 10
+    params['limit'] = PAGE_LIMIT
     return params
 
 
