@@ -95,7 +95,7 @@ def handle_interaction(payload_json):
         view['blocks'][1]['text']['text'] = \
             "*Showing page " + str(page) + " (max " + \
             str(PAGE_LIMIT) + " alerts per page)*"
-        view_id = payload_json['view']['view_id']
+        view_id = payload_json['view']['id']
         hash_value = payload_json['view']['hash']
         return update_form(view_id, hash_value, view)
     else:
