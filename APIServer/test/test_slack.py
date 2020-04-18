@@ -142,12 +142,9 @@ class TestSlack(unittest.TestCase):
             TIME,
             sample_alert_json)
         # update sample alert json
-        sample_alert_json['event_zipcode'] = '10003'
-        sample_alert_json['msg_sender'] = 'Slack'
-        self.assertEqual(sample_alert_json, alert_json)
-        # revert previous update for future use
-        sample_alert_json['event_zipcode'] = '10001'
-        sample_alert_json['msg_sender'] = 'NYU'
+        self.assertEqual(alert_json['event_zipcode'], '10003')
+        self.assertEqual(alert_json['msg_sender'], 'Slack')
+        self.assertEqual(alert_json['active'], 'Not Active')
 
     def testGetAlertId(self):
         """
