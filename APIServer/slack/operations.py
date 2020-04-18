@@ -56,7 +56,6 @@ def handle_interaction(payload_json):
             alert_list = read_filtered_alerts(paras)
             send_slack_log('alert_list: ' + str(alert_list))
             view = read_json('slack/alert_lists.json')
-            view['blocks'] = []
             for alert_json in alert_list:
                 formated_alert = slack_format_alert([alert_json])
                 for section in formated_alert['blocks']:

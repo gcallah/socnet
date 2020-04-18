@@ -148,4 +148,5 @@ class TestSlack(unittest.TestCase):
         sample_response['type'] = 'Fire'
         sample_response['severity'] = 'Low'
         sample_response['date'] = '2019-01-01'
+        sample_response['limit'] = 10
         self.assertEqual(sample_response, response)

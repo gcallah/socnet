@@ -107,6 +107,7 @@ def get_filter_params_from_slack(payload):
             else:
                 if values[value][key].get('value'):
                     params[key[6:]] = values[value][key]['value']
+    params['limit'] = 10
     return params
 
 
