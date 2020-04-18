@@ -52,7 +52,9 @@ def handle_interaction(payload_json):
         elif payload_json['view']['callback_id'] == 'filter_alerts':
             send_slack_log('callback_id: ' + 'filter_alerts')
             paras = get_filter_params_from_slack(payload_json)
+            send_slack_log('parameters: ' + str(paras))
             alert_list = read_filtered_alerts(paras)
+            send_slack_log('alert_list: ' + str(alert_list))
             view = read_json('slack/alert_lists.json')
             view['blocks'] = []
             for alert_json in alert_list:
