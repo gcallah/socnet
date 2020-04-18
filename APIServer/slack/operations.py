@@ -7,6 +7,9 @@ from APIServer.slack.format import get_confirmation_form
 from APIServer.slack.format import get_alerts_page_form
 from APIServer.slack.format import get_id_from_payload
 from APIServer.slack.format import get_filter_params_from_slack
+from APIServer.slack.format import get_action_value
+from APIServer.slack.format import get_page_value
+from APIServer.slack.format import get_alerts_count
 from APIServer.slack.push import send_slack_log
 from APIServer.alerts.operations import write_alert
 from APIServer.alerts.operations import read_alert
@@ -14,6 +17,19 @@ from APIServer.alerts.operations import update_alert
 from APIServer.alerts.operations import read_filtered_alerts
 from APIServer.commons.api_utils import read_json
 from APIServer.commons.form_api import create_alert_json
+
+
+PAGE_LIMIT = 5
+
+
+def create_alerts_page_view(params):
+    alert_list = read_filtered_alerts(params)
+    view = read_json('slack/alert_lists.json')
+    for alert_json in alert_list:
+        formated_alert = slack_format_alert([alert_json])
+        for section in formated_alert['blocks']:
+            view['blocks'].append(section)
+    return view
 
 
 def handle_interaction(payload_json):
@@ -51,23 +67,33 @@ def handle_interaction(payload_json):
             return get_confirmation_form('Success', response)
         elif payload_json['view']['callback_id'] == 'filter_alerts':
             send_slack_log('callback_id: ' + 'filter_alerts')
-            paras = get_filter_params_from_slack(payload_json)
-            send_slack_log('parameters: ' + str(paras))
-            alert_list = read_filtered_alerts(paras)
-            send_slack_log('alert_list: ' + str(alert_list))
-            view = read_json('slack/alert_lists.json')
-            for alert_json in alert_list:
-                formated_alert = slack_format_alert([alert_json])
-                for section in formated_alert['blocks']:
-                    view['blocks'].append(section)
-            send_slack_log('view: ' + str(view))
+            params = get_filter_params_from_slack(payload_json)
+            view = create_alerts_page_view(params)
             return get_alerts_page_form(view)
         else:
             send_slack_log('Unknown callback_id in view_submission')
             return
     elif payload_json['type'] == 'block_actions':
         send_slack_log('Payload type: block_actions')
-        return {'response_action': 'clear'}
+        action = get_action_value(payload_json)
+        params = get_filter_params_from_slack(payload_json)
+        page = get_page_value(payload_json)
+        alerts_count = get_alerts_count(payload_json)
+        if action == 'next_page':
+            if alerts_count == PAGE_LIMIT:
+                page = page + 1
+        elif action == 'prev_page':
+            if page > 1:
+                page = page - 1
+        else:
+            send_slack_log('Invalid action')
+            return
+        params['offset'] = PAGE_LIMIT * (page - 1)
+        view = create_alerts_page_view(params)
+        view['blocks'][1]['text']['text'] = \
+            "*Showing page " + str(page) + " (max " + \
+            str(PAGE_LIMIT) + " alerts per page)*"
+        return get_alerts_page_form(view)
     else:
         send_slack_log('No action needed for this interaction')
         return

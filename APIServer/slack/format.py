@@ -1,5 +1,7 @@
 from APIServer.commons.api_utils import read_json
 
+import re
+
 
 def slack_format_alert(alert_json):
     """
@@ -116,3 +118,18 @@ def get_alerts_page_form(view_json):
     ret['response_action'] = 'update'
     ret['view'] = view_json
     return ret
+
+
+def get_action_value(payload):
+    return payload['actions'][0]['value']
+
+
+def get_page_value(payload):
+    text = payload['view']['blocks'][1]['text']['text']
+    nums = re.findall(r'\d+', text)
+    return int(nums[0])
+
+
+def get_alerts_count(payload):
+    block_count = len(payload['view']['blocks'])
+    return (block_count - 3) / 5

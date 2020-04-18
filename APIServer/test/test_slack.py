@@ -12,6 +12,9 @@ from APIServer.slack.format import create_alert_from_slack_message
 from APIServer.slack.format import create_updated_alert_from_slack_message
 from APIServer.slack.format import get_id_from_payload
 from APIServer.slack.format import get_filter_params_from_slack
+from APIServer.slack.format import get_action_value
+from APIServer.slack.format import get_page_value
+from APIServer.slack.format import get_alerts_count
 
 
 SLACK_CONFIG_PATH = 'test_data/slack/test_slack.json'
@@ -150,3 +153,15 @@ class TestSlack(unittest.TestCase):
         sample_response['date'] = '2019-01-01'
         sample_response['limit'] = 10
         self.assertEqual(sample_response, response)
+
+    def testGetActionPageAndCount(self):
+        """
+        Testing if get_action_value, get_page_value, get_alerts_count works
+        """
+        payload = read_json('test_data/slack/next_page_payload.json')
+        action = get_action_value(payload)
+        page = get_page_value(payload)
+        alerts_count = get_alerts_count(payload)
+        self.assertEqual('next_page', action)
+        self.assertEqual(1, page)
+        self.assertEqual(10, alerts_count)

@@ -16,7 +16,7 @@
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": "*Showing page 1 (max 10 alerts per page)*"
+				"text": "*Showing page 1 (max 5 alerts per page)*"
 			}
 		},
 		{

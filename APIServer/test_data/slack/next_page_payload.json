@@ -1,0 +1,507 @@
+{
+	"type": "block_actions",
+	"view": {
+		"type": "modal",
+		"blocks": [{
+			"type": "divider",
+			"block_id": "TOE"
+		}, {
+			"type": "section",
+			"block_id": "elTS",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Showing page 1 (max 10 alerts per page)",
+				"verbatim": false
+			}
+		}, {
+			"type": "actions",
+			"block_id": "=RxL8",
+			"elements": [{
+				"type": "button",
+				"action_id": "CsJl",
+				"text": {
+					"type": "plain_text",
+					"text": "Previous Page",
+					"emoji": true
+				},
+				"value": "prev_page"
+			}, {
+				"type": "button",
+				"action_id": "mecB",
+				"text": {
+					"type": "plain_text",
+					"text": "Next Page",
+					"emoji": true
+				},
+				"value": "next_page"
+			}]
+		}, {
+			"type": "divider",
+			"block_id": "4a+=m"
+		}, {
+			"type": "section",
+			"block_id": "Mb+Hx",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Burglary*\\nAn office burglary happened",
+				"verbatim": false
+			}
+		}, {
+			"type": "context",
+			"block_id": "jAx",
+			"elements": [{
+				"type": "mrkdwn",
+				"text": "New York City, New York, 10003, USA\\n2020-04-06 21:48:56\\nLow\\nby Slack",
+				"verbatim": false
+			}]
+		}, {
+			"type": "section",
+			"block_id": "I2X",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Go to Socnet to view this alert and its thread",
+				"verbatim": false
+			},
+			"accessory": {
+				"type": "button",
+				"style": "primary",
+				"text": {
+					"type": "plain_text",
+					"text": "Go to Socnet",
+					"emoji": true
+				},
+				"url": "https:\\/\\/gcallah.github.io\\/socnet\\/webapp.html#\\/thread\\/22",
+				"action_id": "W\\/JMT"
+			}
+		}, {
+			"type": "divider",
+			"block_id": "ioNs"
+		}, {
+			"type": "divider",
+			"block_id": "+2CDI"
+		}, {
+			"type": "section",
+			"block_id": "RMn",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Phishing*\\nCOVID-19 Phishing Attempt Targeting NYU Students",
+				"verbatim": false
+			}
+		}, {
+			"type": "context",
+			"block_id": "NO7Z",
+			"elements": [{
+				"type": "mrkdwn",
+				"text": "New York City, New York, 10003, USA\\n2020-04-04 06:04:00\\nMedium\\nby NYU New York Campus",
+				"verbatim": false
+			}]
+		}, {
+			"type": "section",
+			"block_id": "80ET",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Go to Socnet to view this alert and its thread",
+				"verbatim": false
+			},
+			"accessory": {
+				"type": "button",
+				"style": "primary",
+				"text": {
+					"type": "plain_text",
+					"text": "Go to Socnet",
+					"emoji": true
+				},
+				"url": "https:\\/\\/gcallah.github.io\\/socnet\\/webapp.html#\\/thread\\/20",
+				"action_id": "=+B"
+			}
+		}, {
+			"type": "divider",
+			"block_id": "tKS"
+		}, {
+			"type": "divider",
+			"block_id": "gjg"
+		}, {
+			"type": "section",
+			"block_id": "M+iM",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Traffic*\\nThe traffic is high in the city",
+				"verbatim": false
+			}
+		}, {
+			"type": "context",
+			"block_id": "URN\\/i",
+			"elements": [{
+				"type": "mrkdwn",
+				"text": "New York City, New York, 10003, USA\\n2020-04-03 22:58:10\\nLow\\nby NYU New York Campus",
+				"verbatim": false
+			}]
+		}, {
+			"type": "section",
+			"block_id": "eX1",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Go to Socnet to view this alert and its thread",
+				"verbatim": false
+			},
+			"accessory": {
+				"type": "button",
+				"style": "primary",
+				"text": {
+					"type": "plain_text",
+					"text": "Go to Socnet",
+					"emoji": true
+				},
+				"url": "https:\\/\\/gcallah.github.io\\/socnet\\/webapp.html#\\/thread\\/19",
+				"action_id": "J6r+o"
+			}
+		}, {
+			"type": "divider",
+			"block_id": "J4J"
+		}, {
+			"type": "divider",
+			"block_id": "5Ccm"
+		}, {
+			"type": "section",
+			"block_id": "hjiWV",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Flood*\\nFlood because of heavy rain",
+				"verbatim": false
+			}
+		}, {
+			"type": "context",
+			"block_id": "UI4",
+			"elements": [{
+				"type": "mrkdwn",
+				"text": "New York City, New York, 10001, USA\\n2020-04-03 20:40:32\\nHigh\\nby Mattermost",
+				"verbatim": false
+			}]
+		}, {
+			"type": "section",
+			"block_id": "SDb",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Go to Socnet to view this alert and its thread",
+				"verbatim": false
+			},
+			"accessory": {
+				"type": "button",
+				"style": "primary",
+				"text": {
+					"type": "plain_text",
+					"text": "Go to Socnet",
+					"emoji": true
+				},
+				"url": "https:\\/\\/gcallah.github.io\\/socnet\\/webapp.html#\\/thread\\/21",
+				"action_id": "Ttfh"
+			}
+		}, {
+			"type": "divider",
+			"block_id": "FUIc0"
+		}, {
+			"type": "divider",
+			"block_id": "LqvOe"
+		}, {
+			"type": "section",
+			"block_id": "\\/VDi",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Bank Robbery*\\nBank Robbery in Chase",
+				"verbatim": false
+			}
+		}, {
+			"type": "context",
+			"block_id": "PS+y",
+			"elements": [{
+				"type": "mrkdwn",
+				"text": "Manhattan, New York, 10003, USA\\n2020-04-02 14:26:01\\nMedium\\nby NYU",
+				"verbatim": false
+			}]
+		}, {
+			"type": "section",
+			"block_id": "C+r",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Go to Socnet to view this alert and its thread",
+				"verbatim": false
+			},
+			"accessory": {
+				"type": "button",
+				"style": "primary",
+				"text": {
+					"type": "plain_text",
+					"text": "Go to Socnet",
+					"emoji": true
+				},
+				"url": "https:\\/\\/gcallah.github.io\\/socnet\\/webapp.html#\\/thread\\/17",
+				"action_id": "w0Vd"
+			}
+		}, {
+			"type": "divider",
+			"block_id": "4gbBz"
+		}, {
+			"type": "divider",
+			"block_id": "1Xfr"
+		}, {
+			"type": "section",
+			"block_id": "lkxz",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Wildfire*\\nBushfire crisis in Australia",
+				"verbatim": false
+			}
+		}, {
+			"type": "context",
+			"block_id": "1hT",
+			"elements": [{
+				"type": "mrkdwn",
+				"text": "Sydney, New South Wales, 2000, Australia\\n2020-03-27 03:02:58\\nMedium\\nby NYU Sydney",
+				"verbatim": false
+			}]
+		}, {
+			"type": "section",
+			"block_id": "V\\/3gG",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Go to Socnet to view this alert and its thread",
+				"verbatim": false
+			},
+			"accessory": {
+				"type": "button",
+				"style": "primary",
+				"text": {
+					"type": "plain_text",
+					"text": "Go to Socnet",
+					"emoji": true
+				},
+				"url": "https:\\/\\/gcallah.github.io\\/socnet\\/webapp.html#\\/thread\\/16",
+				"action_id": "gNQb"
+			}
+		}, {
+			"type": "divider",
+			"block_id": "LVPG"
+		}, {
+			"type": "divider",
+			"block_id": "\\/2u"
+		}, {
+			"type": "section",
+			"block_id": "CvNu",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Tornado*\\nTornado outside. Go to the basement.",
+				"verbatim": false
+			}
+		}, {
+			"type": "context",
+			"block_id": "WNZt\\/",
+			"elements": [{
+				"type": "mrkdwn",
+				"text": "Dallas, Texas, 75201, USA\\n2020-03-27 02:23:29\\nHigh\\nby Slack Anonymous User",
+				"verbatim": false
+			}]
+		}, {
+			"type": "section",
+			"block_id": "ZP7",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Go to Socnet to view this alert and its thread",
+				"verbatim": false
+			},
+			"accessory": {
+				"type": "button",
+				"style": "primary",
+				"text": {
+					"type": "plain_text",
+					"text": "Go to Socnet",
+					"emoji": true
+				},
+				"url": "https:\\/\\/gcallah.github.io\\/socnet\\/webapp.html#\\/thread\\/15",
+				"action_id": "uIE"
+			}
+		}, {
+			"type": "divider",
+			"block_id": "BlW"
+		}, {
+			"type": "divider",
+			"block_id": "OWPZy"
+		}, {
+			"type": "section",
+			"block_id": "QmHC7",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Bug*\\nA bug was found in Socnet Slack app",
+				"verbatim": false
+			}
+		}, {
+			"type": "context",
+			"block_id": "2YLo",
+			"elements": [{
+				"type": "mrkdwn",
+				"text": "New York City, New York, 10001, USA\\n2020-03-27 01:32:59\\nLow\\nby Slack User (wm1065)",
+				"verbatim": false
+			}]
+		}, {
+			"type": "section",
+			"block_id": "8Wh",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Go to Socnet to view this alert and its thread",
+				"verbatim": false
+			},
+			"accessory": {
+				"type": "button",
+				"style": "primary",
+				"text": {
+					"type": "plain_text",
+					"text": "Go to Socnet",
+					"emoji": true
+				},
+				"url": "https:\\/\\/gcallah.github.io\\/socnet\\/webapp.html#\\/thread\\/12",
+				"action_id": "Bf7be"
+			}
+		}, {
+			"type": "divider",
+			"block_id": "Olki"
+		}, {
+			"type": "divider",
+			"block_id": "ckAA"
+		}, {
+			"type": "section",
+			"block_id": "fEFZ",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Earthquake*\\nEarthquake reported in Los Angeles",
+				"verbatim": false
+			}
+		}, {
+			"type": "context",
+			"block_id": "TRzJ",
+			"elements": [{
+				"type": "mrkdwn",
+				"text": "Los Angeles, California, 90001, USA\\n2020-03-26 07:30:49\\nHigh\\nby Slack",
+				"verbatim": false
+			}]
+		}, {
+			"type": "section",
+			"block_id": "cTppA",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Go to Socnet to view this alert and its thread",
+				"verbatim": false
+			},
+			"accessory": {
+				"type": "button",
+				"style": "primary",
+				"text": {
+					"type": "plain_text",
+					"text": "Go to Socnet",
+					"emoji": true
+				},
+				"url": "https:\\/\\/gcallah.github.io\\/socnet\\/webapp.html#\\/thread\\/14",
+				"action_id": "TBd\\/"
+			}
+		}, {
+			"type": "divider",
+			"block_id": "nQf"
+		}, {
+			"type": "divider",
+			"block_id": "KTv"
+		}, {
+			"type": "section",
+			"block_id": "VCqd6",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Flood*\\nFlood in the city",
+				"verbatim": false
+			}
+		}, {
+			"type": "context",
+			"block_id": "CvKv1",
+			"elements": [{
+				"type": "mrkdwn",
+				"text": "Miami, Florida, 33101, USA\\n2020-03-24 09:45:32\\nMedium\\nby NYU",
+				"verbatim": false
+			}]
+		}, {
+			"type": "section",
+			"block_id": "KZ5rN",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Go to Socnet to view this alert and its thread",
+				"verbatim": false
+			},
+			"accessory": {
+				"type": "button",
+				"style": "primary",
+				"text": {
+					"type": "plain_text",
+					"text": "Go to Socnet",
+					"emoji": true
+				},
+				"url": "https:\\/\\/gcallah.github.io\\/socnet\\/webapp.html#\\/thread\\/11",
+				"action_id": "qi\\/"
+			}
+		}, {
+			"type": "divider",
+			"block_id": "bxy3L"
+		}],
+		"private_metadata": "",
+		"callback_id": "",
+		"state": {
+			"values": {
+				"mXlH": {
+					"event_type": {
+						"type": "plain_text_input"
+					}
+				},
+				"K9q": {
+					"event_severity": {
+						"type": "plain_text_input"
+					}
+				},
+				"lJY": {
+					"event_state": {
+						"type": "plain_text_input"
+					}
+				},
+				"Wxc": {
+					"event_country": {
+						"type": "plain_text_input"
+					}
+				},
+				"5+N=": {
+					"since_date": {
+						"type": "datepicker"
+					}
+				}
+			}
+		},
+		"title": {
+			"type": "plain_text",
+			"text": "SOC-NET: Filter Alerts",
+			"emoji": true
+		},
+		"clear_on_close": false,
+		"notify_on_close": false,
+		"close": {
+			"type": "plain_text",
+			"text": "Close",
+			"emoji": true
+		},
+		"submit": null,
+		"previous_view_id": null
+	},
+	"actions": [{
+		"action_id": "mecB",
+		"block_id": "=RxL8",
+		"text": {
+			"type": "plain_text",
+			"text": "Next Page",
+			"emoji": true
+		},
+		"value": "next_page",
+		"type": "button",
+		"action_ts": "1587176141.978534"
+	}]
+}

@@ -341,6 +341,14 @@ class Test(TestCase):
                                   channel_id='my_channel'))
             self.assertEqual(rv.status_code, 200)
 
+            # check if /slack/submit works when next_page button is clicked
+            NEXT_PAGE_PAYLOAD_PATH = APIServer.api_endpoints.config[
+                'slack_next_page_payload']
+            next_page_payload = read_json(NEXT_PAGE_PAYLOAD_PATH)
+            rv = c.post('/slack/submit',
+                        data=dict(payload=json.dumps(next_page_payload)))
+            self.assertEqual(rv.status_code, 200)
+
 
 if __name__ == "__main__":
     main()

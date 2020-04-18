@@ -11,5 +11,6 @@
   "slack_post_payload": "test_data/slack/post_alert_payload.json",
   "slack_update_payload": "test_data/slack/update_alert_payload.json",
   "slack_update_payload_invalid": "test_data/slack/update_alert_payload_invalid_alert_id.json",
-  "slack_filter_alerts_payload": "test_data/slack/filter_alerts_payload.json"
+  "slack_filter_alerts_payload": "test_data/slack/filter_alerts_payload.json",
+  "slack_next_page_payload": "test_data/slack/next_page_payload.json"
 }
