@@ -87,6 +87,7 @@ def update_alert(alert, id):
     fetched_alert.msg_sender = alert['msg_sender']
     fetched_alert.event_datetime = alert['event_datetime']
     fetched_alert.event_severity = alert['event_severity']
+    fetched_alert.active = alert['active']
     db.session.commit()
     return 'Alert ' + str(id) + ' updated'
 
