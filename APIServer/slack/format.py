@@ -26,10 +26,12 @@ def slack_format_alert(alert_json):
     description = alert_json[0][7]
     severity = alert_json[0][8]
     sender = alert_json[0][9]
+    active_status = alert_json[0][10]
     THREAD_URL = 'https://gcallah.github.io/socnet/webapp.html#/thread/'
     url = THREAD_URL + str(alert_id)
 
-    message['blocks'][1]['text']['text'] = '*' + event + '*\n' + description
+    message['blocks'][1]['text']['text'] = '*' + event \
+        + '* (_' + active_status + '_)\n' + description
     message['blocks'][2]['elements'][0]['text'] = location + '\n' \
         + datetime + '\n' \
         + severity + '\nby *' \

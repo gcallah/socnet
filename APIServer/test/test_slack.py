@@ -129,7 +129,8 @@ class TestSlack(unittest.TestCase):
                                    'Fire',
                                    'Fire in the building',
                                    'High',
-                                   'Socnet Tester')])
+                                   'Socnet Tester',
+                                   'Active')])
         self.assertEqual(sample_message, ret)
 
     def testUpdateAlert(self):

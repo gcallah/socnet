@@ -38,5 +38,4 @@ def update_form(view_id, hash_value, view):
     headers = {"Authorization": slack_config['Bot_Access_Token'],
                "Content-Type": "application/json; charset=utf-8"}
     response = requests.post(URL, json=textToSend, headers=headers)
-    send_slack_log(response)
     return {response.status_code: response.text}

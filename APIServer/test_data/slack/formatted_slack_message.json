@@ -7,7 +7,7 @@
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": "*Fire*\nFire in the building"
+				"text": "*Fire* (_Active_)\nFire in the building"
 			}
 		},
 		{
