@@ -88,6 +88,13 @@ class TestSlack(unittest.TestCase):
         """
         responses.add(**{
             'method': responses.POST,
+            'url': slack_config['Log_URL'],
+            'body': 'ok',
+            'status': 200,
+            'content_type': 'application/json'
+        })
+        responses.add(**{
+            'method': responses.POST,
             'url': slack_config['Views_Update_URL'],
             'body': 'ok',
             'status': 200,
