@@ -6,6 +6,7 @@ from APIServer.commons.api_utils import read_json
 from APIServer.slack.push import send_slack_log
 from APIServer.slack.push import send_json_to_slack_channel
 from APIServer.slack.push import open_form
+from APIServer.slack.push import update_form
 from APIServer.slack.format import get_confirmation_form
 from APIServer.slack.format import slack_format_alert
 from APIServer.slack.format import create_alert_from_slack_message
@@ -78,6 +79,23 @@ class TestSlack(unittest.TestCase):
         response = open_form('my_channel',
                              'my_tigger_id',
                              'test_data/slack/post_alert_form.json')
+        self.assertEqual('ok', response[200])
+
+    @responses.activate
+    def testUpdateForm(self):
+        """
+        Testing if update_form works
+        """
+        responses.add(**{
+            'method': responses.POST,
+            'url': slack_config['Views_Update_URL'],
+            'body': 'ok',
+            'status': 200,
+            'content_type': 'application/json'
+        })
+        response = update_form('my_view_id',
+                               'my_hash',
+                               {})
         self.assertEqual('ok', response[200])
 
     def testCreateAlertFromSlack(self):

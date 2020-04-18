@@ -1,6 +1,8 @@
 {
 	"type": "block_actions",
 	"view": {
+		"view_id": "V011WAEFY9X",
+		"hash": "1587181891.a37433e2",
 		"type": "modal",
 		"blocks": [{
 			"type": "divider",

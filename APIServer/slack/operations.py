@@ -11,6 +11,7 @@ from APIServer.slack.format import get_action_value
 from APIServer.slack.format import get_page_value
 from APIServer.slack.format import get_alerts_count
 from APIServer.slack.push import send_slack_log
+from APIServer.slack.push import update_form
 from APIServer.alerts.operations import write_alert
 from APIServer.alerts.operations import read_alert
 from APIServer.alerts.operations import update_alert
@@ -89,11 +90,14 @@ def handle_interaction(payload_json):
             send_slack_log('Invalid action')
             return
         params['offset'] = PAGE_LIMIT * (page - 1)
+        send_slack_log('Parameters: ' + str(params))
         view = create_alerts_page_view(params)
         view['blocks'][1]['text']['text'] = \
             "*Showing page " + str(page) + " (max " + \
             str(PAGE_LIMIT) + " alerts per page)*"
-        return get_alerts_page_form(view)
+        view_id = payload_json['view']['view_id']
+        hash_value = payload_json['view']['hash']
+        return update_form(view_id, hash_value, view)
     else:
         send_slack_log('No action needed for this interaction')
         return

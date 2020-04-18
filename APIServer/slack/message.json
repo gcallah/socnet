@@ -7,7 +7,7 @@
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": "*Event*\nDescription"
+				"text": "*Event* (_Status_)\nDescription"
 			}
 		},
 		{

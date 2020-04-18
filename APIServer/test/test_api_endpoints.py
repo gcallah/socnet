@@ -264,6 +264,13 @@ class Test(TestCase):
             'status': 200,
             'content_type': 'application/json'
         })
+        responses.add(**{
+            'method': responses.POST,
+            'url': slack_config['Views_Update_URL'],
+            'body': 'ok',
+            'status': 200,
+            'content_type': 'application/json'
+        })
         with app.test_client() as c:
             # check if /slack/submit can handle the calls without payload
             rv = c.post('/slack/submit')
