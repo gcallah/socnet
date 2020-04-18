@@ -33,6 +33,18 @@
 						"type": "datepicker",
 						"selected_date": "2019-01-01"
 					}
+				},
+				"xcs3": {
+					"active": {
+						"type": "static_select",
+						"selected_option": {
+							"text": {
+								"type": "plain_text",
+								"text": "Active"
+							},
+							"value": "y"
+						}
+					}
 				}
 			}
 		}

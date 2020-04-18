@@ -111,6 +111,10 @@ def get_filter_params_from_slack(payload):
             if key == 'since_date':
                 if values[value][key].get('selected_date'):
                     params[key[6:]] = values[value][key]['selected_date']
+            elif key == 'active':
+                if values[value][key].get('selected_option'):
+                    params['active'] = \
+                        values[value][key]['selected_option']['value']
             else:
                 if values[value][key].get('value'):
                     params[key[6:]] = values[value][key]['value']
