@@ -1,5 +1,6 @@
 {
 	"type": "modal",
+	"callback_id": "filter_alerts",
 	"title": {
 		"type": "plain_text",
 		"text": "SOC-NET: Filter Alerts",
@@ -111,6 +112,39 @@
 					"type": "plain_text",
 					"text": "Select a status or leave blank"
 				},
+				"options": [
+					{
+						"text": {
+							"type": "plain_text",
+							"text": "Active"
+						},
+						"value": "y"
+					},
+					{
+						"text": {
+							"type": "plain_text",
+							"text": "Not Active"
+						},
+						"value": "n"
+					}
+				]
+			}
+		},
+		{
+			"type": "input",
+			"block_id": "active",
+			"label": {
+				"type": "plain_text",
+				"text": "Active Status"
+			},
+			"optional": true,
+			"element": {
+				"type": "static_select",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Please select a status"
+				},
+				"action_id": "active",
 				"options": [
 					{
 						"text": {
