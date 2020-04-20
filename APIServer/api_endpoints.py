@@ -302,15 +302,18 @@ class MattermostHello(Resource):
         return push_to_mattermost(text)
 
 
-@api.route('/mattermost_alert/<int:id>')
-@api.doc(params={'id': 'An Alert id number'})
+@api.route('/mattermost_alert')
 class MattermostAlert(Resource):
-    def get(self, id):
+    def post(self):
         """
-        Get alert with the given alert id and send it to mattermost
+        Get alert with the requested alert id and return to mattermost
         """
-        text = read_alert(id)
-        return push_to_mattermost(text)
+        try:
+            alertId = int(request.form['text'])
+        except ValueError:
+            return {"text": "please enter a valid integer as alert Id."}
+        alert = str(read_alert(alertId))
+        return {"text": alert}
 
 
 @api.route('/mattermost_echo')
@@ -321,7 +324,8 @@ class MattermostEcho(Resource):
         """
         user = request.form['user_name']
         text = request.form['text']
-        return push_to_mattermost('msg sent.\ntext:' + text + '\nuser:' + user)
+        return {"text": 'msg sent successfully.\ntext:'
+                + text + '\nuser:' + user}
 
 
 @api.route('/mattermost_alerts')
@@ -340,10 +344,11 @@ class MattermostAlerts(Resource):
         try:
             alert_json = json.loads(request.form['text'])
         except json.decoder.JSONDecodeError:
-            return push_to_mattermost('Failed to send alert.'
-                                      'Incorrect json format.')
-        write_alert(alert_json)
-        return push_to_mattermost('Alert sent successfully.')
+            return {"text": "Failed to send alert. Incorrect json format."}
+        alertId = write_alert(alert_json)
+        responseText = 'successfully created alert ' \
+                       'with id: ' + alertId
+        return {"text": responseText}
 
 
 if __name__ == '__main__':
