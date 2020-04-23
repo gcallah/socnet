@@ -299,11 +299,6 @@ class Test(TestCase):
                         data=dict(text='1', channel_id='my_channel'))
             self.assertEqual(rv.status_code, 200)
 
-            # check if /slack/get_alerts works
-            rv = c.post('/slack/get_alerts',
-                        data=dict(text='[1,2]', channel_id='my_channel'))
-            self.assertEqual(rv.status_code, 200)
-
             # try to use /slack/submit to get filtered results
             FILTER_PAYLOAD_PATH = APIServer.api_endpoints.config[
                 'slack_filter_alerts_payload']

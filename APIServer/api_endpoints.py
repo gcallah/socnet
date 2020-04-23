@@ -232,30 +232,6 @@ class SlackDeleteAlert(Resource):
         return delete_alert(int(alert_id))
 
 
-@api.route('/slack/get_alerts')
-class SlackGetAlerts(Resource):
-    def post(self):
-        """
-        Get multiple alerts and send them to Slack
-        """
-        send_slack_log('Entered /slack/get_alerts')
-        send_slack_log('Request info:')
-        send_slack_log(str(request.form))
-        alert_id_list = json.loads(request.form['text'])
-        channel_id = request.form['channel_id']
-        for alert_id in alert_id_list:
-            try:
-                id = int(alert_id)
-                text = read_alert(id)
-                send_slack_log('Alert ' + str(id) + ' response: ' + str(text))
-                formated_alert = slack_format_alert(text)
-                send_json_to_slack_channel(formated_alert, channel_id)
-            except ValueError:
-                json_to_send = {'text': 'Invalid Alert ID: ' + str(alert_id)}
-                send_json_to_slack_channel(json_to_send)
-        return "Alerts fetched"
-
-
 @api.route('/slack/filter_alerts')
 class SlacFilterAlerts(Resource):
     def post(self):

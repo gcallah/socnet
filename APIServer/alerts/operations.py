@@ -71,7 +71,7 @@ def write_alert(alert):
                         last_comment_id=-1)
     db.session.add(new_thread)
     db.session.commit()
-    return str(new_alert.id)
+    return "Alert " + str(new_alert.id) + " inserted"
 
 
 def update_alert(alert, id):
