@@ -7,7 +7,6 @@ import Home from './components/Home';
 import CreateAlert from './components/CreateAlert';
 import ThreadView from './components/ThreadView';
 import FilterForm from './components/FilterForm';
-import Test from './components/Test';
 
 function App() {
   return (
@@ -18,7 +17,6 @@ function App() {
             <Route exact path="/alerts" component={Home} />
             <Route exact path="/createAlert" component={CreateAlert} />
             <Route exact path="/thread/:id" component={ThreadView} />  
-            <Route exact path="/testPage" component={Test} />
         </Switch>
       </BrowserRouter>
     </div>

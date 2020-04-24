@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Loader, Dimmer } from 'semantic-ui-react';
-import Header from './Header';
+import { Icon, Header, Loader, Dimmer, Comment, Form, Button } from 'semantic-ui-react';
+import NavBar from './Navbar';
 import Alert from './Alert';
-import { ListGroup, InputGroup, FormControl, Button } from 'react-bootstrap';
+import { ListGroup, InputGroup, FormControl } from 'react-bootstrap';
 
 class ThreadView extends Component {
   constructor(props) {
@@ -80,29 +80,56 @@ class ThreadView extends Component {
 
     return (
       <div className="container">
-        <div class="col-auto">
-        <Header title="Socnet" />
-        {/* <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"></input>
-        <label class="form-check-label" for="inlineRadio1">1</label>
-        </div> */}
-        </div>
+        < NavBar />
         <Alert data={alert} id={alert[0]} />
-        
-        <ListGroup>
+
+        <div style={{ textAlign: "left", paddingBlockEnd: 15, paddingBlockStart: 15 }} >
+          <Comment.Group>
+            <Header as='h3' dividing>
+              Comments
+            </Header>
+            {comments.map((comment, i) => {
+              return (
+                <Comment>
+                  <Comment.Author style={{ fontSize: 15 }}> <Icon name="user" /> Anonymous </Comment.Author>
+                  <Comment.Text style={{ fontSize: 15 }}> {comment[Object.keys(comment)[0]]} </Comment.Text>
+                </Comment>
+              )
+            })
+            }
+            <Form reply>
+              <Form.Input placeholder="Type your comment here." onChange={this.propChanged} />
+              <Button content='Add Comment' labelPosition='left' icon='edit' primary onClick={e => this.handleSubmit(e)} />
+            </Form>
+          </Comment.Group>
+        </div>
+
+        {/* <ListGroup>
           {comments.map((comment, i) => {
-            return(
+            return (
               <ListGroup.Item key={i}>{comment[Object.keys(comment)[0]]}</ListGroup.Item>
             )
           })}
         </ListGroup>
+        
         <InputGroup>
           <InputGroup.Prepend>
             <InputGroup.Text>Add a comment</InputGroup.Text>
           </InputGroup.Prepend>
           <FormControl onChange={this.propChanged} as="textarea" aria-label="Add a comment" />
-          <Button variant="dark" type="submit" onClick= {e => this.handleSubmit(e)}>Submit Comment</Button>
+          <Button variant="dark" type="submit" onClick={e => this.handleSubmit(e)}>Submit Comment</Button>
         </InputGroup>
+        <br/> 
+        <br /> */}
+        
+        {/*  Dennis' Code: */}
+        {/* <div class="col-auto">
+        <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"></input>
+        <label class="form-check-label" for="inlineRadio1">1</label>
+        </div> 
+        </div> */}
+
       </div>
     );
   }

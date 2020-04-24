@@ -7,8 +7,8 @@ class NavBar extends Component {
         return (
             <Menu pointing secondary>
                 <Menu.Item active={true}>
-                    <span style={{fontSize: 20}}> 
-                        SOCNET
+                    <span> 
+                        <Link to="/alerts" style={{ fontSize: 20, color: "black"}}> SOCNET </Link>
                     </span>
                 </Menu.Item>
                     
