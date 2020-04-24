@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Loader, Dimmer } from 'semantic-ui-react';
 import Header from './Header';
 import ThreadAlerts from './ThreadAlerts';
+import './styles.css';
+import NavBar from './Navbar';
 
 class Home extends Component {
   constructor(props) {
@@ -44,12 +46,16 @@ class Home extends Component {
 
 
     return (
+
       <div className="container">
-        <Header title="Socnet" />
-        <Link to='/createAlert'><button type="button" className="btn btn-primary">Create Alert</button></Link> <br /> <br />
-        <Link to='/'><button type="button" className="btn btn-primary">Filter Results</button></Link>
+          {/* <Header title="Socnet" className="main-title"/>
+            <Link to='/createAlert'><button type="button" className="btn btn-primary">Create Alert</button></Link>
+            <Link to='/'><button type="button" className="btn btn-primary">Filter Results</button></Link> */}
+        < NavBar />
         <ThreadAlerts />
+        
       </div>
+
     );
   }
 }
