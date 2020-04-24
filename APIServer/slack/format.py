@@ -5,6 +5,8 @@ import re
 
 
 PAGE_LIMIT = constants.SLACK_PAGE_LIMIT
+MESSAGE_TEMPLATE = 'slack/templates/message.json'
+CONFIRM_FORM_LOCATION = 'slack/templates/confirmation.json'
 
 
 def slack_format_alert(alert_json):
@@ -14,7 +16,6 @@ def slack_format_alert(alert_json):
     if alert_json == []:
         return {'text': 'This alert does not exist or has been deleted.'}
 
-    MESSAGE_TEMPLATE = 'slack/message.json'
     message = read_json(MESSAGE_TEMPLATE)
 
     alert_id = alert_json[0][0]
@@ -99,8 +100,7 @@ def get_confirmation_form(title, message):
     Create a confirmation message in Slack
     """
     response_json = {}
-    FORM_LOCATION = 'slack/confirmation.json'
-    form = read_json(FORM_LOCATION)
+    form = read_json(CONFIRM_FORM_LOCATION)
     response_json['response_action'] = 'update'
     form['title']['text'] = title
     form['blocks'][0]['text']['text'] = message

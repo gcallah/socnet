@@ -7,8 +7,8 @@
 	"format_dict": "APIServer/formats/alert_type_dict.json",
 	"database_path": "APIServer/db_temp",
 	"sqlalchemy_database_uri" : "sqlite:///socnet.db",
-	"slack_post_form_path": "APIServer/slack/template_post_alert.json",
-	"slack_update_form_path": "APIServer/slack/template_update_alert.json",
-	"slack_filter_form_path": "APIServer/slack/template_filter_alerts.json",
+	"slack_post_form_path": "APIServer/slack/templates/template_post_alert.json",
+	"slack_update_form_path": "APIServer/slack/templates/template_update_alert.json",
+	"slack_filter_form_path": "APIServer/slack/templates/template_filter_alerts.json",
 	"filter_form_values_path": "APIServer/formats/filter_values.json"
 }

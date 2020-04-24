@@ -22,11 +22,12 @@ from APIServer.commons import constants
 
 
 PAGE_LIMIT = constants.SLACK_PAGE_LIMIT
+ALERT_LIST_TEMPLATE = 'slack/templates/alert_lists.json'
 
 
 def create_alerts_page_view(params):
     alert_list = read_filtered_alerts(params)
-    view = read_json('slack/alert_lists.json')
+    view = read_json(ALERT_LIST_TEMPLATE)
     for alert_json in alert_list:
         formated_alert = slack_format_alert([alert_json])
         for section in formated_alert['blocks']:
