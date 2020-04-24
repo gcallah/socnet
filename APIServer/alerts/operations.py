@@ -5,6 +5,12 @@ from APIServer.threads.operations import delete_thread
 
 from dateutil.parser import parse
 
+from APIServer.commons import constants
+
+
+DEFAULT_LIMIT = constants.API_SERVER_DEFAULT_LIMIT
+DEFAULT_OFFSET = constants.API_SERVER_DEFAULT_OFFSET
+
 
 # return a list of dict
 def convert_to_dic_list(obj):
@@ -124,8 +130,8 @@ def read_filtered_alerts(query_params):
     type_value = query_params.get('type')
     region_value = query_params.get('region')
     country_value = query_params.get('country')
-    limit = query_params.get('limit', 50)
-    offset = query_params.get('offset', 0)
+    limit = query_params.get('limit', DEFAULT_LIMIT)
+    offset = query_params.get('offset', DEFAULT_OFFSET)
     active = query_params.get('active')
     alerts = None
 

@@ -1,9 +1,10 @@
+from APIServer.commons import constants
 from APIServer.commons.api_utils import read_json
 
 import re
 
 
-PAGE_LIMIT = 5
+PAGE_LIMIT = constants.SLACK_PAGE_LIMIT
 
 
 def slack_format_alert(alert_json):

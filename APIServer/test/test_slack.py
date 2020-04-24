@@ -2,6 +2,7 @@ import unittest
 
 import responses
 
+from APIServer.commons import constants
 from APIServer.commons.api_utils import read_json
 from APIServer.slack.push import send_slack_log
 from APIServer.slack.push import send_json_to_slack_channel
@@ -23,7 +24,7 @@ SAMPLE_ALERT_JSON_PATH = 'test_data/test_json.json'
 POST_ALERT_PAYLOAD_PATH = 'test_data/slack/post_alert_payload.json'
 UPDATE_ALERT_PAYLOAD_PATH = 'test_data/slack/update_alert_payload.json'
 SAMPLE_MESSAGE_PATH = 'test_data/slack/formatted_slack_message.json'
-TIME = '2019-11-01 17:45:32'
+TIME = constants.TEST_TIME
 slack_config = read_json(SLACK_CONFIG_PATH)
 sample_alert_json = read_json(SAMPLE_ALERT_JSON_PATH)
 post_alert_payload = read_json(POST_ALERT_PAYLOAD_PATH)

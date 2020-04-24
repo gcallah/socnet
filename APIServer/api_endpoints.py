@@ -97,7 +97,7 @@ class AlertsLists(Resource):
         Enter y or n'})
     @api.doc(params={'limit': 'Pagination parameter. \
         Indicate the max number of results returned. \
-        If not provided, the default value will be set to 50.'})
+        If not provided, the default value will be set to 100.'})
     @api.doc(params={'offset': 'Pagination parameter. \
         Indicate the offset of the first result. \
         If not provided, the default value will be set to 0.'})

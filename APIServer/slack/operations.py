@@ -18,9 +18,10 @@ from APIServer.alerts.operations import update_alert
 from APIServer.alerts.operations import read_filtered_alerts
 from APIServer.commons.api_utils import read_json
 from APIServer.commons.form_api import create_alert_json
+from APIServer.commons import constants
 
 
-PAGE_LIMIT = 5
+PAGE_LIMIT = constants.SLACK_PAGE_LIMIT
 
 
 def create_alerts_page_view(params):
