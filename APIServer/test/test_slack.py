@@ -19,11 +19,16 @@ from APIServer.slack.format import get_page_value
 from APIServer.slack.format import get_alerts_count
 
 
-SLACK_CONFIG_PATH = 'test_data/slack/test_slack.json'
-SAMPLE_ALERT_JSON_PATH = 'test_data/test_json.json'
-POST_ALERT_PAYLOAD_PATH = 'test_data/slack/post_alert_payload.json'
-UPDATE_ALERT_PAYLOAD_PATH = 'test_data/slack/update_alert_payload.json'
-SAMPLE_MESSAGE_PATH = 'test_data/slack/formatted_slack_message.json'
+SLACK_CONFIG_PATH = \
+    'APIServer/test_data/slack/test_slack.json'
+SAMPLE_ALERT_JSON_PATH = \
+    'APIServer/test_data/test_json.json'
+POST_ALERT_PAYLOAD_PATH = \
+    'APIServer/test_data/slack/post_alert_payload.json'
+UPDATE_ALERT_PAYLOAD_PATH = \
+    'APIServer/test_data/slack/update_alert_payload.json'
+SAMPLE_MESSAGE_PATH = \
+    'APIServer/test_data/slack/formatted_slack_message.json'
 TIME = constants.TEST_TIME
 slack_config = read_json(SLACK_CONFIG_PATH)
 sample_alert_json = read_json(SAMPLE_ALERT_JSON_PATH)

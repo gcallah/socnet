@@ -11,11 +11,17 @@ import APIServer.api_endpoints
 from APIServer.api_endpoints import app, HelloWorld, MessageFormat, AlertsLists
 from APIServer.commons.api_utils import err_return, read_json
 
-test_config_path = 'test_data/test_config.json'
+test_config_path = 'APIServer/test_data/test_config.json'
 APIServer.api_endpoints.config = read_json(test_config_path)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
 
-SLACK_CONFIG_PATH = 'test_data/slack/test_slack.json'
+test_json = read_json('APIServer/test_data/test_json.json')
+test_response = read_json('APIServer/test_data/test_response.json')
+test_update = read_json('APIServer/test_data/test_update.json')
+test_update_response = \
+    read_json('APIServer/test_data/test_update_response.json')
+
+SLACK_CONFIG_PATH = 'APIServer/test_data/slack/test_slack.json'
 slack_config = read_json(SLACK_CONFIG_PATH)
 
 
@@ -83,11 +89,6 @@ class Test(TestCase):
         """
         Testing if the alerts module works
         """
-        test_json = read_json('test_data/test_json.json')
-        test_response = read_json('test_data/test_response.json')
-        test_update = read_json('test_data/test_update.json')
-        test_update_response = read_json('test_data/test_update_response.json')
-
         with app.test_client() as c:
             rv = c.get('/alerts')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
@@ -130,11 +131,6 @@ class Test(TestCase):
         """
         Testing if alerts filtering works
         """
-        test_json = read_json('test_data/test_json.json')
-        test_response = read_json('test_data/test_response.json')
-        test_update = read_json('test_data/test_update.json')
-        test_update_response = read_json('test_data/test_update_response.json')
-
         with app.test_client() as c:
             rv = c.get('/alerts')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
@@ -196,8 +192,6 @@ class Test(TestCase):
         """
         Testing if threads module works
         """
-        test_json = read_json('test_data/test_json.json')
-
         with app.test_client() as c:
 
             rv = c.post('/alerts', json=test_json)

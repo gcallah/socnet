@@ -1,7 +1,9 @@
 export user_type="test"
 export test_dir="tests"
-export ignores="scheduler"  # dummy file!
+export ignore_files="scheduler"  # dummy file!
+export ignore_dir="utils"
 
+cd ..
 export PYTHONPATH=$PWD
 
 if [ -z $1 ]
@@ -12,4 +14,4 @@ else
 fi
 
 echo "SOCNET_HOME: $SOCNET_HOME"
-nosetests --ignore-files=$ignores --exe --verbose --with-coverage --cover-package=APIServer $capture
+nosetests --ignore-files=$ignore_files --exe --verbose --with-coverage --cover-package=APIServer $capture --exclude=$ignore_dir
