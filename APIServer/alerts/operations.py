@@ -158,14 +158,14 @@ def read_filtered_alerts(query_params):
             else:
                 alerts = alerts.filter(
                     (Alert.active == active_bool)
-                    or (Alert.active == non_type))
+                    | (Alert.active == non_type))
         else:
             if active_bool is True:
                 alerts = Alert.query.filter(Alert.active == active_bool)
             else:
                 alerts = Alert.query.filter(
                     (Alert.active == active_bool)
-                    or (Alert.active == non_type))
+                    | (Alert.active == non_type))
 
     if severity_value:
         required_severity = query_params_to_list(severity_value)
