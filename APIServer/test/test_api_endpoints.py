@@ -85,6 +85,8 @@ class Test(TestCase):
         """
         test_json = read_json('test_data/test_json.json')
         test_response = read_json('test_data/test_response.json')
+        test_update = read_json('test_data/test_update.json')
+        test_update_response = read_json('test_data/test_update_response.json')
 
         with app.test_client() as c:
             rv = c.get('/alerts')
@@ -100,15 +102,23 @@ class Test(TestCase):
             rv = c.post('/alerts', json=test_json)
             self.assertEqual(rv.status_code, 200)
 
-            rv = c.put('/alerts/1', json=test_json)
-            self.assertEqual(rv.status_code, 200)
-
             rv = c.get('/alerts/1')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
 
             rv = c.get('/alerts')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]),
                              test_response)
+
+            rv = c.put('/alerts/1', json=test_update)
+            self.assertEqual(rv.status_code, 200)
+
+            rv = c.get('/alerts/1')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]),
+                             test_update_response)
+
+            rv = c.get('/alerts')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]),
+                             test_update_response)
 
             rv = c.delete('/alerts/1')
             self.assertEqual(rv.status_code, 200)
@@ -122,6 +132,8 @@ class Test(TestCase):
         """
         test_json = read_json('test_data/test_json.json')
         test_response = read_json('test_data/test_response.json')
+        test_update = read_json('test_data/test_update.json')
+        test_update_response = read_json('test_data/test_update_response.json')
 
         with app.test_client() as c:
             rv = c.get('/alerts')
@@ -169,6 +181,16 @@ class Test(TestCase):
             rv = c.get('/alerts?region=\
                 New York&severity=Low&type=Fire&country=USA&date=2019-01-01')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), test_response)
+
+            rv = c.put('/alerts/1', json=test_update)
+            self.assertEqual(rv.status_code, 200)
+
+            rv = c.get('/alerts?active=n')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]),
+                             test_update_response)
+
+            rv = c.get('/alerts?active=y')
+            self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
 
     def test_threads(self):
         """
