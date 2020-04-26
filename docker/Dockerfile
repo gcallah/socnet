@@ -1,13 +1,17 @@
-FROM python:3.6.0
+# A Dockerfile for deloying APIServer
 
-COPY requirements.txt /requirements.txt
-COPY requirements-dev.txt /requirements-dev.txt
+FROM python:3.7
+
+COPY requirements/requirements.txt /requirements.txt
+COPY requirements/requirements-dev.txt /requirements-dev.txt
+COPY makefile makefile
+COPY APIServer/ APIServer/
 
 RUN pip install --upgrade pip
 
 RUN pip install -r requirements-dev.txt
+RUN pip install -r requirements.txt
 
-ENV repo socnet
-ENV PYTHONPATH "/home/${repo}:${PYTHONPATH}"
+ENV PYTHONPATH "pwd"
 
-WORKDIR /home/$repo/
+CMD ["make", "api_server"]
