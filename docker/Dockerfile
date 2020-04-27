@@ -1,4 +1,6 @@
 # A Dockerfile for deloying APIServer
+# To build image (in socnet directory): docker build -t socnet -f docker/Dockerfile .
+# To run (in port 5000): docker run -d -p 5000:8000 socnet
 
 FROM python:3.7
 
