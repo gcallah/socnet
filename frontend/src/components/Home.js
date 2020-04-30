@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { Loader, Dimmer } from 'semantic-ui-react';
-import Header from './Header';
 import ThreadAlerts from './ThreadAlerts';
 import './styles.css';
 import NavBar from './Navbar';
@@ -53,9 +51,7 @@ class Home extends Component {
             <Link to='/'><button type="button" className="btn btn-primary">Filter Results</button></Link> */}
         < NavBar />
         <ThreadAlerts />
-        
       </div>
-
     );
   }
 }

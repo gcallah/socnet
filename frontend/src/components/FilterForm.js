@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { Dimmer, Loader, Grid, Button, Form, Header, Icon, Segment } from 'semantic-ui-react';
-import DropdownList from "./DropdownList";
-import createHistory from "history/createBrowserHistory";
 import { withRouter } from 'react-router-dom';
+
 import "./Filters.css"
+
 import axios from 'axios';
+import DropdownList from "./DropdownList";
+import NavBar from './Navbar';
+import createHistory from "history/createBrowserHistory";
+
 
 const history = createHistory();
 
@@ -165,10 +169,14 @@ class FilterForm extends Component {
         }
 
         return (
-            <div>
-                <Segment basic padded> <Header as="h1"> Filter Alerts </Header> </Segment>
-                    <Segment padded='very' raised color='teal'>
-                        <Grid centered>
+            <div class="container">
+                < NavBar />
+                <Segment basic padded>
+                    <Header as="h1"> Filter Alerts </Header>
+                    <Header> Leave all fields blank to see all results.</Header>
+                </Segment>
+                <Segment padded='very' raised color='teal'>
+                    <Grid centered>
                         <Form loading={loading} onSubmit={this.handleSubmit.bind(this)} size="large" style={{ width: "60%" }} autoComplete="on">
                             <table align="center" className="filters" cellPadding="5px">
                                 <tbody>
@@ -177,6 +185,7 @@ class FilterForm extends Component {
                                         <td> <label> Since (Date): </label>  </td>
                                         <td>
                                             {/* TO-DO: Input type date doesn't work with Safari and IE. */}
+                                            {/* Work around: Text input is formated into a datetime at the backend */}
                                             <input type="date" placeholder="mm/dd/yyyy"
                                                 onChange={(event) => this.setState({ date: event.target.value })}
                                             />

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Icon } from 'semantic-ui-react';
 
-class NavBar extends Component {
+export default class NavBar extends Component {
     render() {
         return (
             <Menu pointing secondary>
@@ -29,6 +29,3 @@ class NavBar extends Component {
         )
     }
 };
-
-
-export default NavBar;

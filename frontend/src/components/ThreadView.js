@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Icon, Header, Loader, Dimmer, Comment, Form, Button } from 'semantic-ui-react';
 import NavBar from './Navbar';
 import Alert from './Alert';
-import { ListGroup, InputGroup, FormControl } from 'react-bootstrap';
 
 class ThreadView extends Component {
   constructor(props) {

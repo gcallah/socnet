@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Loader, Dimmer } from 'semantic-ui-react';
-import { Form , Button } from 'react-bootstrap';
-import FormInputField from './FormInputField';
 import moment from 'moment';
-import { Header, Segment } from 'semantic-ui-react';
+import { Loader, Dimmer, Header, Segment } from 'semantic-ui-react';
+import { Form , Button } from 'react-bootstrap';
+
+import NavBar from './Navbar';
+import FormInputField from './FormInputField';
 
 class Home extends Component {
   constructor(props) {
@@ -112,6 +113,7 @@ class Home extends Component {
     return (
 
       <div className="container">
+        < NavBar />
         <Segment basic padded>
           <Header as="h1"> Create Alerts </Header>
           <Header> Please help us stay safe by entering the information about the incident you wish to report.</Header>
