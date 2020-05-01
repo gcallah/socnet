@@ -179,7 +179,7 @@ class TestSlack(unittest.TestCase):
         sample_response['state'] = 'New York'
         sample_response['type'] = 'Fire'
         sample_response['severity'] = 'Low'
-        sample_response['since_date'] = '2019-01-01'
+        sample_response['date'] = '2019-01-01'
         sample_response['limit'] = 5
         sample_response['active'] = 'y'
         self.assertEqual(sample_response, response)
