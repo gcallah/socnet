@@ -309,6 +309,9 @@ class Test(TestCase):
             # check if the previous alert was successfully posted
             rv = c.get('alerts/1')
             self.assertEqual(len(eval(rv.data.decode('utf-8')[:-1])), 1)
+            alert = eval(rv.data.decode('utf-8')[:-1])
+            alert[0][1] = test_response[0][1]  # ignore time
+            self.assertEqual(test_response, alert)
 
             # check if /slack/get_alert works
             rv = c.post('/slack/get_alert',
@@ -335,7 +338,12 @@ class Test(TestCase):
             update_alert_payload = read_json(UPDATE_PAYLOAD_PATH)
             rv = c.post('/slack/submit',
                         data=dict(payload=json.dumps(update_alert_payload)))
+            new_alert = eval(
+                c.get('alerts/1').data.decode('utf-8')[:-1])
             self.assertEqual(rv.status_code, 200)
+            self.assertEqual('10003', new_alert[0][2])
+            self.assertEqual('Slack', new_alert[0][9])
+            self.assertEqual('Not Active', new_alert[0][10])
 
             # try to use /slack/submit to update an alert that does not exist
             UPDATE_PAYLOAD_PATH = APIServer.api_endpoints.config[

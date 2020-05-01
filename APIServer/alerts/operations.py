@@ -143,7 +143,6 @@ def delete_alert(id):
 
 
 def read_filtered_alerts(query_params):
-    print(query_params)
     severity_value = query_params.get('severity')
     date_value = query_params.get('date')
     type_value = query_params.get('type')
