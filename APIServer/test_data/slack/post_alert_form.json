@@ -18,7 +18,7 @@
 			"type": "input",
 			"element": {
 				"type": "plain_text_input",
-				"action_id": "event_type",
+				"action_id": "type",
 				"placeholder": {
 					"type": "plain_text",
 					"text": "What is the type of emergecy? (e.g. Fire)"
@@ -33,7 +33,7 @@
 			"type": "input",
 			"element": {
 				"type": "plain_text_input",
-				"action_id": "event_description",
+				"action_id": "description",
 				"multiline": true,
 				"placeholder": {
 					"type": "plain_text",
@@ -49,7 +49,7 @@
 			"type": "input",
 			"element": {
 				"type": "static_select",
-				"action_id": "event_severity",
+				"action_id": "severity",
 				"placeholder": {
 					"type": "plain_text",
 					"text": "Please select event severity"
@@ -87,7 +87,7 @@
 			"type": "input",
 			"element": {
 				"type": "plain_text_input",
-				"action_id": "event_city",
+				"action_id": "city",
 				"placeholder": {
 					"type": "plain_text",
 					"text": "e.g. New York City"
@@ -102,7 +102,7 @@
 			"type": "input",
 			"element": {
 				"type": "plain_text_input",
-				"action_id": "event_state",
+				"action_id": "state",
 				"placeholder": {
 					"type": "plain_text",
 					"text": "e.g. New York"
@@ -117,7 +117,7 @@
 			"type": "input",
 			"element": {
 				"type": "plain_text_input",
-				"action_id": "event_country",
+				"action_id": "country",
 				"placeholder": {
 					"type": "plain_text",
 					"text": "e.g. USA"
@@ -132,7 +132,7 @@
 			"type": "input",
 			"element": {
 				"type": "plain_text_input",
-				"action_id": "event_zipcode",
+				"action_id": "zipcode",
 				"placeholder": {
 					"type": "plain_text",
 					"text": "e.g. 10001"
@@ -147,7 +147,7 @@
 			"type": "input",
 			"element": {
 				"type": "plain_text_input",
-				"action_id": "msg_sender",
+				"action_id": "sender",
 				"placeholder": {
 					"type": "plain_text",
 					"text": "e.g. NYU"

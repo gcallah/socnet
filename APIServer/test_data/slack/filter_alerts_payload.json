@@ -5,25 +5,25 @@
 		"state": {
 			"values": {
 				"6pu5j": {
-					"event_type": {
+					"type": {
 						"type": "plain_text_input",
 						"value": "Fire"
 					}
 				},
 				"YS2BV": {
-					"event_severity": {
+					"severity": {
 						"type": "plain_text_input",
 						"value": "Low"
 					}
 				},
 				"37pU": {
-					"event_state": {
+					"state": {
 						"type": "plain_text_input",
 						"value": "New York"
 					}
 				},
 				"qINbJ": {
-					"event_country": {
+					"country": {
 						"type": "plain_text_input",
 						"value": "USA"
 					}

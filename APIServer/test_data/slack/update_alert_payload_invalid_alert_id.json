@@ -11,43 +11,43 @@
 					}
 				},
 				"Qz6y": {
-					"event_type": {
+					"type": {
 						"type": "plain_text_input"
 					}
 				},
 				"\\/vq": {
-					"event_description": {
+					"description": {
 						"type": "plain_text_input"
 					}
 				},
 				"dFn=": {
-					"event_severity": {
+					"severity": {
 						"type": "static_select"
 					}
 				},
 				"lyM+r": {
-					"event_city": {
+					"city": {
 						"type": "plain_text_input"
 					}
 				},
 				"PxnR": {
-					"event_state": {
+					"state": {
 						"type": "plain_text_input"
 					}
 				},
 				"Fl=c": {
-					"event_country": {
+					"country": {
 						"type": "plain_text_input"
 					}
 				},
 				"cQN=H": {
-					"event_zipcode": {
+					"zipcode": {
 						"type": "plain_text_input",
 						"value": "10003"
 					}
 				},
 				"BkWLd": {
-					"msg_sender": {
+					"sender": {
 						"type": "plain_text_input",
 						"value": "Slack"
 					}

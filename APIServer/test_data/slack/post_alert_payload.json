@@ -5,19 +5,19 @@
 		"state": {
 			"values": {
 				"Js3Q": {
-					"event_type": {
+					"type": {
 						"type": "plain_text_input",
 						"value": "Fire"
 					}
 				},
 				"Fnj": {
-					"event_description": {
+					"description": {
 						"type": "plain_text_input",
 						"value": "Fire in the building"
 					}
 				},
 				"ouGX": {
-					"event_severity": {
+					"severity": {
 						"type": "static_select",
 						"selected_option": {
 							"text": {
@@ -30,31 +30,31 @@
 					}
 				},
 				"k6WN\\/": {
-					"event_city": {
+					"city": {
 						"type": "plain_text_input",
 						"value": "New York City"
 					}
 				},
 				"\\/3n\\/": {
-					"event_state": {
+					"state": {
 						"type": "plain_text_input",
 						"value": "New York"
 					}
 				},
 				"tuQ": {
-					"event_country": {
+					"country": {
 						"type": "plain_text_input",
 						"value": "USA"
 					}
 				},
 				"9cE": {
-					"event_zipcode": {
+					"zipcode": {
 						"type": "plain_text_input",
 						"value": "10001"
 					}
 				},
 				"72pVD": {
-					"msg_sender": {
+					"sender": {
 						"type": "plain_text_input",
 						"value": "NYU"
 					}

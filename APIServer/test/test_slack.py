@@ -148,8 +148,8 @@ class TestSlack(unittest.TestCase):
             TIME,
             sample_alert_json)
         # update sample alert json
-        self.assertEqual(alert_json['event_zipcode'], '10003')
-        self.assertEqual(alert_json['msg_sender'], 'Slack')
+        self.assertEqual(alert_json['zipcode'], '10003')
+        self.assertEqual(alert_json['sender'], 'Slack')
         self.assertEqual(alert_json['active'], 'Not Active')
 
     def testGetAlertId(self):
@@ -179,7 +179,7 @@ class TestSlack(unittest.TestCase):
         sample_response['state'] = 'New York'
         sample_response['type'] = 'Fire'
         sample_response['severity'] = 'Low'
-        sample_response['date'] = '2019-01-01'
+        sample_response['since_date'] = '2019-01-01'
         sample_response['limit'] = 5
         sample_response['active'] = 'y'
         self.assertEqual(sample_response, response)

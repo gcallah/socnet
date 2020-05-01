@@ -66,6 +66,8 @@ def convert_name(alert):
                  "msg_sender": alert['sender'],
                  "event_datetime": alert['datetime'],
                  "event_severity": alert['severity']}
+    if alert.get('active'):
+        alert_new['active'] = alert['active']
     return alert_new
 
 

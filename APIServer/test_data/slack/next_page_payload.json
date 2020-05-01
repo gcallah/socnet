@@ -453,22 +453,22 @@
 		"state": {
 			"values": {
 				"mXlH": {
-					"event_type": {
+					"type": {
 						"type": "plain_text_input"
 					}
 				},
 				"K9q": {
-					"event_severity": {
+					"severity": {
 						"type": "plain_text_input"
 					}
 				},
 				"lJY": {
-					"event_state": {
+					"state": {
 						"type": "plain_text_input"
 					}
 				},
 				"Wxc": {
-					"event_country": {
+					"country": {
 						"type": "plain_text_input"
 					}
 				},

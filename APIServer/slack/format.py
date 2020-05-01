@@ -50,12 +50,12 @@ def create_alert_from_slack_message(payload, time):
     values = payload['view']['state']['values']
     for value in values:
         for key in values[value]:
-            if key == 'event_severity':
+            if key == 'severity':
                 alert_json[key] = \
                     values[value][key]['selected_option']['text']['text']
             else:
                 alert_json[key] = values[value][key]['value']
-    alert_json['event_datetime'] = time
+    alert_json['datetime'] = time
     return alert_json
 
 
@@ -68,7 +68,7 @@ def create_updated_alert_from_slack_message(payload, time, alert_json):
         for key in values[value]:
             if key == 'alert_id':
                 continue
-            if key == 'event_severity':
+            if key == 'severity':
                 if values[value][key].get('selected_option'):
                     alert_json[key] = \
                         values[value][key]['selected_option']['text']['text']
@@ -79,7 +79,7 @@ def create_updated_alert_from_slack_message(payload, time, alert_json):
             else:
                 if values[value][key].get('value'):
                     alert_json[key] = values[value][key]['value']
-    alert_json['event_datetime'] = time
+    alert_json['datetime'] = time
     return alert_json
 
 
@@ -115,14 +115,14 @@ def get_filter_params_from_slack(payload):
         for key in values[value]:
             if key == 'since_date':
                 if values[value][key].get('selected_date'):
-                    params[key[6:]] = values[value][key]['selected_date']
+                    params[key] = values[value][key]['selected_date']
             elif key == 'active':
                 if values[value][key].get('selected_option'):
                     params['active'] = \
                         values[value][key]['selected_option']['value']
             else:
                 if values[value][key].get('value'):
-                    params[key[6:]] = values[value][key]['value']
+                    params[key] = values[value][key]['value']
     params['limit'] = PAGE_LIMIT
     return params
 
