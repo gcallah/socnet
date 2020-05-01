@@ -1,52 +1,52 @@
 {
-    "required": ["event_datetime", "event_zipcode", "event_city","event_state","event_country", "event_type", "event_severity", "msg_sender"],
+    "required": ["datetime", "zipcode", "city","state","country", "type", "severity", "sender"],
     "properties": {
-        "event_datetime": {
+        "datetime": {
 	    "required": true,
             "type": "datetime",
             "description": "When did event occur?",
             "example": "2020-03-04 12:45:32" 
         },
-        "event_zipcode": {
+        "zipcode": {
 	    "required": true,
             "type": "string",
             "example": "10001"
         },
-        "event_city": {
+        "city": {
             "required": true,
             "type": "string",
             "example": "New York City"
         },
-        "event_state": {
+        "state": {
             "required": true,
             "type": "string",
             "example": "New York"
         },
-        "event_country": {
+        "country": {
             "required": true,
             "type": "string",
             "example": "USA"
         },
-        "event_type": {
+        "type": {
 	    "required": true,
             "type": "string",
             "description": "What is the type of emergecy?",
             "example": "Fire"
         },
-        "event_description": {
+        "description": {
 	    "required": true,
             "type": "string",
             "description": "What is the emergency?",
             "example": "Smoke in the building"
         },
-        "event_severity": {
+        "severity": {
             "required": true,
             "type": "string",
             "values": ["High", "Medium", "Low"],
             "description": "How severe is the emergency?",
             "example": "Medium"
         },
-        "msg_sender": {
+        "sender": {
 	    "required": true,
             "type": "string",
             "description": "Who is sending the alert?",

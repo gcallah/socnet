@@ -56,10 +56,25 @@ def query_params_to_list(query_string):
     return query_list
 
 
+def convert_name(alert):
+    alert_new = {"event_zipcode": alert['zipcode'],
+                 "event_city": alert['city'],
+                 "event_state": alert['state'],
+                 "event_country": alert['country'],
+                 "event_type": alert['type'],
+                 "event_description": alert['description'],
+                 "msg_sender": alert['sender'],
+                 "event_datetime": alert['datetime'],
+                 "event_severity": alert['severity']}
+    return alert_new
+
+
 def write_alert(alert):
     """
     Add a new alert to database
     """
+    if ("event_zipcode" not in alert):
+        alert = convert_name(alert)
     new_alert = Alert(event_zipcode=alert['event_zipcode'],
                       event_city=alert['event_city'],
                       event_state=alert['event_state'],
@@ -84,6 +99,8 @@ def update_alert(alert, id):
     fetched_alert = Alert.query.get(id)
     if fetched_alert is None:
         return {'message': 'Alert ' + str(id) + ' does not exist'}, 404
+    if ("event_zipcode" not in alert):
+        alert = convert_name(alert)
     fetched_alert.event_zipcode = alert['event_zipcode']
     fetched_alert.event_city = alert['event_city']
     fetched_alert.event_state = alert['event_state']
