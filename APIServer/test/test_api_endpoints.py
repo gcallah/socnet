@@ -94,7 +94,7 @@ class Test(TestCase):
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
 
             # Should not be able to update or delete alert before inserting
-            rv = c.put('/alerts/1', json=test_json)
+            rv = c.put('/alerts/1', json=test_update)
             self.assertEqual(rv.status_code, 404)
 
             rv = c.delete('/alerts/1')
@@ -126,6 +126,12 @@ class Test(TestCase):
 
             rv = c.get('/alerts')
             self.assertEqual(eval(rv.data.decode('utf-8')[:-1]), [])
+
+            rv = c.put('/alerts/1', json=test_update)
+            self.assertEqual(rv.status_code, 404)
+
+            rv = c.delete('/alerts/1')
+            self.assertEqual(rv.status_code, 404)
 
     def test_alert_filtering(self):
         """
