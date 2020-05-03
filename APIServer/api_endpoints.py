@@ -23,14 +23,22 @@ from APIServer.slack.operations import handle_interaction
 
 from APIServer.mattermost.push import push_to_mattermost
 
+from werkzeug.middleware.proxy_fix import ProxyFix
+
+import os
 import json
 
 CONFIG_PATH = 'api_config.json'
 # config is a dictionary of configuration params:
 config = read_json(CONFIG_PATH)
 
+port = int(os.environ.get("PORT", config['port']))
 
 app = create_app(config)
+
+# fix the bug that 'no api definition provided'
+# when deployed to Heroku
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 api = Api(app, title='SOCNET API')
 
@@ -328,4 +336,4 @@ class MattermostAlerts(Resource):
 
 
 if __name__ == '__main__':
-    app.run(host=config['host'], port=config['port'], debug=config['debug'])
+    app.run(host=config['host'], port=port, debug=config['debug'])
