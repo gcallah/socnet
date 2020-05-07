@@ -158,7 +158,7 @@ class Home extends Component {
             </table>
             <Button type="submit"> Submit Alert  </Button>
           </Form>
-          </Segment>
+        </Segment>
       </div>
     );
   }

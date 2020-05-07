@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Loader, Dimmer, Table } from 'semantic-ui-react' 
 import createHistory from "history/createBrowserHistory"
 import { withRouter } from 'react-router-dom';
+import './styles.css';
 
 const history = createHistory();
 
@@ -42,7 +43,6 @@ class ThreadAlerts extends Component {
     background = {
         "Low": "#000000",
         "Medium": "#FFCC00",
-        // "High": "#FF0000",
         "High": "#CC0000",
         
     };
@@ -50,12 +50,19 @@ class ThreadAlerts extends Component {
     apiServer = 'https://socnet.pythonanywhere.com/';
 
     renderTableData = (alerts) => {
+        alerts.sort((a, b) => {
+            let x = a[10],
+                y = b[10]
+            return x === y ? 0 : x > y ? 1 : -1;
+        });
+        
         return alerts.map((alertData) => {
             const id = alertData[0]
             const date = alertData[1]
             const region = alertData[4]
             const title = alertData[6]
             const description = alertData[7]
+            const active = alertData[10]
 
             const bgcolor = this.background
 
@@ -66,9 +73,9 @@ class ThreadAlerts extends Component {
                     }
                 }>
                     {/* <Table.Cell > <Icon name="check" /> </Table.Cell> */}
-                    <Table.Cell> Active </Table.Cell>
+                    <Table.Cell> {active} </Table.Cell>
                     <Table.Cell style={{ color: bgcolor[alertData[8]] }}> {title} </Table.Cell>
-                    <Table.Cell> {description} </Table.Cell>
+                    <Table.Cell className="collapsable"> {description} </Table.Cell>
                     <Table.Cell> {region} </Table.Cell>
                     <Table.Cell textAlign="right"> {date} </Table.Cell>
                 </Table.Row>
@@ -95,7 +102,7 @@ class ThreadAlerts extends Component {
                     <Table.Header>
                         <Table.HeaderCell> Status </Table.HeaderCell>
                         <Table.HeaderCell> Type </Table.HeaderCell>
-                        <Table.HeaderCell width={6}> Description </Table.HeaderCell>
+                        <Table.HeaderCell width={5} className="collapsable"> Description </Table.HeaderCell>
                         <Table.HeaderCell> Region </Table.HeaderCell>
                         <Table.HeaderCell textAlign="right"> Date </Table.HeaderCell>
                     </Table.Header>

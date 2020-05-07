@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Dimmer, Loader, Grid, Button, Form, Header, Icon, Segment } from 'semantic-ui-react';
+import { Dimmer, Loader, Button, Header, Icon, Segment } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
-
-import "./Filters.css"
+import { Form } from 'react-bootstrap';
 
 import axios from 'axios';
 import DropdownList from "./DropdownList";
@@ -37,7 +36,6 @@ class FilterForm extends Component {
         }
 
     }
-
 
     // Sample Input: Development time only
     severityList = {
@@ -102,13 +100,13 @@ class FilterForm extends Component {
     generateQueryString = () => {
         const { loading, date, severity, type, region } = this.state;
         var queryString = [];
-        
+
         if (region.length > 0) {
-            queryString.push("region="+region.toString());
+            queryString.push("region=" + region.toString());
         }
-        
+
         if (type.length > 0) {
-            queryString.push("type="+type.toString());
+            queryString.push("type=" + type.toString());
         }
 
         if (severity.length > 0) {
@@ -116,7 +114,7 @@ class FilterForm extends Component {
         }
 
         if (date.length > 0) {
-            queryString.push("date="+date)
+            queryString.push("date=" + date)
         }
 
         queryString = queryString.join("&");
@@ -127,6 +125,19 @@ class FilterForm extends Component {
         e.preventDefault()
         if (this.handleValidation()) {
             try {
+                // console.log(this.state.region)
+                // await axios.get(`${this.apiServer}alerts`, {
+                //     params: {
+                //         region: this.state.region.toString(),
+                //         type: this.state.region.toString(),
+                //         severity: this.state.severity.toString(),
+                //         date: this.state.date
+                //     }
+                // })
+                //     .then(payload => {
+                //         this.setState({ loading: false });
+                //         this.props.history.push('/alerts', { alerts: payload.data });
+                //     });
                 const queryParams = this.generateQueryString()
                 console.log("Query Parameters: ", queryParams)
 
@@ -176,77 +187,74 @@ class FilterForm extends Component {
                     <Header> Leave all fields blank to see all results.</Header>
                 </Segment>
                 <Segment padded='very' raised color='teal'>
-                    <Grid centered>
-                        <Form loading={loading} onSubmit={this.handleSubmit.bind(this)} size="large" style={{ width: "60%" }} autoComplete="on">
-                            <table align="center" className="filters" cellPadding="5px">
-                                <tbody>
-                                    {/* Date */}
-                                    <tr>
-                                        <td> <label> Since (Date): </label>  </td>
-                                        <td>
-                                            {/* TO-DO: Input type date doesn't work with Safari and IE. */}
-                                            {/* Work around: Text input is formated into a datetime at the backend */}
-                                            <input type="date" placeholder="mm/dd/yyyy"
-                                                onChange={(event) => this.setState({ date: event.target.value })}
-                                            />
-                                        </td>
-                                    </tr>
+                    <Form className="container-fluid mt-4" onSubmit={this.handleSubmit.bind(this)}>
+                        <table align="center" cellPadding="5px">
+                            <tbody>
+                                {/* Date */}
+                                <tr>
+                                    <td> <label> Since (Date): </label>  </td>
+                                    <td>
+                                        {/* TO-DO: Input type date doesn't work with Safari and IE. */}
+                                        {/* Work around: Text input is formated into a datetime at the backend */}
+                                        <input type="date" placeholder="mm/dd/yyyy"
+                                            onChange={(event) => this.setState({ date: event.target.value })}
+                                        />
+                                    </td>
+                                </tr>
 
-                                    <tr>  
-                                        <td> <label> Severity: </label> </td>
-                                        <td>
-                                            < DropdownList
-                                                placeholder={this.severityList.name}
-                                                options={this.severityList.optionList}
-                                                handleDropdown={this.handleDropdown}
-                                            />
-                                        </td>
-                                    </tr>
+                                <tr>  
+                                    <td> <label> Severity: </label> </td>
+                                    <td>
+                                        < DropdownList
+                                            placeholder={this.severityList.name}
+                                            options={this.severityList.optionList}
+                                            handleDropdown={this.handleDropdown}
+                                        />
+                                    </td>
+                                </tr>
 
-                                    <tr >
-                                        <td > <label> Type: </label> </td>
-                                        <td> 
-                                            < DropdownList
-                                                placeholder={this.typeList.name}
-                                                options={this.typeList.optionList}
-                                                handleDropdown={this.handleDropdown}
-                                            />
-                                        </td>
-                                    </tr>
+                                <tr >
+                                    <td > <label> Type: </label> </td>
+                                    <td> 
+                                        < DropdownList
+                                            placeholder={this.typeList.name}
+                                            options={this.typeList.optionList}
+                                            handleDropdown={this.handleDropdown}
+                                        />
+                                    </td>
+                                </tr>
 
-                                    <tr>
-                                        <td> <label> Region: </label></td>
-                                        <td> 
-                                            < DropdownList
-                                                placeholder={this.regionList.name}
-                                                options={this.regionList.optionList}
-                                                handleDropdown={this.handleDropdown}
-                                            />
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <br /> 
-                            <Button animated onClick={e => this.handleBack.bind(this)}>
-                                <Button.Content visible> Back </Button.Content>
-                                <Button.Content hidden>
-                                    <Icon name='arrow left' />
-                                </Button.Content>
-                            </Button>
+                                <tr>
+                                    <td> <label> Region: </label></td>
+                                    <td> 
+                                        < DropdownList
+                                            placeholder={this.regionList.name}
+                                            options={this.regionList.optionList}
+                                            handleDropdown={this.handleDropdown}
+                                        />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br /> 
+                        <Button animated onClick={e => this.handleBack.bind(this)}>
+                            <Button.Content visible> Back </Button.Content>
+                            <Button.Content hidden>
+                                <Icon name='arrow left' />
+                            </Button.Content>
+                        </Button>
 
-                            <Button type="submit" animated>
-                                <Button.Content visible>Submit</Button.Content>
-                                <Button.Content hidden>
-                                    <Icon name='arrow right' />
-                                </Button.Content>
-                            </Button>
-                        </Form>
-                    </Grid>
+                        <Button type="submit" animated>
+                            <Button.Content visible>Submit</Button.Content>
+                            <Button.Content hidden>
+                                <Icon name='arrow right' />
+                            </Button.Content>
+                        </Button>
+                    </Form>
                 </Segment> 
-                {/* Uncomment below to see state as it gets changed. */}
+
+                {/* DEVELOPMENT ONLY: Uncomment below to see state as it gets changed. */}
                 {/*  <br />
-                    <strong> LEAVE BLANK FOR ALL </strong>
-                    <strong> For testing before backend integration </strong>
                     <pre>{JSON.stringify({ severity, date, region, type })}</pre> 
                 */}
             </div>
