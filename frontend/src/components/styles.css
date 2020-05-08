@@ -12,7 +12,9 @@ a:hover {
 }
 
 @media only screen and (max-width: 450px) {
-        .collapsable {
-            display: none; 
-        }
+        
+    .hide-mobile {  
+        display: none !important; 
+    }
+
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import { Loader, Dimmer, Table } from 'semantic-ui-react' 
+import { Loader, Dimmer, Table, Icon } from 'semantic-ui-react' 
 import createHistory from "history/createBrowserHistory"
 import { withRouter } from 'react-router-dom';
 import './styles.css';
@@ -12,7 +12,8 @@ class ThreadAlerts extends Component {
         super(props)
         this.state = {
             loadingData: false,
-            alerts: []
+            alerts: [], 
+            width: 0
         };
     }
     
@@ -20,7 +21,7 @@ class ThreadAlerts extends Component {
         // In case we reached this page from the filters first page.
         try {
             this.setState({loadingData: true})
-            console.log("ThreadAlerts.js/ComponentDidMount Props: ", this.props.location.state)
+            // console.log("ThreadAlerts.js/ComponentDidMount Props: ", this.props.location.state)
             this.setState({ 
                 loadingData: false,
                 alerts: this.props.location.state.alerts 
@@ -38,13 +39,23 @@ class ThreadAlerts extends Component {
             }
             console.log("Error! " , e , " Alerts State: ", this.state.alerts)
         }
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions.bind(this));
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions.bind(this));
+    }
+
+    updateWindowDimensions() {
+        this.setState({ width: window.innerWidth });
+        console.log(this.state.width);
     }
 
     background = {
         "Low": "#000000",
         "Medium": "#FFCC00",
-        "High": "#CC0000",
-        
+        "High": "#CC0000",   
     };
 
     apiServer = 'https://socnet.pythonanywhere.com/';
@@ -55,38 +66,54 @@ class ThreadAlerts extends Component {
                 y = b[10]
             return x === y ? 0 : x > y ? 1 : -1;
         });
-        
+
         return alerts.map((alertData) => {
+
             const id = alertData[0]
             const date = alertData[1]
             const region = alertData[4]
             const title = alertData[6]
             const description = alertData[7]
-            const active = alertData[10]
-
-            const bgcolor = this.background
-
-            return (
-                <Table.Row 
-                    onClick = {() => {
-                        this.props.history.push(`/thread/${id}`)
-                    }
-                }>
-                    {/* <Table.Cell > <Icon name="check" /> </Table.Cell> */}
-                    <Table.Cell> {active} </Table.Cell>
-                    <Table.Cell style={{ color: bgcolor[alertData[8]] }}> {title} </Table.Cell>
-                    <Table.Cell className="collapsable"> {description} </Table.Cell>
-                    <Table.Cell> {region} </Table.Cell>
-                    <Table.Cell textAlign="right"> {date} </Table.Cell>
-                </Table.Row>
-            )
+            const active = alertData[10];
+            const icon = active === "Active" ? "check" : "close";
+            const bgcolor = this.background;
+            
+            if (this.state.width > 450) {
+                return (
+                    <Table.Row
+                        onClick={() => {
+                            this.props.history.push(`/thread/${id}`)
+                        }
+                        }>
+                        <Table.Cell textAlign="left"> {active} </Table.Cell>
+                        <Table.Cell style={{ color: bgcolor[alertData[8]] }}> {title} </Table.Cell>
+                        <Table.Cell > {description} </Table.Cell>
+                        <Table.Cell> {region} </Table.Cell>
+                        <Table.Cell textAlign="right"> {date} </Table.Cell>
+                    </Table.Row>
+                )
+            } else {
+                return (
+                    <Table.Row
+                        onClick={() => {
+                            this.props.history.push(`/thread/${id}`)
+                        }
+                        }>
+                        <Table.Cell textAlign="left"> <Icon name={icon} /> </Table.Cell>
+                        <Table.Cell style={{ color: bgcolor[alertData[8]] }}> {title} </Table.Cell>
+                        <Table.Cell> {region} </Table.Cell>
+                        <Table.Cell textAlign="right"> {date} </Table.Cell>
+                    </Table.Row>
+                )
+            }
+       
         })
     }
 
     render() {
 
         const { loadingData, alerts } = this.state;
-        console.log(alerts);
+        //console.log(alerts);
 
         if (loadingData) {
             return (
@@ -102,7 +129,7 @@ class ThreadAlerts extends Component {
                     <Table.Header>
                         <Table.HeaderCell> Status </Table.HeaderCell>
                         <Table.HeaderCell> Type </Table.HeaderCell>
-                        <Table.HeaderCell width={5} className="collapsable"> Description </Table.HeaderCell>
+                        <Table.HeaderCell width={5} className="hide-mobile"> Description </Table.HeaderCell>
                         <Table.HeaderCell> Region </Table.HeaderCell>
                         <Table.HeaderCell textAlign="right"> Date </Table.HeaderCell>
                     </Table.Header>

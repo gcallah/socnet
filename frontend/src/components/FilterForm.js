@@ -140,7 +140,6 @@ class FilterForm extends Component {
                 //     });
                 const queryParams = this.generateQueryString()
                 console.log("Query Parameters: ", queryParams)
-
                 await axios.get(`${this.apiServer}alerts?${queryParams}`)
                     .then(payload => {
                         this.setState({ loading: false });

@@ -71,18 +71,19 @@ class Home extends Component {
     } catch (e) {
       console.log(e)
     }
+  }
 
-  }
-  
-  formatItem = (item) => {
-    if (item.includes("event")){
-      item=item.substring(6,item.length);
-    }
-    else {
-      item="sender's name";
-    }
-    return item;
-  }
+  // Commented by Harman Chawla. Redundant code, database changed.
+  // formatItem = (item) => {
+  //   if (item.includes("event")){
+  //     item=item.substring(6,item.length);
+  //   }
+  //   else {
+  //     item="sender's name";
+  //   }
+  //   return item;
+  // }
+
   formatType = (type, values) => {
     if (typeof values === "undefined") {
       if (type === "datetime") {
@@ -95,8 +96,8 @@ class Home extends Component {
     }
   };
 
-  firstLetterUpperCase = (item) => {
-    return item[0].toUpperCase() + item.slice(1) + ": "
+  firstLetterUpperCase = (elem) => {
+    return elem[0].toUpperCase() + elem.slice(1) + ": "
   }
 
   render() {
@@ -132,20 +133,21 @@ class Home extends Component {
             <table align="center" cellPadding="5px"> 
               <tbody>
                 {Object.keys(properties).map((item) => {
+                  console.log(item);
                   if (item !== 'event_datetime') {
                     return (
                       <tr> 
-                        <td>
-                          <label> {this.firstLetterUpperCase(this.formatItem(item))} </label>
+                        <td style={{textAlign: "left"}}>
+                          <label> { this.firstLetterUpperCase(item) } </label>
                         </td>
                         <td> 
                           <FormInputField
-                            label={this.formatItem(item)}
+                            // label={this.formatItem(item)}
                             type={this.formatType(properties[item].type, properties[item].values)}
                             placeholder={properties[item].example}
                             propChanged={e => this.propChanged(e, item)}
                             values={properties[item].values}
-                            key={this.formatItem(item)}
+                            // key={this.formatItem(item)}
                             errorMessage={errorMessage}
                           ></FormInputField>
                         </td>
@@ -153,7 +155,6 @@ class Home extends Component {
                     );
                   }
                 })}
-
               </tbody>
             </table>
             <Button type="submit"> Submit Alert  </Button>
