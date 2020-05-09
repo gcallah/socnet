@@ -44,7 +44,8 @@ submods:
 
 # dev container has dev tools
 dev_container: $(DOCKER_DIR)/Dockerfile # $(REQ_DIR)/requirements.txt $(REQ_DIR)/requirements-dev.txt
-	docker build -t $(REPO)-dev -f $(DOCKER_DIR)/Dockerfile .
+	docker build -t gcallah/$(REPO)-dev -f $(DOCKER_DIR)/Dockerfile .  # build image
+	docker run docker run -d -p 5000:8000 gcallah/$(REPO)-dev
 
 nocrud:
 	rm *~
