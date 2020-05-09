@@ -1,30 +1,30 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import { Loader, Dimmer, Table, Icon } from 'semantic-ui-react' 
+import { Loader, Dimmer, Table, Icon } from 'semantic-ui-react'
 import createHistory from "history/createBrowserHistory"
 import { withRouter } from 'react-router-dom';
 import './styles.css';
 
 const history = createHistory();
 
-class ThreadAlerts extends Component {
+class TrialView extends Component {
     constructor(props) {
         super(props)
         this.state = {
             loadingData: false,
-            alerts: [], 
+            alerts: [],
             width: 0
         };
     }
-    
+
     async componentDidMount() {
         // In case we reached this page from the filters first page.
         try {
-            this.setState({loadingData: true})
+            this.setState({ loadingData: true })
             // console.log("ThreadAlerts.js/ComponentDidMount Props: ", this.props.location.state)
-            this.setState({ 
+            this.setState({
                 loadingData: false,
-                alerts: this.props.location.state.alerts 
+                alerts: this.props.location.state.alerts
             });
         } catch (e) {  // In case we navigate straight to the main page
             try {
@@ -37,7 +37,7 @@ class ThreadAlerts extends Component {
             } catch (e) {
                 console.log('Error while fetching alterts')
             }
-            console.log("Error! " , e , " Alerts State: ", this.state.alerts)
+            console.log("Error! ", e, " Alerts State: ", this.state.alerts)
         }
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions.bind(this));
@@ -55,7 +55,7 @@ class ThreadAlerts extends Component {
     background = {
         "Low": "#000000",
         "Medium": "#FFCC00",
-        "High": "#CC0000",   
+        "High": "#CC0000",
     };
 
     apiServer = 'https://socnet.pythonanywhere.com/';
@@ -77,7 +77,7 @@ class ThreadAlerts extends Component {
             const active = alertData[10];
             const icon = active === "Active" ? "check" : "close";
             const bgcolor = this.background;
-            
+
             if (this.state.width > 450) {
                 return (
                     <Table.Row
@@ -106,7 +106,7 @@ class ThreadAlerts extends Component {
                     </Table.Row>
                 )
             }
-       
+
         })
     }
 
@@ -124,7 +124,7 @@ class ThreadAlerts extends Component {
         }
 
         return (
-            <div style={{padding: "2%"}}>
+            <div style={{ padding: "2%" }}>
                 <Table fixed singleLine padded selectable color="teal">
                     <Table.Header>
                         <Table.HeaderCell> Status </Table.HeaderCell>
@@ -134,7 +134,7 @@ class ThreadAlerts extends Component {
                         <Table.HeaderCell textAlign="right"> Date </Table.HeaderCell>
                     </Table.Header>
                     <Table.Body>
-                        { this.renderTableData(alerts) }
+                        {this.renderTableData(alerts)}
                     </Table.Body>
                 </Table>
             </div>
@@ -142,4 +142,4 @@ class ThreadAlerts extends Component {
     }
 }
 
-export default withRouter(ThreadAlerts);
+export default withRouter(TrialView);

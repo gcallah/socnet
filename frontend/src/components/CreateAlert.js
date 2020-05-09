@@ -3,6 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { Loader, Dimmer, Header, Segment } from 'semantic-ui-react';
 import { Form , Button } from 'react-bootstrap';
+import CustomSnackbar from './Snackbar';
 
 import NavBar from './Navbar';
 import FormInputField from './FormInputField';
@@ -14,7 +15,8 @@ class Home extends Component {
       loadingData: false,
       properties: {},
       requiredProperties: [],
-      payload: {}
+      payload: {},
+      open: false
     };
 
     this.apiServer = 'https://socnet.pythonanywhere.com/';
@@ -56,33 +58,38 @@ class Home extends Component {
     const { history } = this.props;
 
     Object.keys(payload).map((payloadKey) => {
-      if (payloadKey === "event_severity" && payload[payloadKey].value === undefined) {
+      if (payloadKey === "severity" && payload[payloadKey].value === undefined) {
         payload[payloadKey] = 'Low';
       } else
         payload[payloadKey] = payload[payloadKey].value;
     });
 
-    payload["event_datetime"] = moment().format("YYYY-MM-DD hh:mm:ss");
+    payload["datetime"] = moment().format("YYYY-MM-DD hh:mm:ss");
     console.log("after payload", moment().format("YYYY-MM-DD hh:mm:ss"));
     
     try {
       await axios.post(`${this.apiServer}alerts`, payload);
-      history.push('/alerts');
+      this.setState({open: true})
+      // Commented by Harman Chawla. 
+      // Uncomment this if you want to redirect the user to alerts table
+      // when an alert is created.
+      //history.push('/alerts'); 
     } catch (e) {
       console.log(e)
     }
+  }
 
-  }
-  
-  formatItem = (item) => {
-    if (item.includes("event")){
-      item=item.substring(6,item.length);
-    }
-    else {
-      item="sender's name";
-    }
-    return item;
-  }
+  // Commented by Harman Chawla. Redundant code, database changed.
+  // formatItem = (item) => {
+  //   if (item.includes("event")){
+  //     item=item.substring(6,item.length);
+  //   }
+  //   else {
+  //     item="sender's name";
+  //   }
+  //   return item;
+  // }
+
   formatType = (type, values) => {
     if (typeof values === "undefined") {
       if (type === "datetime") {
@@ -95,8 +102,8 @@ class Home extends Component {
     }
   };
 
-  firstLetterUpperCase = (item) => {
-    return item[0].toUpperCase() + item.slice(1) + ": "
+  firstLetterUpperCase = (elem) => {
+    return elem[0].toUpperCase() + elem.slice(1) + ": "
   }
 
   render() {
@@ -132,20 +139,21 @@ class Home extends Component {
             <table align="center" cellPadding="5px"> 
               <tbody>
                 {Object.keys(properties).map((item) => {
-                  if (item !== 'event_datetime') {
+                  //console.log(item);
+                  if (item !== 'datetime') {
                     return (
                       <tr> 
-                        <td>
-                          <label> {this.firstLetterUpperCase(this.formatItem(item))} </label>
+                        <td style={{textAlign: "left"}}>
+                          <label> { this.firstLetterUpperCase(item) } </label>
                         </td>
                         <td> 
                           <FormInputField
-                            label={this.formatItem(item)}
+                            // label={this.formatItem(item)}
                             type={this.formatType(properties[item].type, properties[item].values)}
                             placeholder={properties[item].example}
                             propChanged={e => this.propChanged(e, item)}
                             values={properties[item].values}
-                            key={this.formatItem(item)}
+                            // key={this.formatItem(item)}
                             errorMessage={errorMessage}
                           ></FormInputField>
                         </td>
@@ -153,12 +161,12 @@ class Home extends Component {
                     );
                   }
                 })}
-
               </tbody>
             </table>
             <Button type="submit"> Submit Alert  </Button>
           </Form>
         </Segment>
+        <CustomSnackbar open={this.state.open} message="Successfully created!"/>
       </div>
     );
   }

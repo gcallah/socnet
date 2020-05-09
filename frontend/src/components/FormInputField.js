@@ -3,7 +3,7 @@ import { FormControl, InputGroup } from 'react-bootstrap';
 
 function FormInputField(props) {
 
-  const { label, type, placeholder, propChanged, values, errorMessage } = props;
+  const { type, placeholder, propChanged, values, errorMessage } = props;
 
   if (typeof values !== "undefined") {
     return (
