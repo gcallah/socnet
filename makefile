@@ -13,6 +13,7 @@ WEB_SRC = $(WEB_DIR)/src
 WEBFILES = $(shell ls $(WEB_SRC)/*.js)
 WEBFILES += $(shell ls $(WEB_SRC)/components/*.js)
 WEBFILES += $(shell ls $(WEB_SRC)/*.css)
+API_SERVER_PORT = 5000
 
 INCS = $(TEMPLATE_DIR)/head.txt $(TEMPLATE_DIR)/logo.txt $(TEMPLATE_DIR)/menu.txt
 
@@ -44,8 +45,14 @@ submods:
 
 # dev container has dev tools
 dev_container: $(DOCKER_DIR)/Dockerfile # $(REQ_DIR)/requirements.txt $(REQ_DIR)/requirements-dev.txt
-	docker build -t gcallah/$(REPO)-dev -f $(DOCKER_DIR)/Dockerfile .  # build image
-	docker run docker run -d -p 5000:8000 gcallah/$(REPO)-dev
+	make rm_dev_container
+	docker build -t gcallah/$(REPO)-dev -f $(DOCKER_DIR)/Dockerfile . # build image
+	docker run -d -p $(API_SERVER_PORT):8000 --name $(REPO)-dev gcallah/socnet-dev # run container at localhost:$(API_SERVER_PORT)
+
+# clean up the dev container
+rm_dev_container:
+	docker stop $(REPO)-dev 2> /dev/null || true # stop the previous running containers
+	docker rm $(REPO)-dev 2> /dev/null || true # remove the previous containers
 
 nocrud:
 	rm *~
