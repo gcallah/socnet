@@ -120,6 +120,14 @@ def update_alert(alert, id):
     return 'Alert ' + str(id) + ' updated'
 
 
+def number_of_alerts():
+    """
+    This will return the total number of alerts.
+    It should use:
+        return db.session.query(Alert).count()
+    """
+
+
 def read_alert(id):
     fetched_alert = Alert.query.get(id)
     alert_schema = AlertSchema()
