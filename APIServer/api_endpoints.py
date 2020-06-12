@@ -11,6 +11,7 @@ from APIServer.alerts.operations import write_alert
 from APIServer.alerts.operations import read_alert
 from APIServer.alerts.operations import update_alert
 from APIServer.alerts.operations import delete_alert
+from APIServer.alerts.operations import number_of_alerts
 
 from APIServer.threads.operations import get_comments
 from APIServer.threads.operations import add_comment
@@ -93,7 +94,14 @@ class MessageFormat(Resource):
 alert = api.schema_model('Alert',
                          get_alert_form(config['format_path']))
 
-
+@api.route('/number_of_alerts')
+class TotalAlerts(Resource):
+    def get(self):
+        """
+        Get the total number of alerts
+        """
+        return number_of_alerts()
+    
 @api.route('/alerts')
 class AlertsLists(Resource):
     @api.doc(params={'severity': 'Filter alerts by severity'})
