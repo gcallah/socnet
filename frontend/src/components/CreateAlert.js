@@ -79,17 +79,6 @@ class Home extends Component {
     }
   }
 
-  // Commented by Harman Chawla. Redundant code, database changed.
-  // formatItem = (item) => {
-  //   if (item.includes("event")){
-  //     item=item.substring(6,item.length);
-  //   }
-  //   else {
-  //     item="sender's name";
-  //   }
-  //   return item;
-  // }
-
   formatType = (type, values) => {
     if (typeof values === "undefined") {
       if (type === "datetime") {

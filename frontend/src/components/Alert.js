@@ -18,6 +18,9 @@ class Alert extends Component {
       "Medium": "#FFCC00",
       "High": "#CC0000",
     }
+    this.TITLE = 7
+    this.SEVERITY = 8
+    this.AUTHOR = 9
   }
 
   render() {
@@ -25,15 +28,15 @@ class Alert extends Component {
     const { linkable } = this.props
     return (
       <Card className="m-3">
-        <Card.Header style={{background: this.bgcolor[eventDetails[8]]}}  as="h5">{ eventDetails[6] }</Card.Header>
+        <Card.Header style={{background: this.bgcolor[eventDetails[this.SEVERITY]]}}  as="h5">{ eventDetails[6] }</Card.Header>
         <Card.Body>
-          <Card.Title>{ eventDetails[7] }</Card.Title>
+          <Card.Title>{ eventDetails[this.TITLE] }</Card.Title>
           <Card.Text>
             { `${eventDetails[3]}, ${eventDetails[4]} ${eventDetails[2]}, ${eventDetails[5]} at ${eventDetails[1]}` }
             <br />
-            { `Priority: ${eventDetails[8]}` }
+            { `Priority: ${eventDetails[this.SEVERITY]}` }
             <br />
-            { `Author: ${eventDetails[9]}` }
+            { `Author: ${eventDetails[this.AUTHOR]}` }
           </Card.Text>
           {linkable ? <Link to={`/thread/${this.props.id}`}><button type="button" className="btn btn-dark">View Thread</button></Link> : null}
         </Card.Body>
