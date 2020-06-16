@@ -33,7 +33,7 @@ prod: $(INCS) $(HTMLFILES) tests
 	git pull origin master
 	git push origin master
 
-tests: 
+tests: FORCE
 	cd APIServer; make tests
 
 api_server: 

@@ -94,6 +94,7 @@ class MessageFormat(Resource):
 alert = api.schema_model('Alert',
                          get_alert_form(config['format_path']))
 
+
 @api.route('/number_of_alerts')
 class TotalAlerts(Resource):
     def get(self):
@@ -101,7 +102,8 @@ class TotalAlerts(Resource):
         Get the total number of alerts
         """
         return number_of_alerts()
-    
+
+
 @api.route('/alerts')
 class AlertsLists(Resource):
     @api.doc(params={'severity': 'Filter alerts by severity'})
