@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Loader, Dimmer, Table, Icon } from 'semantic-ui-react'
 import createHistory from "history/createBrowserHistory"
 import { withRouter } from 'react-router-dom';
+import config from '../config';
 import './styles.css';
 
 const history = createHistory();
@@ -29,7 +30,7 @@ class TrialView extends Component {
         } catch (e) {  // In case we navigate straight to the main page
             try {
                 this.setState({ loadingData: true });
-                const payload = await axios.get(`${this.apiServer}alerts`)
+                const payload = await axios.get(`${config.API_URL}alerts`)
                 this.setState({
                     loadingData: false,
                     alerts: payload.data,
@@ -57,8 +58,6 @@ class TrialView extends Component {
         "Medium": "#FFCC00",
         "High": "#CC0000",
     };
-
-    apiServer = 'https://socnet.pythonanywhere.com/';
 
     renderTableData = (alerts) => {
         alerts.sort((a, b) => {

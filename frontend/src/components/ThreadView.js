@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Icon, Header, Loader, Dimmer, Comment, Form, Button } from 'semantic-ui-react';
 import NavBar from './Navbar';
 import Alert from './Alert';
+import config from '../config';
 
 class ThreadView extends Component {
   constructor(props) {
@@ -14,7 +15,6 @@ class ThreadView extends Component {
       alert: [],
     }
     // console.log("Constructor: ", this.props.match.params.id )
-    this.apiServer = 'https://socnet.pythonanywhere.com/'
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -23,8 +23,8 @@ class ThreadView extends Component {
       this.setState({ loadingData: true });
       console.log(this.props);
 
-      const res = await axios.get(`${this.apiServer}threads/${this.props.match.params.id}`);
-      const alert = await axios.get(`${this.apiServer}alerts/${this.props.match.params.id}`);
+      const res = await axios.get(`${config.API_URL}threads/${this.props.match.params.id}`);
+      const alert = await axios.get(`${config.API_URL}alerts/${this.props.match.params.id}`);
 
       this.setState({
         comments: res.data,
@@ -53,9 +53,9 @@ class ThreadView extends Component {
 
     try {
       this.setState({ loadingData: true });
-      console.log(`${this.apiServer}threads/${this.props.match.params.id}`)
-      let res = await axios.put(`${this.apiServer}threads/${this.props.match.params.id}`, payload);
-      res = await axios.get(`${this.apiServer}threads/${this.props.match.params.id}`);
+      console.log(`${config.API_URL}threads/${this.props.match.params.id}`)
+      let res = await axios.put(`${config.API_URL}threads/${this.props.match.params.id}`, payload);
+      res = await axios.get(`${config.API_URL}threads/${this.props.match.params.id}`);
 
       this.setState({
         comments: res.data,

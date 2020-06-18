@@ -11,7 +11,6 @@ class Home extends Component {
     this.state = {
       loadingData: false,
     };
-    this.apiServer = 'https://socnet.pythonanywhere.com/'
   }
 
 

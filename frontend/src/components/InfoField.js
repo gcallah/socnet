@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import config from '../config';
 import './styles.css';
 
+
 class InfoField extends Component {
-    async componentDidMount() {
-        // here you will use axios.get() for your endpoint
-    }
-
-
     render() {
+        const payload = axios.get(`${config.API_URL}number_of_alerts`);
+        // const numAlerts = payload.data.number_of_alerts
         return (
           <>
-            Number of alerts: 
+            Number of alerts:
           </>
         )
     }

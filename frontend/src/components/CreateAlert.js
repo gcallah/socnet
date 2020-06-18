@@ -4,6 +4,7 @@ import moment from 'moment';
 import { Loader, Dimmer, Header, Segment } from 'semantic-ui-react';
 import { Form , Button } from 'react-bootstrap';
 import CustomSnackbar from './Snackbar';
+import config from '../config';
 
 import NavBar from './Navbar';
 import FormInputField from './FormInputField';
@@ -19,15 +20,13 @@ class Home extends Component {
       open: false
     };
 
-    this.apiServer = 'https://socnet.pythonanywhere.com/';
-    
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   async componentDidMount() {
     try {
       this.setState({ loadingData: true });
-      const res = await axios.get(`${this.apiServer}form`);
+      const res = await axios.get(`${config.API_URL}form`);
       this.setState({
         properties: res.data.properties,
         requiredProperties: res.data.required,
@@ -68,7 +67,7 @@ class Home extends Component {
     console.log("after payload", moment().format("YYYY-MM-DD hh:mm:ss"));
     
     try {
-      await axios.post(`${this.apiServer}alerts`, payload);
+      await axios.post(`${config.API_URL}alerts`, payload);
       this.setState({open: true})
       // Commented by Harman Chawla. 
       // Uncomment this if you want to redirect the user to alerts table

@@ -101,7 +101,7 @@ class TotalAlerts(Resource):
         """
         Get the total number of alerts
         """
-        return number_of_alerts()
+        return {'number_of_alerts': number_of_alerts()}
 
 
 @api.route('/alerts')

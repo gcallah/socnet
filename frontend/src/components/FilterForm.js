@@ -7,6 +7,7 @@ import axios from 'axios';
 import DropdownList from "./DropdownList";
 import NavBar from './Navbar';
 import createHistory from "history/createBrowserHistory";
+import config from '../config';
 
 
 const history = createHistory();
@@ -26,7 +27,7 @@ class FilterForm extends Component {
 
     async componentDidMount() {
         try {
-            axios.get(`${this.apiServer}filters`)
+            axios.get(`${config.API_URL}filters`)
             .then( payload => {
                 this.setState({filters: payload.data})
                 //this.transformFilterData();
