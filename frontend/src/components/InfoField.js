@@ -11,7 +11,7 @@ class InfoField extends Component {
         // const numAlerts = payload.data.number_of_alerts
         return (
           <>
-            Number of alerts:
+            Number of alerts:  (Up to 100 alerts per page)
           </>
         )
     }
