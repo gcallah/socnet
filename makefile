@@ -29,6 +29,7 @@ FORCE:
 local: $(HTMLFILES)
 
 prod: $(INCS) $(HTMLFILES) tests
+	make webapp
 	-git commit -a 
 	git push origin master
 
@@ -72,8 +73,5 @@ $(WEB_PUBLIC)/index.html: $(WEBFILES)
 	mv build/index.html build/webapp.html && \
 	cp -r build/* .. && \
 	cd ..
-
-deploy_webapp: webapp
-	@echo "After completion you must run `make prod`"
+	@echo "Adding the webapp changes to the stage index"
 	git add .
-	cd $(WEB_DIR); npm run deploy
