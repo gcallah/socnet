@@ -36,7 +36,11 @@ class ThreadAlerts extends Component {
                     alerts: payload.data,
                 });
             } catch (e) {
-                console.log('Error while fetching alterts')
+                this.setState({
+                    // must put message to the screen here!
+                    loadingData: false,
+                }
+                console.log('Error while fetching alerts')
             }
             console.log("Error! " , e , " Alerts State: ", this.state.alerts)
         }

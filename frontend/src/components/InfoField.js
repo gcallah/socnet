@@ -16,6 +16,7 @@ class InfoField extends Component {
       axios.get(`${config.API_URL}number_of_alerts`)
       .then( payload => {
           this.setState({numAlerts: payload.data})
+      // .catch: (perhaps?) to handle 404 etc.
       });
   } catch (e) {
       console.log("Unable to fetch number of alerts.")
@@ -25,7 +26,7 @@ class InfoField extends Component {
     render() {
         return (
           <>
-            Number of alerts: {this.state.numAlerts.number_of_alerts} (Up to 100 alerts per page)
+            Number of alerts: {this.state.numAlerts.number_of_alerts}
           </>
         )
     }
