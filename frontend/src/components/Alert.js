@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
+import flds from '../fields';
 
 class Alert extends Component {
   constructor(props){
@@ -18,9 +19,6 @@ class Alert extends Component {
       "Medium": "#FFCC00",
       "High": "#CC0000",
     }
-    this.TITLE = 7
-    this.SEVERITY = 8
-    this.AUTHOR = 9
   }
 
   render() {
@@ -28,15 +26,15 @@ class Alert extends Component {
     const { linkable } = this.props
     return (
       <Card className="m-3">
-        <Card.Header style={{background: this.bgcolor[eventDetails[this.SEVERITY]]}}  as="h5">{ eventDetails[6] }</Card.Header>
+        <Card.Header style={{background: this.bgcolor[eventDetails[flds.SEVERITY]]}}  as="h5">{ eventDetails[6] }</Card.Header>
         <Card.Body>
-          <Card.Title>{ eventDetails[this.TITLE] }</Card.Title>
+          <Card.Title>{ eventDetails[flds.TITLE] }</Card.Title>
           <Card.Text>
-            { `${eventDetails[3]}, ${eventDetails[4]} ${eventDetails[2]}, ${eventDetails[5]} at ${eventDetails[1]}` }
+            { `${eventDetails[3]}, ${eventDetails[4]} ${eventDetails[flds.ZIP]}, ${eventDetails[5]} at ${eventDetails[flds.DATE]}` }
             <br />
-            { `Priority: ${eventDetails[this.SEVERITY]}` }
+            { `Priority: ${eventDetails[flds.SEVERITY]}` }
             <br />
-            { `Author: ${eventDetails[this.AUTHOR]}` }
+            { `Author: ${eventDetails[flds.AUTHOR]}` }
           </Card.Text>
           {linkable ? <Link to={`/thread/${this.props.id}`}><button type="button" className="btn btn-dark">View Thread</button></Link> : null}
         </Card.Body>

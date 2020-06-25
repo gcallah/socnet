@@ -33,13 +33,13 @@ class ThreadAlerts extends Component {
                 const payload = await axios.get(`${config.API_URL}alerts`)
                 this.setState({
                     loadingData: false,
-                    alerts: payload.data,
+                    alerts: payload.data
                 });
             } catch (e) {
                 this.setState({
                     // must put message to the screen here!
-                    loadingData: false,
-                }
+                    loadingData: false
+                })
                 console.log('Error while fetching alerts')
             }
             console.log("Error! " , e , " Alerts State: ", this.state.alerts)
