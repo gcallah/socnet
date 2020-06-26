@@ -26,11 +26,13 @@ class Alert extends Component {
     const { linkable } = this.props
     return (
       <Card className="m-3">
-        <Card.Header style={{background: this.bgcolor[eventDetails[flds.SEVERITY]]}}  as="h5">{ eventDetails[6] }</Card.Header>
+        <Card.Header style={{background: this.bgcolor[eventDetails[flds.SEVERITY]]}}  as="h5"> {eventDetails[flds.TYPE]} </Card.Header>
         <Card.Body>
-          <Card.Title>{ eventDetails[flds.TITLE] }</Card.Title>
+          <Card.Title>{ eventDetails[flds.DESC] }</Card.Title>
           <Card.Text>
-            { `${eventDetails[3]}, ${eventDetails[4]} ${eventDetails[flds.ZIP]}, ${eventDetails[5]} at ${eventDetails[flds.DATE]}` }
+            { `${eventDetails[flds.CITY]}, ${eventDetails[flds.STATE]}
+            ${eventDetails[flds.ZIP]}, ${eventDetails[flds.COUNTRY]}
+            at ${eventDetails[flds.DATE]}` }
             <br />
             { `Priority: ${eventDetails[flds.SEVERITY]}` }
             <br />
