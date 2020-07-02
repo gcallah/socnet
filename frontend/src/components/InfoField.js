@@ -1,32 +1,29 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
-import config from '../config';
 import './styles.css';
 
 
 class InfoField extends Component {
-  
+/*
+ * We need a constructor that gets passed:
+ *   * label
+ *   * data
+ *   For ex., see Alert.js
+ *   Line 83 in ThreadView.js shows the use of the constructor.
+ */
+  constructor(props){
+    super(props);
+  }
+
+
   state = {
     numAlerts: ""
   };
-  
- async componentDidMount() {
-  try {
-      axios.get(`${config.API_URL}number_of_alerts`)
-      .then( payload => {
-          this.setState({numAlerts: payload.data})
-      // .catch: (perhaps?) to handle 404 etc.
-      });
-  } catch (e) {
-      console.log("Unable to fetch number of alerts.")
-  }
-}
 
     render() {
         return (
           <>
-            Number of alerts: {this.state.numAlerts.number_of_alerts}
+            {`${this.props.label}`}: {this.props.data}
           </>
         )
     }

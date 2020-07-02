@@ -3,16 +3,33 @@ import { Loader, Dimmer } from 'semantic-ui-react';
 import ThreadAlerts from './ThreadAlerts';
 import './styles.css';
 import NavBar from './Navbar';
+import axios from 'axios';
+import config from '../config';
 import InfoField from './InfoField';
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      numAlerts: 0,
       loadingData: false,
     };
   }
 
+  
+ async componentDidMount() {
+   try {
+      this.setState({ loadingData: true });
+      let payload = await axios.get(`${config.API_URL}number_of_alerts`)
+      this.setState({
+        numAlerts: payload.data,
+        loadingData: false,
+      })
+   } catch (e) {
+       console.log("Unable to fetch number of alerts.")
+       this.setState({ loadingData: false });
+   }
+ }
 
   render() {
     const loadingData  = this.state.loadingData;
@@ -27,12 +44,13 @@ class Home extends Component {
     }
 
 
+    // another field: <InfoField label={"Earliest alert"}/>
     return (
 
       <div className="container">
           {}
         <NavBar />
-        <InfoField />
+        <InfoField label={"Number of alerts"} data={this.state.numAlerts.number_of_alerts}/>
         <ThreadAlerts />
       </div>
     );
