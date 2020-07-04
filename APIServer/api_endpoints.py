@@ -12,6 +12,8 @@ from APIServer.alerts.operations import read_alert
 from APIServer.alerts.operations import update_alert
 from APIServer.alerts.operations import delete_alert
 from APIServer.alerts.operations import number_of_alerts
+from APIServer.alerts.operations import newest_alert
+from APIServer.alerts.operations import oldest_alert
 
 from APIServer.threads.operations import get_comments
 from APIServer.threads.operations import add_comment
@@ -102,6 +104,24 @@ class TotalAlerts(Resource):
         Get the total number of alerts
         """
         return {'number_of_alerts': number_of_alerts()}
+
+
+@api.route('/newest_alert')
+class NewestAlert(Resource):
+    def get(self):
+        """
+        Return the date and time for the latest alert
+        """
+        return {"Latest alert:": newest_alert()}
+
+
+@api.route('/oldest_alert')
+class OldestAlert(Resource):
+    def get(self):
+        """
+        Return the date and time for the oldest alert
+        """
+        return {"Earliest alert:": oldest_alert()}
 
 
 @api.route('/alerts')

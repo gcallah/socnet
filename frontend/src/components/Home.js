@@ -12,17 +12,29 @@ class Home extends Component {
     super(props);
     this.state = {
       numAlerts: 0,
+      earliestAlert: " ",
+      latestAlert: " ",
       loadingData: false,
     };
   }
 
-  
+
  async componentDidMount() {
    try {
       this.setState({ loadingData: true });
-      let payload = await axios.get(`${config.API_URL}number_of_alerts`)
+      let payload = await axios.get(`${config.API_URL}number_of_alerts`);
+      //let earliest = await axios.get(`${config.API_URL}oldest_alert`);
+      //let latest = await axios.get(`${config.API_URL}newest_alert`);
       this.setState({
         numAlerts: payload.data,
+        //earliestAlert : earliest.data,
+        //latestAlert :  latest.data,
+        loadingData: false,
+      })
+      payload = await axios.get(`${config.API_URL}number_of_alerts`);
+      this.setState({
+        earliestAlert : payload.data,
+        //latestAlert :  latest.data,
         loadingData: false,
       })
    } catch (e) {
@@ -43,14 +55,21 @@ class Home extends Component {
       );
     }
 
-
-    // another field: <InfoField label={"Earliest alert"}/>
+    //<InfoField label={"Earliest alert posted"} data={this.state.earliestAlert.oldest_alert}/>
+    //  <InfoField label={"Lastest alert posted"} data={this.state.latestAlert.newest_alert}/>
     return (
 
       <div className="container">
           {}
         <NavBar />
+        <div id='left'>
+        <InfoField label={"Earliest alert posted"} data={this.state.earliestAlert.oldest_alert}/>
+        </div>
         <InfoField label={"Number of alerts"} data={this.state.numAlerts.number_of_alerts}/>
+        <div id='right'>
+        <InfoField label={"Lastest alert posted"} />
+        </div>
+
         <ThreadAlerts />
       </div>
     );

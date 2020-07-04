@@ -127,6 +127,21 @@ def number_of_alerts():
     return db.session.query(Alert).count()
 
 
+def newest_alert():
+    """
+    This will return the latest alert.
+    """
+    a = db.session.query(Alert).order_by('event_datetime')[-1]
+    return a.event_datetime
+
+
+def oldest_alert():
+    """
+    This will return the oldest alert.
+    """
+    return db.session.query(Alert).first().event_datetime
+
+
 def read_alert(id):
     fetched_alert = Alert.query.get(id)
     alert_schema = AlertSchema()
