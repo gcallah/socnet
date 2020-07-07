@@ -12,31 +12,32 @@ class Home extends Component {
     super(props);
     this.state = {
       numAlerts: 0,
-      earliestAlert: " ",
-      latestAlert: " ",
+      earliestAlert: '',
+      latestAlert: '',
       loadingData: false,
     };
   }
-
-
+ 
  async componentDidMount() {
    try {
       this.setState({ loadingData: true });
       let payload = await axios.get(`${config.API_URL}number_of_alerts`);
-      //let earliest = await axios.get(`${config.API_URL}oldest_alert`);
-      //let latest = await axios.get(`${config.API_URL}newest_alert`);
+      let earliest = await axios.get(`${config.API_URL}oldest_alert`);
+      let latest = await axios.get(`${config.API_URL}newest_alert`);
+      axios.all([payload, earliest, latest]).then(axios.spread((responses) => {
+        let payload = responses[0]
+        let earliest = responses[1]
+        let latest = responses[2]
+      }));
+
       this.setState({
         numAlerts: payload.data,
-        //earliestAlert : earliest.data,
-        //latestAlert :  latest.data,
+        earliestAlert : earliest.data,
+        latestAlert :  latest.data,
         loadingData: false,
       })
-      payload = await axios.get(`${config.API_URL}number_of_alerts`);
-      this.setState({
-        earliestAlert : payload.data,
-        //latestAlert :  latest.data,
-        loadingData: false,
-      })
+
+
    } catch (e) {
        console.log("Unable to fetch number of alerts.")
        this.setState({ loadingData: false });
@@ -54,11 +55,7 @@ class Home extends Component {
         </Dimmer>
       );
     }
-
-    //<InfoField label={"Earliest alert posted"} data={this.state.earliestAlert.oldest_alert}/>
-    //  <InfoField label={"Lastest alert posted"} data={this.state.latestAlert.newest_alert}/>
     return (
-
       <div className="container">
           {}
         <NavBar />
@@ -67,9 +64,8 @@ class Home extends Component {
         </div>
         <InfoField label={"Number of alerts"} data={this.state.numAlerts.number_of_alerts}/>
         <div id='right'>
-        <InfoField label={"Lastest alert posted"} />
+        <InfoField label={"Lastest alert posted"} data={this.state.latestAlert.newest_alert}/>
         </div>
-
         <ThreadAlerts />
       </div>
     );
