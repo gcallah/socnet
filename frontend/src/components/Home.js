@@ -21,22 +21,21 @@ class Home extends Component {
  async componentDidMount() {
    try {
       this.setState({ loadingData: true });
-      let payload = await axios.get(`${config.API_URL}number_of_alerts`);
-      let earliest = await axios.get(`${config.API_URL}oldest_alert`);
-      let latest = await axios.get(`${config.API_URL}newest_alert`);
-      axios.all([payload, earliest, latest]).then(axios.spread((responses) => {
-        let payload = responses[0]
-        let earliest = responses[1]
-        let latest = responses[2]
+      let alertsReq = axios.get(`${config.API_URL}number_of_alerts`);
+      let earliestReq = axios.get(`${config.API_URL}oldest_alert`);
+      let latestReq = axios.get(`${config.API_URL}newest_alert`);
+      axios.all([alertsReq, earliestReq, latestReq]).then(axios.spread((...responses) => {
+        const numAlerts = responses[0]
+        const earliest = responses[1]
+        const latest = responses[2]
+
+        this.setState({
+          numAlerts: numAlerts.data,
+          earliest : earliest.data,
+          latest :  latest.data,
+          loadingData: false,
+        })
       }));
-
-      this.setState({
-        numAlerts: payload.data,
-        earliestAlert : earliest.data,
-        latestAlert :  latest.data,
-        loadingData: false,
-      })
-
 
    } catch (e) {
        console.log("Unable to fetch number of alerts.")
@@ -60,11 +59,11 @@ class Home extends Component {
           {}
         <NavBar />
         <div id='left'>
-        <InfoField label={"Earliest alert posted"} data={this.state.earliestAlert.oldest_alert}/>
+        {/* <InfoField label={"Earliest alert posted"} data={this.state.earliest.oldest_alert}/> */}
         </div>
         <InfoField label={"Number of alerts"} data={this.state.numAlerts.number_of_alerts}/>
         <div id='right'>
-        <InfoField label={"Lastest alert posted"} data={this.state.latestAlert.newest_alert}/>
+        {/* <InfoField label={"Lastest alert posted"} data={this.state.latest.newest_alert}/> */}
         </div>
         <ThreadAlerts />
       </div>

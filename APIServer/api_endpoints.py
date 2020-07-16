@@ -112,7 +112,7 @@ class NewestAlert(Resource):
         """
         Return the date and time for the latest alert
         """
-        return {"Latest alert:": newest_alert()}
+        return {"newest_alert": newest_alert()}
 
 
 @api.route('/oldest_alert')
@@ -121,7 +121,7 @@ class OldestAlert(Resource):
         """
         Return the date and time for the oldest alert
         """
-        return {"Earliest alert:": oldest_alert()}
+        return {"oldest_alert": oldest_alert()}
 
 
 @api.route('/alerts')

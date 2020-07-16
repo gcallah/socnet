@@ -5,7 +5,7 @@ import NavBar from './Navbar';
 import Alert from './Alert';
 import config from '../config';
 
-class ThreadView extends Component {
+class AlertDetail extends Component {
   constructor(props) {
     super(props)
 
@@ -134,4 +134,4 @@ class ThreadView extends Component {
   }
 }
 
-export default ThreadView;
+export default AlertDetail;

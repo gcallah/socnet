@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import { Loader, Dimmer, Table, Icon } from 'semantic-ui-react'
-import createHistory from "history/createBrowserHistory"
 import { withRouter } from 'react-router-dom';
 import config from '../config';
 import flds from '../fields';
 import './styles.css';
 
-const history = createHistory();
 
 class ThreadAlerts extends Component {
     constructor(props) {
@@ -64,12 +62,11 @@ class ThreadAlerts extends Component {
         "High": "#CC0000",
     };
 
-    apiServer = 'https://socnet.pythonanywhere.com/';
-
     renderTableData = (alerts) => {
+        // sort alerts with active ahead of inactive
         alerts.sort((a, b) => {
-            let x = a[10],
-                y = b[10]
+            let x = a[flds.ACTIVE],
+                y = b[flds.ACTIVE]
             return x === y ? 0 : x > y ? 1 : -1;
         });
 
