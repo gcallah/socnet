@@ -12,16 +12,16 @@ import config from '../config';
 
 const history = createHistory();
 
-class FilterForm extends Component {
+class SearchAlerts extends Component {
     state = {
         loading: false,
-        date: "", 
-        severity: [], 
+        date: "",
+        severity: [],
         type: [],
-        region: [], 
+        region: [],
         filters: ""
     };
-    
+
     apiServer = 'https://socnet.pythonanywhere.com/';
     // devApiServer = "http://127.0.0.1:8000/";
 
@@ -42,15 +42,15 @@ class FilterForm extends Component {
     severityList = {
         name: "severity",
         type: "dropdown",
-        optionList: [{key: "H", text: "High", value: "High"}, 
-                    {key: "L", text: "Low", value: "Low"}, 
+        optionList: [{key: "H", text: "High", value: "High"},
+                    {key: "L", text: "Low", value: "Low"},
                     {key: "M", text: "Medium", value: "Medium"}]
     };
 
     regionList = {
-        name: "region", 
-        type: "dropdown", 
-        optionList: [{key: "NY", text: "NY - New York", value: "New York"}, 
+        name: "region",
+        type: "dropdown",
+        optionList: [{key: "NY", text: "NY - New York", value: "New York"},
                     { key: "NJ", text: "NJ - New Jersey", value: "New Jersey" },
                     { key: "CT", text: "CT - Conneticut", value: "Conneticut" }]
     };
@@ -71,14 +71,14 @@ class FilterForm extends Component {
             console.log(this.state.severity)
         });
     };
-    
+
     // Excecuted when the back button is clicked
     handleBack = () => {
         // Soon to be depreciated
         this.props.history.push('/alerts')
     }
 
-    handleChange = (e, {name, value}) => { 
+    handleChange = (e, {name, value}) => {
         this.setState({[name]:value})
     }
 
@@ -160,7 +160,7 @@ class FilterForm extends Component {
                     console.log("Alerts loaded. Payload looks like: ", payload.data)
                     this.props.history.push('/alerts', {alerts: payload.data})
                 })
-                
+
             } catch (e) {
                 console.log('ERROR: UNABLE TO GET ALL RESULTS.')
             }
@@ -202,7 +202,7 @@ class FilterForm extends Component {
                                     </td>
                                 </tr>
 
-                                <tr>  
+                                <tr>
                                     <td> <label> Severity: </label> </td>
                                     <td>
                                         < DropdownList
@@ -215,7 +215,7 @@ class FilterForm extends Component {
 
                                 <tr >
                                     <td > <label> Type: </label> </td>
-                                    <td> 
+                                    <td>
                                         < DropdownList
                                             placeholder={this.typeList.name}
                                             options={this.typeList.optionList}
@@ -226,7 +226,7 @@ class FilterForm extends Component {
 
                                 <tr>
                                     <td> <label> Region: </label></td>
-                                    <td> 
+                                    <td>
                                         < DropdownList
                                             placeholder={this.regionList.name}
                                             options={this.regionList.optionList}
@@ -236,7 +236,7 @@ class FilterForm extends Component {
                                 </tr>
                             </tbody>
                         </table>
-                        <br /> 
+                        <br />
                         <Button animated onClick={e => this.handleBack.bind(this)}>
                             <Button.Content visible> Back </Button.Content>
                             <Button.Content hidden>
@@ -251,15 +251,15 @@ class FilterForm extends Component {
                             </Button.Content>
                         </Button>
                     </Form>
-                </Segment> 
+                </Segment>
 
                 {/* DEVELOPMENT ONLY: Uncomment below to see state as it gets changed. */}
                 {/*  <br />
-                    <pre>{JSON.stringify({ severity, date, region, type })}</pre> 
+                    <pre>{JSON.stringify({ severity, date, region, type })}</pre>
                 */}
             </div>
         );
     }
 }
 
-export default withRouter(FilterForm);
+export default withRouter(SearchAlerts);

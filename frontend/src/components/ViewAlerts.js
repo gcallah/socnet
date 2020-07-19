@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Loader, Dimmer } from 'semantic-ui-react';
-import ThreadAlerts from './ThreadAlerts';
+import AlertsTable from './AlertsTable';
 import './styles.css';
 import NavBar from './Navbar';
 import axios from 'axios';
 import config from '../config';
 import InfoField from './InfoField';
 
-class Home extends Component {
+class ViewAlerts extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +17,7 @@ class Home extends Component {
       loadingData: false,
     };
   }
- 
+
  async componentDidMount() {
    try {
       this.setState({ loadingData: true });
@@ -65,10 +65,10 @@ class Home extends Component {
         <div id='right'>
         {/* <InfoField label={"Lastest alert posted"} data={this.state.latest.newest_alert}/> */}
         </div>
-        <ThreadAlerts />
+        <AlertsTable />
       </div>
     );
   }
 }
 
-export default Home;
+export default ViewAlerts;

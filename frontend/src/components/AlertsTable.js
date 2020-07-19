@@ -7,7 +7,7 @@ import flds from '../fields';
 import './styles.css';
 
 
-class ThreadAlerts extends Component {
+class AlertsTable extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -145,4 +145,4 @@ class ThreadAlerts extends Component {
     }
 }
 
-export default withRouter(ThreadAlerts);
+export default withRouter(AlertsTable);
