@@ -54,25 +54,25 @@ class Home extends Component {
     event.preventDefault();
 
     const { payload } = this.state;
-    const { history } = this.props;
+    //const { history } = this.props;
 
     Object.keys(payload).map((payloadKey) => {
       if (payloadKey === "severity" && payload[payloadKey].value === undefined) {
-        payload[payloadKey] = 'Low';
+        return payload[payloadKey] = 'Low';
       } else
-        payload[payloadKey] = payload[payloadKey].value;
+        return payload[payloadKey] = payload[payloadKey].value;
     });
 
     payload["datetime"] = moment().format("YYYY-MM-DD hh:mm:ss");
     console.log("after payload", moment().format("YYYY-MM-DD hh:mm:ss"));
-    
+
     try {
       await axios.post(`${config.API_URL}alerts`, payload);
       this.setState({open: true})
-      // Commented by Harman Chawla. 
-      // Uncomment this if you want to redirect the user to alerts table
+      // Commented by Harman Chawla.
+      // Uncomment this (and line 57) if you want to redirect the user to alerts table
       // when an alert is created.
-      //history.push('/alerts'); 
+      //history.push('/alerts');
     } catch (e) {
       console.log(e)
     }
@@ -124,17 +124,17 @@ class Home extends Component {
       </div> */}
         <Segment padded='very' raised color='teal'>
           <Form className="container-fluid mt-4" onSubmit={e => this.handleSubmit(e)}>
-            <table align="center" cellPadding="5px"> 
+            <table align="center" cellPadding="5px">
               <tbody>
                 {Object.keys(properties).map((item) => {
                   //console.log(item);
                   if (item !== 'datetime') {
                     return (
-                      <tr> 
+                      <tr>
                         <td style={{textAlign: "left"}}>
                           <label> { this.firstLetterUpperCase(item) } </label>
                         </td>
-                        <td> 
+                        <td>
                           <FormInputField
                             // label={this.formatItem(item)}
                             type={this.formatType(properties[item].type, properties[item].values)}

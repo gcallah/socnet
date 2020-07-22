@@ -6,11 +6,7 @@ import { Form } from 'react-bootstrap';
 import axios from 'axios';
 import DropdownList from "./DropdownList";
 import NavBar from './Navbar';
-import createHistory from "history/createBrowserHistory";
 import config from '../config';
-
-
-const history = createHistory();
 
 class SearchAlerts extends Component {
     state = {
@@ -99,7 +95,7 @@ class SearchAlerts extends Component {
     }
 
     generateQueryString = () => {
-        const { loading, date, severity, type, region } = this.state;
+        const { date, severity, type, region } = this.state;
         var queryString = [];
 
         if (region.length > 0) {

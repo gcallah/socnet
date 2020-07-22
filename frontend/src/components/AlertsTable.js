@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Loader, Dimmer, Table, Icon } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom';
 import config from '../config';
-import flds from '../fields';
+import flds, { colors, sizes } from '../fields';
 import './styles.css';
 
 
@@ -56,10 +56,10 @@ class AlertsTable extends Component {
         console.log(this.state.width);
     }
 
-    background = {
-        "Low": "#000000",
-        "Medium": "#FFCC00",
-        "High": "#CC0000",
+    severityColor = {
+        "Low": colors.BLACK,
+        "Medium": colors.YELLOW,
+        "High": colors.RED,
     };
 
     renderTableData = (alerts) => {
@@ -79,9 +79,9 @@ class AlertsTable extends Component {
             const description = alertData[flds.DESC]
             const active = alertData[flds.ACTIVE];
             const icon = active === "Active" ? "check" : "close";
-            const bgcolor = this.background;
+            const textColor = this.severityColor;
 
-            if (this.state.width > 450) {
+            if (this.state.width > sizes.DEFAULT_WIDTH) {
                 return (
                     <Table.Row
                         onClick={() => {
@@ -89,7 +89,7 @@ class AlertsTable extends Component {
                         }
                         }>
                         <Table.Cell textAlign="left"> {active} </Table.Cell>
-                        <Table.Cell style={{ color: bgcolor[alertData[flds.SEVERITY]] }}> {title} </Table.Cell>
+                        <Table.Cell style={{ color: textColor[alertData[flds.SEVERITY]] }}> {title} </Table.Cell>
                         <Table.Cell > {description} </Table.Cell>
                         <Table.Cell> {region} </Table.Cell>
                         <Table.Cell textAlign="right"> {date} </Table.Cell>
@@ -103,7 +103,7 @@ class AlertsTable extends Component {
                         }
                         }>
                         <Table.Cell textAlign="left"> <Icon name={icon} /> </Table.Cell>
-                        <Table.Cell style={{ color: bgcolor[alertData[flds.SEVERITY]] }}> {title} </Table.Cell>
+                        <Table.Cell style={{ color: textColor[alertData[flds.SEVERITY]] }}> {title} </Table.Cell>
                         <Table.Cell> {region} </Table.Cell>
                         <Table.Cell textAlign="right"> {date} </Table.Cell>
                     </Table.Row>
@@ -127,12 +127,12 @@ class AlertsTable extends Component {
         }
 
         return (
-            <div style={{padding: "2%"}}>
+            <div style={{padding: sizes.PADDING}}>
                 <Table fixed singleLine padded selectable color="teal">
                     <Table.Header>
                         <Table.HeaderCell> Status </Table.HeaderCell>
                         <Table.HeaderCell> Type </Table.HeaderCell>
-                        <Table.HeaderCell width={5} className="hide-mobile"> Description </Table.HeaderCell>
+                        <Table.HeaderCell width={sizes.HEADER_WIDTH} className="hide-mobile"> Description </Table.HeaderCell>
                         <Table.HeaderCell> Region </Table.HeaderCell>
                         <Table.HeaderCell textAlign="right"> Date </Table.HeaderCell>
                     </Table.Header>

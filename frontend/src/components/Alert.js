@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
-import flds from '../fields';
+import flds, { colors } from '../fields';
 
 class Alert extends Component {
   constructor(props){
@@ -15,12 +15,11 @@ class Alert extends Component {
       "High": "danger",
     };
     this.bgcolor = {
-      "Low": "#FFFFFF",
-      "Medium": "#FFCC00",
-      "High": "#CC0000",
+      "Low": colors.WHITE,
+      "Medium": colors.YELLOW,
+      "High": colors.RED,
     }
   }
-
   render() {
     const { eventDetails } = this.state;
     const { linkable } = this.props

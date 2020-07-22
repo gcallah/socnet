@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
-import { makeStyles, Theme } from "@material-ui/core/styles";
+import MuiAlert from "@material-ui/lab/Alert";
+import { makeStyles } from "@material-ui/core/styles";
 
 class CustomSnackbar extends Component {
 
@@ -32,13 +32,13 @@ class CustomSnackbar extends Component {
             <div >
                 <Snackbar open={ open } autoHideDuration = {6000} onClose = { this.handleClose } >
                 <MuiAlert elevation={6} variant="filled" onClose={ this.handleClose } severity="success" >
-                    {message} 
+                    {message}
                 </MuiAlert>
                 </Snackbar>
             </div>
         );
     }
-    
+
 }
 
 export default CustomSnackbar;
