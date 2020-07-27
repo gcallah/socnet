@@ -14,7 +14,7 @@ class ViewAlerts extends Component {
       numAlerts: 0,
       earliestAlert: '',
       latestAlert: '',
-      loadingData: false,
+      loadingData: true,
     };
   }
 
@@ -59,11 +59,11 @@ class ViewAlerts extends Component {
           {}
         <NavBar />
         <div id='left'>
-        {/* <InfoField label={"Earliest alert posted"} data={this.state.earliest.oldest_alert}/> */}
+        { <InfoField label={"Earliest alert posted"} data={this.state.earliest.oldest_alert}/> }
         </div>
         <InfoField label={"Number of alerts"} data={this.state.numAlerts.number_of_alerts}/>
         <div id='right'>
-        {/* <InfoField label={"Lastest alert posted"} data={this.state.latest.newest_alert}/> */}
+        { <InfoField label={"Lastest alert posted"} data={this.state.latest.newest_alert}/> }
         </div>
         <AlertsTable />
       </div>
